@@ -1,5 +1,5 @@
 {
-	"name": "iap",
+	"name": "in-app-purchase",
 	"description": "In-App-Purchase validation for iOS and Android",
 	"version": "0.1.0",
 	"author": "Nobuyori Takahashi <voltrue2@yahoo.com>",

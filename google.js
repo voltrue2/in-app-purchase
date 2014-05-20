@@ -29,7 +29,9 @@ module.exports.setup = function (cb) {
 		if (error) {
 			return cb(new Error('failed to read public key file: ' + pkeyPath));
 		}
-		publicKey = fileData.toString().replace(/\s+$/, '');
+		pkey = fileData.toString().replace(/\s+$/, '');
+		pkey = chunkSplit(pkey, 64, '\n'); 
+		publicKey = '-----BEGIN PUBLIC KEY-----\n' + pkey + '-----END PUBLIC KEY-----\n';
 		cb();
 	});	
 };
@@ -45,20 +47,13 @@ module.exports.validatePurchase = function (receipt, cb) {
 	if (!receipt.data || !receipt.signature) {
 		return cb(new Error('missing receipt data:\n' + JSON.stringify(receipt)));
 	}
-	var pKey = getPublicKey(receipt);
-	validatePublicKey(receipt, pKey, cb);
+	validatePublicKey(receipt, cb);
 };
 
-function getPublicKey(receipt) {
-	var key = chunkSplit(publicKey, 64, '\n'); 
-	var pkey = '-----BEGIN PUBLIC KEY-----\n' + key + '-----END PUBLIC KEY-----\n';
-	return pkey;	
-}
-
-function validatePublicKey(receipt, pkey, cb) {
+function validatePublicKey(receipt, cb) {
 	var validater = crypto.createVerify('SHA1');
 	validater.update(receipt.data);
-	var valid = validater.verify(pkey, receipt.signature, 'base64');
+	var valid = validater.verify(publicKey, receipt.signature, 'base64');
 
 	if (valid) {
 		// validated successfully

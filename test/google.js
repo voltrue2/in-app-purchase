@@ -14,6 +14,7 @@ describe('iap', function () {
 			googlePublicKeyPath: pkPath
 		});
 		iap.setup(function (error) {
+			console.log(error);
 			assert.equal(error, undefined);
 			fs.readFile(path, function (error, data) {
 				assert.equal(error, undefined);

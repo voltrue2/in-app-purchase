@@ -1,7 +1,7 @@
 {
 	"name": "in-app-purchase",
 	"description": "In-App-Purchase validation for iOS and Android",
-	"version": "0.1.0",
+	"version": "0.1.2",
 	"author": "Nobuyori Takahashi <voltrue2@yahoo.com>",
 	"repository": {
 		"type": "git",

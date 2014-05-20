@@ -1,4 +1,5 @@
-# iap
+# in-app-purchase
+
 ©Nobuyori Takahashi < <voltrue2@yahoo.com> >
 
 A Node.js module for In-App-Purchase validation for iOS and Android.

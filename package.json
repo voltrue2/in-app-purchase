@@ -27,12 +27,5 @@
     "in-app-purchase",
     "Validation"
   ],
-  "license": "MIT",
-  "readme": "# in-app-purchase\n\n©Nobuyori Takahashi < <voltrue2@yahoo.com> >\n\nA Node.js module for In-App-Purchase validation for iOS and Android.\n\n### Methods\n\n####.validate(receipt [string or object], callback [function])\n\nValidates an in-app-purchase receipt.\n\nFor Apple validation, receipt is a string.\n\nFor Google validation, receipt is an object { data: xxx, signature: yyyy }\n\n####.isValid(response [object])\n\nReturns a boolean.\n\n### GooglePlay Public Key Files\n\nFor GooglePlay, in-app-purchase module needs to have the public key file(s).\n\nThe module requires the file(s) to be name in a certain way:\n\nFor sandbox, the file name should be: `iap-sandbox`.\n\nFor production, the file name should be: `iap-live`.\n\nThe module will automatically decide which file to use based on the configurations given.\n\n### Configurations\n\nThe module needs to call `.config()` before it can execute `.setup()` correctly.\n\nExample:\n\n```\nvar inAppPurchase = require('in-app-purchase');\ninAppPurchase.config({\n\tsandbox: true, // this tells the module which environment it should be connecting to for validation\n\tgooglePublicKeyPath: \"path/to/public/key/directory/\" // this is the path to the directory containing iap-sanbox/iap-live files\n});\n```\n\n### How To Use It\n\nExample: Apple\n\n```javascript\nvar iap = require('in-app-purchase');\n/*\nFor google iap, you need to name your public key file as:\niap-sandbox or iap-live\n*/\niap.config({\n\tsandbox: true,\n\tgooglePublicKeyPath: \"/path/to/google/public/key/dir/\"\n});\niap.setup(function (error) {\n\tif (error) {\n\t\treturn console.error('something went wrong...');\n\t}\n\t// iap is ready\n\tiap.validate(iap.APPLE, appleReceipt, function (err, appleRes) {\n\t\tif (err) {\n\t\t\treturn console.error(err);\n\t\t}\n\t\tif (iap.isValid(appRes)) {\n\t\t\t// yay good!\n\t\t}\n\t});\n});\n```\n\nExample: Google\n\n```javascript\nvar iap = require('in-app-purchase');\n/*\nFor google iap, you need to name your public key file as:\niap-sanbox or iap-live\n*/\niap.config({\n\tsandbox: true,\n\tgooglePublicKeyPath: \"/path/to/google/public/key/dir/\"\n});\niap.setup(function (error) {\n\tif (error) {\n\t\treturn console.error('something went wrong...');\n\t}\n\t// iap is ready\n\tiap.validate(iap.GOOGLE, appleReceipt, function (err, appleRes) {\n\t\tif (err) {\n\t\t\treturn console.error(err);\n\t\t}\n\t\tif (iap.isValid(appRes)) {\n\t\t\t// yay good!\n\t\t}\n\t});\n});\n```\n",
-  "readmeFilename": "README.md",
-  "bugs": {
-    "url": "https://github.com/voltrue2/in-app-purchase/issues"
-  },
-  "_id": "in-app-purchase@0.1.3",
-  "_from": "in-app-purchase@"
+  "license": "MIT"
 }

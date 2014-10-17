@@ -124,7 +124,7 @@ make test-apple path=/path/to/your/apple/receipt/file
 
 For Android:
 
-In order to test google's in-ap-billing, you must provide the public key file in addition to your google receipt file.
+In order to test google's in-app-billing, you must provide the public key file in addition to your google receipt file.
 
 NOTE: the receipt file for google must contain javascript object format something similar to:
 

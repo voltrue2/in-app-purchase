@@ -14,7 +14,7 @@ For Apple validation, receipt is a string.
 
 For Google validation, receipt is an object { data: xxx, signature: yyyy }
 
-####.isValid(response [object])
+####.isValidated(response [object])
 
 Returns a boolean.
 
@@ -69,7 +69,7 @@ iap.setup(function (error) {
 		if (err) {
 			return console.error(err);
 		}
-		if (iap.isValid(appRes)) {
+		if (iap.isValidated(appRes)) {
 			// yay good!
 		}
 	});
@@ -103,7 +103,7 @@ iap.setup(function (error) {
 		if (err) {
 			return console.error(err);
 		}
-		if (iap.isValid(googleRes)) {
+		if (iap.isValidated(googleRes)) {
 			// yay good!
 		}
 	});

@@ -118,6 +118,8 @@ To set up your server-side Android in-app-billing correctly, you must provide th
 
 Once you copy the public key string from the Developer Console account for your application, you simply need to copy and paste it to a file and name it `iap-live` as shown in the example above.
 
+**NOTE:** The public key string you copy from the Developer Console account is actually a base64 string. You do NOT have to convert this to anything yourself. The module converts it to the public key automatically for you.
+
 ***
 
 ## Test

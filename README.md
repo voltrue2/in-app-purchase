@@ -110,6 +110,16 @@ iap.setup(function (error) {
 });
 ```
 
+## Google In-app-Billing Set Up
+
+To set up your server-side Android in-app-billing correctly, you must provide the public key string as a file from your Developer Console account.
+
+**Reference:** <a href="https://developer.android.com/google/play/billing/billing_integrate.html#billing-security">Inmplementing In-app Billing</a>
+
+Once you copy the public key string from the Developer Console account for your application, you simply need to copy and paste it to a file and name it `iap-live` as shown in the example above.
+
+***
+
 ## Test
 
 `in-app-purchase` module provides unit tests. In order the make use of the unit tests, you must provide receipts for iOS/Android in files.

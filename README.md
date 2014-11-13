@@ -102,7 +102,7 @@ iap.setup(function (error) {
 	});
 });
 ```
-i
+
 Example: Windows
 
 ```javascript

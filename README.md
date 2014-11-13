@@ -10,9 +10,11 @@ A Node.js module for In-App-Purchase validation for iOS, Android, and Windows.
 
 Validates an in-app-purchase receipt.
 
-For Apple validation, receipt is a string.
+- For Apple validation, receipt is a string.
 
-For Google validation, receipt is an object { data: xxx, signature: yyyy }
+- For Google validation, receipt is an object { data: xxx, signature: yyyy }
+
+- For Windows validate, receipt is a signed XML string.
 
 ####.isValidated(response [object])
 

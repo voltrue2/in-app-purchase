@@ -1,9 +1,12 @@
 var apple = require('./apple');
 var google = require('./google');
+var windows = require('./windows');
 
 module.exports.APPLE = 'apple';
 
 module.exports.GOOGLE = 'google';
+
+module.exports.WINDOWS = 'windows';
 
 module.exports.config = function (configIn) {
 	google.readConfig(configIn);
@@ -21,6 +24,9 @@ module.exports.validate = function (service, receipt, cb) {
 			break;
 		case module.exports.GOOGLE:
 			validator = google.validatePurchase;
+			break;
+		case module.exports.WINDOWS:
+			validator = windows.validatePurchase;
 			break;
 		default:
 			return cb(new Error('invalid service given: ' + service));

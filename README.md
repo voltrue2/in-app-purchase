@@ -2,7 +2,7 @@
 
 ©Nobuyori Takahashi < <voltrue2@yahoo.com> >
 
-A Node.js module for In-App-Purchase validation for iOS and Android.
+A Node.js module for In-App-Purchase validation for iOS, Android, and Windows.
 
 ### Methods
 
@@ -53,13 +53,6 @@ Example: Apple
 
 ```javascript
 var iap = require('in-app-purchase');
-/*
-For google iap, you need to name your public key file as:
-iap-sandbox or iap-live
-*/
-iap.config({
-	googlePublicKeyPath: "/path/to/google/public/key/dir/"
-});
 iap.setup(function (error) {
 	if (error) {
 		return console.error('something went wrong...');
@@ -109,6 +102,25 @@ iap.setup(function (error) {
 	});
 });
 ```
+i
+Example: Windows
+
+```javascript
+var iap = require('in-app-purchase');
+iap.setup(function (error) {
+	if (erorr) {
+		// oops
+	}
+	iap.validate(iap.WINDOWS, windowsReceipt, function (err, windowsRes) {
+		if (err) {
+			// failed to validate the purchase
+		}
+		if (iap.isValidated(windowsRes)) {
+			// yay good!
+		}
+	});
+});
+```
 
 ## Google In-app-Billing Set Up
 
@@ -128,13 +140,13 @@ Once you copy the public key string from the Developer Console account for your 
 
 To test the module you may execute the following commands in the root directory of the module:
 
-For iOS:
+#### For iOS:
 
 ```
 make test-apple path=/path/to/your/apple/receipt/file
 ```
 
-For Android:
+#### For Android:
 
 In order to test google's in-app-billing, you must provide the public key file in addition to your google receipt file.
 
@@ -146,4 +158,12 @@ NOTE: the receipt file for google must contain javascript object format somethin
 
 ```
 make test-google path=/path/to/your/google/receipt/file pk=/path/you/the/directory/of/your/google/public/key/
+```
+
+#### For Windows:
+
+In order to test windows' in-app-purchase, you must provide the signed receipt XML as a file.
+
+```
+make test-windows path=/path/to/your/windows/receipt/xml
 ```

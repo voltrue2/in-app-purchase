@@ -16,12 +16,12 @@ module.exports.readConfig = function (configIn) {
 	if (!config) {
 		config = {};
 	}
-	keyPathMap.sandbox = configIn.googlePublicKeyPath + sandboxPkey;
-	keyPathMap.live = configIn.googlePublicKeyPath + livePkey;
+	keyPathMap.sandbox = config.googlePublicKeyPath + sandboxPkey;
+	keyPathMap.live = config.googlePublicKeyPath + livePkey;
 };
 
 module.exports.setup = function (cb) {
-	if (!config.googlePublicKeyPath) {
+	if (!config || !config.googlePublicKeyPath) {
 		// no google iap
 		return cb();
 	}

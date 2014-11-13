@@ -1,31 +1,36 @@
 {
-  "name": "in-app-purchase",
-  "description": "In-App-Purchase validation for iOS and Android",
-  "version": "0.1.7",
-  "author": {
-    "name": "Nobuyori Takahashi",
-    "email": "voltrue2@yahoo.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/voltrue2/in-app-purchase.git"
-  },
-  "dependencies": {
-    "async": "0.8.0",
-    "request": "2.33.0"
-  },
-  "devDependencies": {
-    "mocha": "1.18.2"
-  },
-  "engine": "node >= 0.10.20",
-  "contributors": [],
-  "keywords": [
-    "Apple",
-    "Android",
-    "Purchase",
-    "App",
-    "in-app-purchase",
-    "Validation"
-  ],
-  "license": "MIT"
+	"name": "in-app-purchase",
+	"description": "In-App-Purchase validation for iOS, Android, and Windows",
+	"version": "0.2.0",
+	"author": {
+		"name": "Nobuyori Takahashi",
+		"email": "voltrue2@yahoo.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/voltrue2/in-app-purchase.git"
+	},
+	"dependencies": {
+		"async": "0.8.0",
+		"request": "2.33.0",
+		"xmldom": "0.1.19",
+		"xml-crypto": "0.1.25"
+	},
+	"devDependencies": {
+		"mocha": "1.18.2"
+	},
+	"engine": "node >= 0.10.20",
+	"contributors": [],
+	"keywords": [
+		"Apple",
+		"iOS",
+		"Android",
+		"Windows",
+		"Purchase",
+		"App",
+		"in-app-purchase",
+		"in-app-billing",
+		"Validation"
+	],
+	"license": "MIT"
 }

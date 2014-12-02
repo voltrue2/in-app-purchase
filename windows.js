@@ -1,5 +1,3 @@
-'use strict';
-
 var constants = require('./constants');
 var xmlCrypto = require('xml-crypto');
 var Parser = require('xmldom').DOMParser;
@@ -27,7 +25,7 @@ module.exports.validatePurchase = function (receipt, cb) {
 	};
 	try {
 		var doc = new Parser(options).parseFromString(receipt);
-		var certId = doc.firstChild.getAttribute('CertificateId');
+		certId = doc.firstChild.getAttribute('CertificateId');
 	} catch (e) {
 		return cb(new Error('failed to validate purchase: ' + e.message), { status: constants.VALIDATION.FAILURE });
 	}

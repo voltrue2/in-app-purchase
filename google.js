@@ -1,5 +1,3 @@
-'use strict';
-
 var constants = require('./constants');
 var fs = require('fs');
 var crypto = require('crypto');

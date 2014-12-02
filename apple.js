@@ -1,5 +1,3 @@
-'use strict';
-
 var constants = require('./constants');
 var request = require('request');
 var errorMap = {

@@ -1,5 +1,3 @@
-'use strict';
-
 var apple = require('./apple');
 var google = require('./google');
 var windows = require('./windows');

@@ -1,3 +1,6 @@
+'use strict';
+
+var constants = require('./constants');
 var fs = require('fs');
 var crypto = require('crypto');
 var async = require('async');
@@ -60,13 +63,28 @@ module.exports.validatePurchase = function (receipt, cb) {
 					return cb(error);
 				}
 				// sandbox worked
+				data.service = constants.SERVICES.GOOGLE;
 				cb(null, data);
 			});
 			return;
 		}
 		// live worked
+		data.service = constants.SERVICES.GOOGLE;
 		cb(null, data);
 	});
+};
+
+module.exports.getPurchaseData = function (purchase) {
+	if (!purchase) {
+		return null;
+	}
+	var data = [];
+	data.push({
+		productId: purchase.productId,
+		purchaseDate: purchase.purchaseTime,
+		quantity: 1
+	});
+	return data;
 };
 
 function getPublicKey(publicKey) {
@@ -91,7 +109,7 @@ function validatePublicKey(receipt, pkey, cb) {
 	if (valid) {
 		// validated successfully
 		var data = JSON.parse(receipt.data);
-		data.status = 0;
+		data.status = constants.VALIDATION.SUCCESS;
 		return cb(null, data);
 	}
 	// failed to validate

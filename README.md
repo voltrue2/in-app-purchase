@@ -20,6 +20,52 @@ Validates an in-app-purchase receipt.
 
 Returns a boolean.
 
+####.getPurchaseData(response [object]);
+
+Returns a parsed purchase data as an array.
+
+For apple and windows, the returned array may contain more than 1 purchase data.
+
+For windows purchase data, each purchase data in the array contains `expirationDate`.
+
+The purchase data structure is:
+
+```
+{
+	productId: <string>,
+	purchaseDate: <number>,
+	quantity: <number>,
+	*expirationDate: <number> // windows only
+}
+```
+
+Example:
+
+```javascript
+iap.setup(function (error) {
+	if (error) {
+		// error hmm
+	}
+	iap.validate(iap.APPLE, function (error, response) {
+		if (error) {
+			// error
+		}
+		if (iap.isValidated(response)) {
+			var purcahseDataList = iap.getPurchaseData(response);
+			/*
+				[
+					{
+						productId: xxx,
+						purchasedDate: yyy,
+						quantity: zzz
+					}
+				]
+			*/
+		}
+	});
+});
+```
+
 ### GooglePlay Public Key Files
 
 For GooglePlay, in-app-purchase module needs to have the public key file(s).

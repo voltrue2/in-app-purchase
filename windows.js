@@ -1,3 +1,6 @@
+'use strict';
+
+var constants = require('./constants');
 var xmlCrypto = require('xml-crypto');
 var Parser = require('xmldom').DOMParser;
 var async = require('async');
@@ -26,7 +29,7 @@ module.exports.validatePurchase = function (receipt, cb) {
 		var doc = new Parser(options).parseFromString(receipt);
 		var certId = doc.firstChild.getAttribute('CertificateId');
 	} catch (e) {
-		return cb(new Error('failed to validate purchase'), { status: 1 });
+		return cb(new Error('failed to validate purchase: ' + e.message), { status: constants.VALIDATION.FAILURE });
 	}
 	if (!certId) {
 		return cb(new Error('failed to find certificate ID'));
@@ -35,6 +38,7 @@ module.exports.validatePurchase = function (receipt, cb) {
 		if (error) {
 			return cb(error);
 		}
+		var data;
 		try {
 			var publicKey = body;
 			var canonicalXML = removeWhiteSpace(doc.firstChild).toString();
@@ -49,7 +53,7 @@ module.exports.validatePurchase = function (receipt, cb) {
 				for (var i = 0, len = items.length; i < len; i++) {
 					var item = items[i];
 					purchases.push({
-						producId: item.getAttribute('ProductId'),
+						productId: item.getAttribute('ProductId'),
 						purchaseDate: item.getAttribute('PurchaseDate'),
 						expirationDate: item.getAttribute('ExpirationDate'),
 						productType: item.getAttribute('ProductType'),
@@ -57,18 +61,35 @@ module.exports.validatePurchase = function (receipt, cb) {
 					});
 				}
 				// successful validation
-				var data = {
-					status: 1,
+				data = {
+					service: constants.SERVICES.WINDOWS,
+					status: constants.VALIDATION.SUCCESS,
 					purchases: purchases
 				};
-				data.status = 0;
-				// done
-				cb(null, data);
 			}
 		} catch (e) {
-			return cb(new Error('failed to validate purchase'), { status: 1 });
+			return cb(new Error('failed to validate purchase: ' + e.message), { status: constants.VALIDATION.FAILURE });
 		}
+		// done
+		cb(null, data);
 	});
+};
+
+module.exports.getPurchaseData = function (purchase) {
+	if (!purchase || !purchase.purchases || !purchase.purchases.length) {
+		return null;
+	}
+	var data = [];
+	for (var i = 0, len = purchase.purchases.length; i < len; i++) {
+		var item = purchase.purchases[i];
+		data.push({
+			productId: item.productId,
+			purchaseDate: new Date(item.purchaseDate).getTime(),
+			expirationDate: new Date(item.expirationDate).getTime(), // window only
+			quantity: 1
+		});
+	}
+	return data;
 };
 
 function send(url, cb) {

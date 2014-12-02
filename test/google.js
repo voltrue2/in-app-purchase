@@ -20,7 +20,13 @@ describe('iap', function () {
 				iap.validate(iap.GOOGLE, JSON.parse(receipt), function (error, response) {
 					assert.equal(error, undefined);
 					assert.equal(iap.isValidated(response), true);
-					console.log(response);
+					var data = iap.getPurchaseData(response);
+					for (var i = 0, len = data.length; i < len; i++) {
+						assert(data[i].productId);
+						assert(data[i].purchaseDate);
+						assert(data[i].quantity);
+					}
+					console.log(data);
 					done();
 				});
 			});
@@ -41,7 +47,6 @@ describe('iap', function () {
 			iap.validate(iap.APPLE, { data: 'fake-receipt', signature: 'fake' }, function (error, response) {
 				assert(error);
 				assert.equal(iap.isValidated(response), false);
-				console.log(response);
 				done();
 			});
 		});

@@ -1,3 +1,6 @@
+'use strict';
+
+var constants = require('./constants');
 var request = require('request');
 var errorMap = {
 	21000: 'The App Store could not read the JSON object you provided.',
@@ -41,9 +44,36 @@ module.exports.validatePurchase = function (receipt, cb) {
 	});
 };
 
+module.exports.getPurchaseData = function (purchase) {
+	if (!purchase || !purchase.receipt) {
+		return null;
+	}
+	var data = [];
+	if (purchase.receipt.in_app) {
+		// iOS 6+
+		for (var i = 0, len = purchase.receipt.in_app.length; i < len; i++) {
+			var item = purchase.receipt.in_app[i];
+			data.push({
+				productId: item.product_id,
+				purchaseDate: item.original_purchase_date_ms,
+				quantity: parseInt(item.quantity, 10)
+			});
+		}
+		return data;
+	}
+	// old and will be deprecated by Apple
+	data.push({
+		productId: purchase.receipt.product_id,
+		purchaseDate: purchase.receipt.original_purchase_date_ms,
+		quantity: parseInt(purchase.receipt.quantity, 10)
+	});
+	return data;
+};
+
 function handleResponse(receipt, data, cb) {
-	if (data.status === 0) {
+	if (data.status === constants.VALIDATION.SUCCESS) {
 		// validated successfully
+		data.service = constants.SERVICES.APPLE;
 		return cb(null, data);
 	}
 	// failed to validate

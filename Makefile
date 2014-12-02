@@ -1,6 +1,6 @@
 .PHONY: test-apple
 test-apple:
-	./node_modules/mocha/bin/mocha test/apple.js -R spec -b --path=$(path)
+	./node_modules/mocha/bin/mocha test/apple.js -R spec -b --timeout=5000 --path=$(path)
 
 .PHONY: test-google
 test-google:
@@ -8,4 +8,4 @@ test-google:
 
 .PHONY: test-windows
 test-windows:
-	./node_modules/mocha/bin/mocha test/windows.js -R spec -b --path=$(path)
+	./node_modules/mocha/bin/mocha test/windows.js -R spec -b --timeout=5000 --path=$(path)

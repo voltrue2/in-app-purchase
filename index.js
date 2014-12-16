@@ -1,6 +1,6 @@
-var apple = require('./apple');
-var google = require('./google');
-var windows = require('./windows');
+var apple = require('./lib/apple');
+var google = require('./lib/google');
+var windows = require('./lib/windows');
 var constants = require('./constants');
 
 module.exports.APPLE = constants.SERVICES.APPLE;
@@ -8,10 +8,12 @@ module.exports.GOOGLE = constants.SERVICES.GOOGLE;
 module.exports.WINDOWS = constants.SERVICES.WINDOWS;
 
 module.exports.config = function (configIn) {
+	// read config: google only
 	google.readConfig(configIn);
 };
 
 module.exports.setup = function (cb) {
+	// set up: google only
 	google.setup(cb);
 };
 
@@ -60,4 +62,10 @@ module.exports.getPurchaseData = function (purchaseData) {
 		default:
 			return null;
 	}	
+};
+
+// test use only
+module.exports.reset = function () {
+	// resets google setup
+	google.reset();
 };

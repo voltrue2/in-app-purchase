@@ -66,9 +66,9 @@ iap.setup(function (error) {
 });
 ```
 
-### GooglePlay Public Key Files
+### GooglePlay Public Key From Files
 
-For GooglePlay, in-app-purchase module needs to have the public key file(s).
+For GooglePlay, `in-app-purchase` module needs to have the public key file(s).
 
 The module requires the file(s) to be name in a certain way:
 
@@ -94,6 +94,28 @@ inAppPurchase.config({
 	googlePublicKeyPath: "path/to/public/key/directory/" // this is the path to the directory containing iap-sanbox/iap-live files
 });
 ```
+
+### GooglePlay Public Key From Environment Variables
+
+For GooglePlay, `in-app-purchase` module can read public key value from the environement variables instead of file(s).
+
+The basics is the same as using file(s).
+
+You will need to set the public key value, which is the same value as you would save as a file, to environment variables.
+
+#### GOOGLE_IAB_PUBLICKEY_SANDBOX
+
+This would be the public key value for sandbox.
+
+`export=GOOGLE_IAB_PUBLIC_SANDBOX=xxxxxxxxxxxxxxxxxxxxxxxx`.
+
+#### GOOGLE_IAB_PUBLICKEY_LIVE
+
+This would be the public key value for live
+
+`export=GOOGLE_IAB_PUBLIC_LIVE=yyyyyyyyyyyyyyyyyyyyyyyyyy`.
+
+**NOTE**: This works exactly the same as you were to use file(s) with one expection. You do **NOT** need to call `.config()` for GooglePlay since it will be using environment variables instead.
 
 ### How To Use It
 

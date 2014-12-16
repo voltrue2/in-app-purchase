@@ -14,7 +14,7 @@ name="gracenode-server";
 cwd=`pwd`;
 # list directories/files to lint
 list=();
-defaultDirList="index.js apple.js google.js windows.js";
+defaultDirList="index.js lib/";
 # optional space separated list of directories/files to lint
 # Example: ./lint.sh "mydir/ myFile" > this will lint all files in mydir/ and lint myFile
 dirList=$1;

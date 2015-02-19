@@ -107,13 +107,13 @@ You will need to set the public key value, which is the same value as you would 
 
 This would be the public key value for sandbox.
 
-`export=GOOGLE_IAB_PUBLIC_SANDBOX=xxxxxxxxxxxxxxxxxxxxxxxx`.
+`export=GOOGLE_IAB_PUBLICKEY_SANDBOX=xxxxxxxxxxxxxxxxxxxxxxxx`.
 
 #### GOOGLE_IAB_PUBLICKEY_LIVE
 
 This would be the public key value for live
 
-`export=GOOGLE_IAB_PUBLIC_LIVE=yyyyyyyyyyyyyyyyyyyyyyyyyy`.
+`export=GOOGLE_IAB_PUBLICKEY_LIVE=yyyyyyyyyyyyyyyyyyyyyyyyyy`.
 
 **NOTE**: This works exactly the same as you were to use file(s) with one expection. You do **NOT** need to call `.config()` for GooglePlay since it will be using environment variables instead.
 
@@ -126,8 +126,8 @@ Example:
 ```
 var iap = require('in-app-purchase');
 iap.config({
-	googlePublicKeyStrSandBox: publicKeySandboxString,
-	googlePublickKeyStrLive: publicKeyLiveString
+	publicKeyStrSandBox: publicKeySandboxString,
+	publickKeyStrLive: publicKeyLiveString
 });
 //... proceed with the rest of your code here
 ```

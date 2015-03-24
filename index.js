@@ -1,3 +1,5 @@
+var async = require('async');
+
 var apple = require('./lib/apple');
 var google = require('./lib/google');
 var windows = require('./lib/windows');
@@ -8,13 +10,19 @@ module.exports.GOOGLE = constants.SERVICES.GOOGLE;
 module.exports.WINDOWS = constants.SERVICES.WINDOWS;
 
 module.exports.config = function (configIn) {
-	// read config: google only
+    apple.readConfig(configIn);
 	google.readConfig(configIn);
 };
 
 module.exports.setup = function (cb) {
-	// set up: google only
-	google.setup(cb);
+    async.parallel([
+        function (next) {
+            apple.setup(next);
+        },
+        function (next) {
+	        google.setup(next);
+        }
+    ], cb);
 };
 
 module.exports.validate = function (service, receipt, cb) {
@@ -37,7 +45,7 @@ module.exports.validate = function (service, receipt, cb) {
 			return cb(error);
 		}
 		cb(null, response);
-	});		
+	});
 };
 
 module.exports.isValidated = function (response) {
@@ -61,7 +69,7 @@ module.exports.getPurchaseData = function (purchaseData) {
 			return windows.getPurchaseData(purchaseData);
 		default:
 			return null;
-	}	
+	}
 };
 
 // test use only

@@ -70,10 +70,10 @@ describe('iap', function () {
 
 		var iap = require('../');
 		iap.reset();
-		fs.readFile(pkPath + 'iap-sandbox', 'utf8', function (error, pk) {
+		fs.readFile(pkPath + 'iap-live', 'utf8', function (error, pk) {
 			assert.equal(error, undefined);
 			// set env variable
-			process.env.GOOGLE_IAB_PUBLICKEY_SANDBOX = pk.replace(/(\r\n|\n|\r)/gm, '');
+			process.env.GOOGLE_IAB_PUBLICKEY_LIVE = pk.replace(/(\r\n|\n|\r)/gm, '');
 			// now test
 			iap.setup(function (error) {
 				assert.equal(error, undefined);

@@ -10,19 +10,19 @@ module.exports.GOOGLE = constants.SERVICES.GOOGLE;
 module.exports.WINDOWS = constants.SERVICES.WINDOWS;
 
 module.exports.config = function (configIn) {
-    apple.readConfig(configIn);
+	apple.readConfig(configIn);
 	google.readConfig(configIn);
 };
 
 module.exports.setup = function (cb) {
-    async.parallel([
-        function (next) {
-            apple.setup(next);
-        },
-        function (next) {
-	        google.setup(next);
-        }
-    ], cb);
+	async.parallel([
+		function (next) {
+			apple.setup(next);
+		},
+		function (next) {
+			google.setup(next);
+		}
+	], cb);
 };
 
 module.exports.validate = function (service, receipt, cb) {

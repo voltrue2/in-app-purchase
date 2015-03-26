@@ -94,7 +94,7 @@ Example:
 ```
 var inAppPurchase = require('in-app-purchase');
 inAppPurchase.config({
-    applePassword: "1234567890abcdef1234567890abcdef", // this comes from iTunes Connect
+	applePassword: "1234567890abcdef1234567890abcdef", // this comes from iTunes Connect
 	googlePublicKeyPath: "path/to/public/key/directory/" // this is the path to the directory containing iap-sanbox/iap-live files
 });
 ```
@@ -143,7 +143,7 @@ Example: Apple
 ```javascript
 var iap = require('in-app-purchase');
 iap.config({
-    applePassword: "1234567890abcdef1234567890abcdef"
+	applePassword: "1234567890abcdef1234567890abcdef"
 });
 iap.setup(function (error) {
 	if (error) {

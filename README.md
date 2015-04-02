@@ -6,7 +6,7 @@ A Node.js module for In-App-Purchase validation for iOS, Android, and Windows.
 
 ### Methods
 
-####.validate(receipt [string or object], callback [function])
+#### .validate(receipt [string or object], callback [function])
 
 Validates an in-app-purchase receipt.
 
@@ -16,11 +16,11 @@ Validates an in-app-purchase receipt.
 
 - For Windows validate, receipt is a signed XML string.
 
-####.isValidated(response [object])
+#### .isValidated(response [object])
 
 Returns a boolean.
 
-####.getPurchaseData(response [object]);
+#### .getPurchaseData(response [object]);
 
 Returns a parsed purchase data as an array.
 
@@ -131,7 +131,7 @@ Example:
 var iap = require('in-app-purchase');
 iap.config({
 	publicKeyStrSandBox: publicKeySandboxString,
-	publickKeyStrLive: publicKeyLiveString
+	publicKeyStrLive: publicKeyLiveString
 });
 //... proceed with the rest of your code here
 ```

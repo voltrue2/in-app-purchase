@@ -130,8 +130,8 @@ Example:
 ```
 var iap = require('in-app-purchase');
 iap.config({
-	publicKeyStrSandBox: publicKeySandboxString,
-	publicKeyStrLive: publicKeyLiveString
+	googlePublicKeyStrSandBox: publicKeySandboxString,
+	googlePublicKeyStrLive: publicKeyLiveString
 });
 //... proceed with the rest of your code here
 ```

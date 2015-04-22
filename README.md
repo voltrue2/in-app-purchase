@@ -6,9 +6,17 @@ A Node.js module for In-App-Purchase validation for iOS, Android, and Windows.
 
 ### Methods
 
-#### .validate(receipt [string or object], callback [function])
+#### .validate(service [constant], receipt [string or object], callback [function])
 
 Validates an in-app-purchase receipt.
+
+**NOTE:**
+
+constant for iOS: `iap.APPLE`
+
+constant for Android: `iap.GOOGLE`
+
+constatn for Windows: `iap.WINDOWS`
 
 - For Apple validation, receipt is a string.
 
@@ -46,7 +54,7 @@ iap.setup(function (error) {
 	if (error) {
 		// error hmm
 	}
-	iap.validate(iap.APPLE, function (error, response) {
+	iap.validate(iap.APPLE, receipt, function (error, response) {
 		if (error) {
 			// error
 		}

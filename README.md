@@ -40,6 +40,7 @@ The purchase data structure is:
 
 ```
 {
+	transactionId: <string>,
 	productId: <string>,
 	purchaseDate: <number>,
 	quantity: <number>,

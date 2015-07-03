@@ -2,7 +2,7 @@
 
 ©Nobuyori Takahashi < <voltrue2@yahoo.com> >
 
-A Node.js module for In-App-Purchase validation for iOS, Android, and Windows.
+A Node.js module for In-App-Purchase validation for iOS, Android, Windows and Amazon.
 
 ### Methods
 
@@ -15,6 +15,8 @@ Validates an in-app-purchase receipt.
 constant for iOS: `iap.APPLE`
 
 constant for Android: `iap.GOOGLE`
+
+constant for Amazon: `iap.AMAZON`
 
 constatn for Windows: `iap.WINDOWS`
 
@@ -74,6 +76,11 @@ iap.setup(function (error) {
 	});
 });
 ```
+
+### Amazon Shared Key and UserId
+
+For Amazon purchases you need to get the developer key that will issue in call url and the amazon user id
+
 ### Apple Recurring Purchase Password
 
 For iTunes subscription purchases, a shared password is required.
@@ -98,7 +105,7 @@ If you do not need to have different public keys, simply use the same public key
 
 The module needs to call `.config()` before it can execute `.setup()` correctly.
 
-Example:
+Example for Google:
 
 ```
 var inAppPurchase = require('in-app-purchase');
@@ -106,6 +113,16 @@ inAppPurchase.config({
 	applePassword: "1234567890abcdef1234567890abcdef", // this comes from iTunes Connect
 	googlePublicKeyPath: "path/to/public/key/directory/" // this is the path to the directory containing iap-sanbox/iap-live files
 });
+```
+Example for Amazon:
+```
+var config = {
+        developerSecret : "secret",
+        userId          : user.uuid,
+        purchaseToken   : receipt
+};
+
+inAppPurchase.config(config, inAppPurchase.AMAZON);
 ```
 
 ### GooglePlay Public Key From Environment Variables
@@ -222,6 +239,38 @@ iap.setup(function (error) {
 	});
 });
 ```
+
+Example: Amazon
+
+```javascript
+var iap = require('in-app-purchase');
+/*
+For amazon iap, you need amazon uuid and developer secret along with the receipt
+*/
+var config = {
+        developerSecret : "secret",
+        userId          : user.uuid,
+        purchaseToken   : receipt
+};
+
+iap.config(config, iap.AMAZON);
+iap.setup(function (error) {
+	if (error) {
+		return console.error('something went wrong...');
+	}
+
+	// iap is ready
+	iap.validate(iap.AMAZON, receipt, function (err, amazonRes) {
+		if (err) {
+			return console.error(err);
+		}
+		if (iap.isValidated(amazonRes)) {
+			// validated
+		}
+	});
+});
+```
+
 
 ## Google In-app-Billing Set Up
 

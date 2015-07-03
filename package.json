@@ -1,6 +1,6 @@
 {
 	"name": "in-app-purchase",
-	"description": "In-App-Purchase validation for iOS, Android, and Windows",
+	"description": "In-App-Purchase validation for iOS, Android, Windows and Amazon",
 	"version": "0.4.10",
 	"author": {
 		"name": "Nobuyori Takahashi",
@@ -27,6 +27,7 @@
 		"Android",
 		"Windows",
 		"Purchase",
+	  	"Amazon",
 		"App",
 		"in-app-purchase",
 		"in-app-billing",

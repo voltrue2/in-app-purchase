@@ -4,7 +4,8 @@
 exports.SERVICES = {
 	APPLE: 'apple',
 	GOOGLE: 'google',
-	WINDOWS: 'windows'
+	WINDOWS: 'windows',
+	AMAZON: 'amazon'
 };
 
 // validation

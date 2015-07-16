@@ -12,6 +12,7 @@ module.exports.WINDOWS = constants.SERVICES.WINDOWS;
 module.exports.config = function (configIn) {
 	apple.readConfig(configIn);
 	google.readConfig(configIn);
+	windows.readConfig(configIn);
 };
 
 module.exports.setup = function (cb) {

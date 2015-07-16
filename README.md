@@ -108,9 +108,13 @@ inAppPurchase.config({
 });
 ```
 
+#### HTTP Request Configuration
+
+The module utilises the Request module for the HTTP requests required to validate Apple and Windows IAP subscriptions. The default settings for requests can be configured by passing in the `requestDefaults` configuration property. This allows you to configure proxies, tunnels and request timeouts. This object can contain any [Request module options](https://github.com/request/request#requestoptions-callback) but may be overridden by request-specific options set by this module.
+
 ### GooglePlay Public Key From Environment Variables
 
-For GooglePlay, `in-app-purchase` module can read public key value from the environement variables instead of file(s).
+For GooglePlay, `in-app-purchase` module can read public key value from the environment variables instead of file(s).
 
 The basics is the same as using file(s).
 

@@ -95,6 +95,7 @@ describe('iap', function () {
 								assert(data[i].quantity);
 							}
 							console.log(data);
+							console.log('response:', response);
 							exec('unset GOOGLE_IAB_PUBLICKEY_SANDBOX', done);
 						});
 					});

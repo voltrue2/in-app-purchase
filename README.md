@@ -28,13 +28,27 @@ constatn for Windows: `iap.WINDOWS`
 
 Returns a boolean.
 
-#### .getPurchaseData(response [object]);
+#### .getPurchaseData(response [object], options [*object]);
 
 Returns a parsed purchase data as an array.
 
 For apple and windows, the returned array may contain more than 1 purchase data.
 
-For windows purchase data, each purchase data in the array contains `expirationDate`.
+For windows purchase data and Apple iTunes (recurring subscription only), each purchase data in the array contains `expirationDate`.
+
+##### Options
+
+```
+{
+	ignoreExpired: <boolean>
+}
+```
+
+**ignoreExpired**: If `true`, the function will exclude expired items from the return array.
+
+This is only for `windows` and `apple` iTunes (recurring subscription only).
+
+**NOTE:** For Apple, if the item is NOT a recurring purchase, then `expirationDate` is `0`.
 
 The purchase data structure is:
 
@@ -44,7 +58,7 @@ The purchase data structure is:
 	productId: <string>,
 	purchaseDate: <number>,
 	quantity: <number>,
-	*expirationDate: <number> // windows only
+	*expirationDate: <number> // iTunes and windows only
 }
 ```
 
@@ -74,6 +88,59 @@ iap.setup(function (error) {
 	});
 });
 ```
+
+#### .isExpired(purchaseDataItem [object])
+
+Returns `true` if a purchased item has been expired.
+
+**NOTE:** This function is for only `windows` and `apple` iTunes (recurring subscription only)
+
+Example For Checking Expiration Manually:
+
+```javascript
+iap.setup(function (error) {
+	if (error) {
+		// handle error properly here
+	}
+	iap.validate(iap.APPLE, receipt, function (error, response) {
+		if (error) {
+			// oh no error...
+		}
+		if (iap.isValidated(response)) {
+			// now check if any of the items validated has been exipred or not
+			var purchaseDataList = iap.getPurchaseData(response);
+			for (var i = 0, len = purchaseDataList.length; i < len; i++) {
+				if (iap.isExpired(purchaseDataList[i])) {
+					// this item has been expired...
+				}
+			}
+		}
+	});
+});
+```
+
+Example For Ignoring Expired Items:
+
+```javascript
+iap.setup(function (error) {
+	if (error) {
+		// handle error properly here
+	}
+	iap.validate(iap.APPLE, receipt, function (error, response) {
+		if (error) {
+			// oh no error...
+		}
+		if (iap.isValidated(response)) {
+			// get the purchased items that have not been expired ONYL
+			var options = {
+				ignoreExipred: true
+			};
+			var purchaseDataList = iap.getPurchaseData(response, options);
+		}
+	});
+});
+```
+
 ### Apple Recurring Purchase Password
 
 For iTunes subscription purchases, a shared password is required.

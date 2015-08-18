@@ -3,16 +3,20 @@ var async = require('async');
 var apple = require('./lib/apple');
 var google = require('./lib/google');
 var windows = require('./lib/windows');
+var amazon = require('./lib/amazon');
 var constants = require('./constants');
 
 module.exports.APPLE = constants.SERVICES.APPLE;
 module.exports.GOOGLE = constants.SERVICES.GOOGLE;
 module.exports.WINDOWS = constants.SERVICES.WINDOWS;
+module.exports.AMAZON = constants.SERVICES.AMAZON;
 
 module.exports.config = function (configIn) {
 	apple.readConfig(configIn);
 	google.readConfig(configIn);
 	windows.readConfig(configIn);
+	// TODO: implement amazon properly
+	//amazon.readConfig(configIn);
 };
 
 module.exports.setup = function (cb) {
@@ -38,6 +42,11 @@ module.exports.validate = function (service, receipt, cb) {
 		case module.exports.WINDOWS:
 			validator = windows.validatePurchase;
 			break;
+		case module.exports.AMAZON:
+			// TODO: implement amazon properly
+			//validator = amazon.validatePurchase;
+			cb(new Error('amazon has not been implemented yet'));
+			break;
 		default:
 			return cb(new Error('invalid service given: ' + service));
 	}
@@ -56,18 +65,37 @@ module.exports.isValidated = function (response) {
 	return false;
 };
 
-module.exports.getPurchaseData = function (purchaseData) {
+module.exports.isExpired = function (purchasedItem) {
+	if (!purchasedItem || !purchasedItem.transactionId) {
+		throw new Error('invalid purchased item given:\n' + JSON.stringify(purchasedItem));
+	}
+	if (!purchasedItem.expirationDate) {
+		// there is no exipiration date with this item
+		return false;
+	}
+	if (Date.now() - purchasedItem >= 0) {
+		return true;
+	}
+	// has not exipired yet
+	return false;
+};
+
+module.exports.getPurchaseData = function (purchaseData, options) {
 	if (!purchaseData || !purchaseData.service) {
 		return null;
 	}
 	var data = {};
 	switch (purchaseData.service) {
-		case constants.SERVICES.APPLE:
-			return apple.getPurchaseData(purchaseData);
-		case constants.SERVICES.GOOGLE:
-			return google.getPurchaseData(purchaseData);
-		case constants.SERVICES.WINDOWS:
-			return windows.getPurchaseData(purchaseData);
+		case module.exports.APPLE:
+			return apple.getPurchaseData(purchaseData, options);
+		case module.exports.GOOGLE:
+			return google.getPurchaseData(purchaseData, options);
+		case module.exports.WINDOWS:
+			return windows.getPurchaseData(purchaseData, options);
+		case module.exports.AMAZON:
+			// TODO: implement amazon properly
+			//return amazon.getPurchaseData(purchaseData, options);
+			return null;
 		default:
 			return null;
 	}

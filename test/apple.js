@@ -19,13 +19,14 @@ describe('iap', function () {
 				iap.validate(iap.APPLE, receipt, function (error, response) {
 					assert.equal(error, undefined);
 					assert.equal(iap.isValidated(response), true);
-					var data = iap.getPurchaseData(response);
+					var data = iap.getPurchaseData(response, { ignoreExpired: true });
 					for (var i = 0, len = data.length; i < len; i++) {
 						assert(data[i].productId);
 						assert(data[i].purchaseDate);
 						assert(data[i].quantity);
 					}
 					console.log(data);
+					console.log('response:', response);
 					done();
 				});
 			});

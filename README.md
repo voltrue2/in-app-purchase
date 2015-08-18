@@ -131,7 +131,7 @@ iap.setup(function (error) {
 			// oh no error...
 		}
 		if (iap.isValidated(response)) {
-			// get the purchased items that have not been expired ONYL
+			// get the purchased items that have not been expired ONLY
 			var options = {
 				ignoreExipred: true
 			};

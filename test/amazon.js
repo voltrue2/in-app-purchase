@@ -3,17 +3,14 @@ var fs = require('fs');
 
 describe('iap', function () {
 	
-	var sharedKey = process.argv[process.argv.length - 3].replace('--sharedKey=', '');
-	var path = process.argv[process.argv.length - 2].replace('--path=', '');
-	var uuid = process.argv[process.argv.length -1].replace('--uid=', '');
+	var sharedKey = process.argv[process.argv.length - 2].replace('--sharedKey=', '');
+	var path = process.argv[process.argv.length - 1].replace('--path=', '');
 	var iap = require('../');
 
 	it('Can NOT validate amazon in-app-purchase with incorrect receipt', function (done) {
-		var fakeReceipt = 'fake-receipt';
+		var fakeReceipt = { userId: null, receiptId: 'fake-receipt' };
 		iap.config({
-			userId: uuid,
-			purchaseToken: fakeReceipt,			
-			sharedKey: sharedKey
+			secret: sharedKey
 		});
 		iap.setup(function (error) {
 			iap.validate(iap.AMAZON, fakeReceipt, function (error, response) {
@@ -26,17 +23,16 @@ describe('iap', function () {
 	});
 
 	it('Can validate amazon in-app-purchase', function (done) {
-		fs.readFile(path, function (error, data) {
+		fs.readFile(path, 'UTF-8', function (error, data) {
 			assert.equal(error, null);
 			iap.config({
-				userId: uuid,
-				purhcaseToken: data.toString(),
-				sharedKey: sharedKey
+				secret: sharedKey
 			});
 			iap.setup(function (error) {
 				assert.equal(error, null);
-				var receipt = data.toString();
+				var receipt = JSON.parse(data.toString());
 				iap.validate(iap.AMAZON, receipt, function (error, response) {
+					console.log(error, response);
 					assert.equal(error, null);
 					assert.equal(iap.isValidated(response), true);
 					var pdata = iap.getPurchaseData(response);

@@ -21,4 +21,4 @@ test-windows:
 
 .PHONY: test-amazon
 test-amazon:
-	./node_modules/mocha/bin/mocha test/amazon.js -R spec -b --timeout=5000 --sharedKey-$(sharedkey) --path=$(path) --uuid=$(uuid)
+	./node_modules/mocha/bin/mocha test/amazon.js -R spec -b --timeout=5000 --sharedKey=$(sharedKey) --path=$(path)

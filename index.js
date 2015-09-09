@@ -15,8 +15,7 @@ module.exports.config = function (configIn) {
 	apple.readConfig(configIn);
 	google.readConfig(configIn);
 	windows.readConfig(configIn);
-	// TODO: implement amazon properly
-	//amazon.readConfig(configIn);
+	amazon.readConfig(configIn);
 };
 
 module.exports.setup = function (cb) {
@@ -26,6 +25,9 @@ module.exports.setup = function (cb) {
 		},
 		function (next) {
 			google.setup(next);
+		},
+		function (next) {
+			amazon.setup(next);
 		}
 	], cb);
 };
@@ -43,9 +45,7 @@ module.exports.validate = function (service, receipt, cb) {
 			validator = windows.validatePurchase;
 			break;
 		case module.exports.AMAZON:
-			// TODO: implement amazon properly
-			//validator = amazon.validatePurchase;
-			cb(new Error('amazon has not been implemented yet'));
+			validator = amazon.validatePurchase;
 			break;
 		default:
 			return cb(new Error('invalid service given: ' + service));
@@ -93,9 +93,7 @@ module.exports.getPurchaseData = function (purchaseData, options) {
 		case module.exports.WINDOWS:
 			return windows.getPurchaseData(purchaseData, options);
 		case module.exports.AMAZON:
-			// TODO: implement amazon properly
-			//return amazon.getPurchaseData(purchaseData, options);
-			return null;
+			return amazon.getPurchaseData(purchaseData, options);
 		default:
 			return null;
 	}

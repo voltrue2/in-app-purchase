@@ -2,7 +2,7 @@
 
 ©Nobuyori Takahashi < <voltrue2@yahoo.com> >
 
-A Node.js module for In-App-Purchase validation for iOS, Android, and Windows.
+A Node.js module for In-App-Purchase validation for iOS, Android, Amazon, and Windows.
 
 ### Methods
 
@@ -16,13 +16,17 @@ constant for iOS: `iap.APPLE`
 
 constant for Android: `iap.GOOGLE`
 
-constatn for Windows: `iap.WINDOWS`
+constant for Windows: `iap.WINDOWS`
+
+constant for Amazon: `iap.AMAZON`
 
 - For Apple validation, receipt is a string.
 
-- For Google validation, receipt is an object { data: xxx, signature: yyyy }
+- For Google validation, receipt is an object `{ data: "xxx", signature: "yyyy" }`.
 
-- For Windows validate, receipt is a signed XML string.
+- For Windows validation, receipt is a signed XML string.
+
+- For Amazon validation, receipt is an object `{ userId: "xxx", receiptId: "yyyy" }`. `receiptId` is a ``purchaseToken sent from Amazon app store server.
 
 #### .isValidated(response [object])
 
@@ -303,6 +307,10 @@ To set up your server-side Android in-app-billing correctly, you must provide th
 Once you copy the public key string from the Developer Console account for your application, you simply need to copy and paste it to a file and name it `iap-live` as shown in the example above.
 
 **NOTE:** The public key string you copy from the Developer Console account is actually a base64 string. You do NOT have to convert this to anything yourself. The module converts it to the public key automatically for you.
+
+## Amazon App Store Reference
+
+https://developer.amazon.com/appsandservices/apis/earn/in-app-purchasing/docs/rvs
 
 ***
 

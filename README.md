@@ -78,7 +78,7 @@ iap.setup(function (error) {
 			// error
 		}
 		if (iap.isValidated(response)) {
-			var purcahseDataList = iap.getPurchaseData(response);
+			var purchaseDataList = iap.getPurchaseData(response);
 			/*
 				[
 					{
@@ -205,7 +205,7 @@ This would be the public key value for live
 
 **NOTE**: This works exactly the same as you were to use file(s) with one expection. You do **NOT** need to call `.config()` for GooglePlay since it will be using environment variables instead.
 
-### GooglPlay Public Key As String
+### GooglePlay Public Key As String
 
 The module also allows you to feed GooglePlay public key value as string. For example, you may store the key value in a database and read from it to use it etc.
 

@@ -52,5 +52,26 @@ describe('iap', function () {
 		});
 	
 	});
+	
+	it('Can get an error response', function (done) {
+		
+		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		var iap = require('../');
+		iap.config({
+			sandbox: true
+		});
+		iap.setup(function (error) {
+			assert.equal(error, undefined);
+			iap.validate(iap.APPLE, 'fake-receipt', function (error, response) {
+				assert(error);
+				assert(response);
+				assert.equal(iap.isValidated(response), false);
+				console.log(response);
+				done();
+			});
+		});
+	
+	});
 
 });

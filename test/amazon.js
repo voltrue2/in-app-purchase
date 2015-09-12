@@ -48,4 +48,22 @@ describe('iap', function () {
 		});
 	});
 
+	it('Can get an error response', function (done) {
+		var fakeReceipt = { userId: null, receiptId: 'fake-receipt' };
+		iap.config({
+			secret: sharedKey
+		});
+		iap.setup(function (error) {
+			iap.validate(iap.AMAZON, fakeReceipt, function (error, response) {
+				assert(error);
+				assert(response);
+				assert(response.status);
+				assert(response.message);
+				assert.equal(iap.isValidated(response), false);
+				console.log(response);
+				done();
+			});
+		});
+	});
+
 });

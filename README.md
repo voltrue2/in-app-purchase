@@ -10,7 +10,7 @@ A Node.js module for In-App-Purchase validation for iOS, Android, Amazon, and Wi
 
 Validates an in-app-purchase receipt.
 
-**NOTE:**
+**NOTE 1:**
 
 constant for iOS: `iap.APPLE`
 
@@ -27,6 +27,10 @@ constant for Amazon: `iap.AMAZON`
 - For Windows validation, receipt is a signed XML string.
 
 - For Amazon validation, receipt is an object `{ userId: "xxx", receiptId: "yyyy" }`. `receiptId` is a ``purchaseToken sent from Amazon app store server.
+
+**NOTE 2:**
+
+Validation error will have a response object as `{ status: <status code>, message: <message string> }`.
 
 #### .isValidated(response [object])
 
@@ -62,7 +66,7 @@ The purchase data structure is:
 	productId: <string>,
 	purchaseDate: <number>,
 	quantity: <number>,
-	*expirationDate: <number> // iTunes and windows only
+	*expirationDate: <number> // iTunes and windows and amazon subscription only
 }
 ```
 

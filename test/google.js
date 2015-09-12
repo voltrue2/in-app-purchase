@@ -86,6 +86,7 @@ describe('iap', function () {
 						assert.equal(error, undefined);
 						var receipt = data.toString();
 						iap.validate(iap.GOOGLE, JSON.parse(receipt), function (error, response) {
+							console.log(error, response);
 							assert.equal(error, undefined);
 							assert.equal(iap.isValidated(response), true);
 							var data = iap.getPurchaseData(response);
@@ -183,6 +184,27 @@ describe('iap', function () {
 						exec('unset GOOGLE_IAB_PUBLICKEY_SANDBOX', done);
 					});
 				});
+			});
+		});
+	
+	});
+	
+	it('Can get an error message', function (done) {
+		
+		var path = process.argv[process.argv.length - 2].replace('--path=', '');
+		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+
+		var iap = require('../');
+		iap.config({
+			googlePublicKeyPath: pkPath
+		});
+		iap.setup(function (error) {
+			assert.equal(error, undefined);
+			iap.validate(iap.GOOGLE, { data: 'fake-receipt', signature: 'fake' }, function (error, response) {
+				assert(error);
+				assert.equal(iap.isValidated(response), false);
+				console.log(response);
+				done();
 			});
 		});
 	

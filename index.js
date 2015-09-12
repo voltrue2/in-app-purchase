@@ -51,10 +51,7 @@ module.exports.validate = function (service, receipt, cb) {
 			return cb(new Error('invalid service given: ' + service));
 	}
 	validator(receipt, function (error, response) {
-		if (error) {
-			return cb(error);
-		}
-		cb(null, response);
+		cb(error, response);
 	});
 };
 

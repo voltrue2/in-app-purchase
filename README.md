@@ -218,7 +218,7 @@ Example:
 ```
 var iap = require('in-app-purchase');
 iap.config({
-	googlePublicKeyStrSandBox: publicKeySandboxString,
+	googlePublicKeyStrSandbox: publicKeySandboxString,
 	googlePublicKeyStrLive: publicKeyLiveString
 });
 //... proceed with the rest of your code here

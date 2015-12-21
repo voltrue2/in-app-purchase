@@ -318,6 +318,28 @@ https://developer.amazon.com/appsandservices/apis/earn/in-app-purchasing/docs/rv
 
 ***
 
+## Windows Signed XML
+
+in-app-purchase module supports the following algorithms:
+
+### Canonicalization and Transformation Algorithms
+
+- Exclusive Canonicalization http://www.w3.org/2001/10/xml-exc-c14n#
+
+- Exclusive Canonicalization with comments http://www.w3.org/2001/10/xml-exc-c14n#WithComments
+
+- Enveloped Signature transform http://www.w3.org/2000/09/xmldsig#enveloped-signature
+
+### Hashing Algorithms
+
+- SHA1 digests http://www.w3.org/2000/09/xmldsig#sha1
+
+- SHA256 digests http://www.w3.org/2001/04/xmlenc#sha256
+
+- SHA512 digests http://www.w3.org/2001/04/xmlenc#sha512
+
+***
+
 ## Test
 
 `in-app-purchase` module provides unit tests. In order the make use of the unit tests, you must provide receipts for iOS/Android in files.

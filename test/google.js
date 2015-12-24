@@ -7,6 +7,32 @@ describe('iap', function () {
 	* With Public Key From FS *
 	***************************/
 		
+	it('Cannot validate google in-app-purchase with a receipt.data that is not a string', function (done) {
+		
+		var path = process.argv[process.argv.length - 2].replace('--path=', '');
+		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+
+		var iap = require('../');
+		iap.config({
+			googlePublicKeyPath: pkPath
+		});
+		iap.setup(function (error) {
+			assert.equal(error, undefined);
+			fs.readFile(path, function (error, data) {
+				assert.equal(error, undefined);
+				var receipt = JSON.parse(data.toString());
+				receipt.data = {};
+				iap.validate(iap.GOOGLE, receipt, function (error, response) {
+					assert(error);
+					assert.equal(error.message, 'receipt.data must be a string');
+					assert.equal(iap.isValidated(response), false);
+					done();
+				});
+			});
+		});
+	
+	});
+		
 	it('Can validate google in-app-purchase', function (done) {
 		
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');

@@ -1,7 +1,7 @@
 {
 	"name": "in-app-purchase",
 	"description": "In-App-Purchase validation for iOS, Android, Amazon, and Windows",
-	"version": "0.5.5",
+	"version": "0.6.0",
 	"author": {
 		"name": "Nobuyori Takahashi",
 		"email": "voltrue2@yahoo.com"
@@ -12,7 +12,7 @@
 	},
 	"dependencies": {
 		"async": "0.8.0",
-		"request": "2.33.0",
+		"request": "2.67.0",
 		"xmldom": "0.1.19",
 		"xml-crypto": "0.8.2"
 	},

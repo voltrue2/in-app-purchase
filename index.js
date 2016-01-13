@@ -70,7 +70,7 @@ module.exports.isExpired = function (purchasedItem) {
 		// there is no exipiration date with this item
 		return false;
 	}
-	if (Date.now() - purchasedItem >= 0) {
+	if (Date.now() - purchasedItem.expirationDate >= 0) {
 		return true;
 	}
 	// has not exipired yet

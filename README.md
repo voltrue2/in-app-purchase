@@ -2,6 +2,8 @@
 
 ©Nobuyori Takahashi < <voltrue2@yahoo.com> >
 
+[![Build Status](https://travis-ci.org/voltrue2/in-app-purchase.svg?branch=master)](https://travis-ci.org/voltrue2/in-app-purchase)
+
 A Node.js module for In-App-Purchase validation for iOS, Android, Amazon, and Windows.
 
 ### Methods

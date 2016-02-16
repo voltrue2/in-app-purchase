@@ -22,7 +22,7 @@ constant for Windows: `iap.WINDOWS`
 
 constant for Amazon: `iap.AMAZON`
 
-- For Apple validation, receipt is a string.
+- For Apple validation, receipt is a base64 encoded string.
 
 - For Google validation, receipt is an object `{ data: "xxx", signature: "yyyy" }`.
 
@@ -291,6 +291,24 @@ iap.setup(function (error) {
 		}
 		if (iap.isValidated(googleRes)) {
 			// yay good!
+		}
+	});
+});
+```
+
+Example: Amazon
+
+```javascript
+iap.setup(function (error) {
+	if (error) {
+		// oh no...
+	}
+	iap.validate(iap.AMAZON, amazonReceipt, function (err, response) {
+		if (err) {
+			return console.error(err);
+		}
+		if (iap.isValidated(response)) {
+			// goody validated
 		}
 	});
 });

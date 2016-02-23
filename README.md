@@ -24,7 +24,7 @@ constant for Amazon: `iap.AMAZON`
 
 - For Apple validation, receipt is a base64 encoded string.
 
-- For Google validation, receipt is an object `{ data: "xxx", signature: "yyyy" }`.
+- For Google validation, receipt is an object `{ data: "stringified purchase data", signature: "yyyy" }`.
 
 - For Windows validation, receipt is a signed XML string.
 
@@ -33,6 +33,10 @@ constant for Amazon: `iap.AMAZON`
 **NOTE 2:**
 
 Validation error will have a response object as `{ status: <status code>, message: <message string> }`.
+
+**NOTE 3:**
+
+For Google Play validation, the `data` must be a string, but if you pass it as an object, the module can automatically correct the data format and validate it still.
 
 #### .isValidated(response [object])
 

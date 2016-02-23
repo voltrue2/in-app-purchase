@@ -19,12 +19,18 @@ describe('iap', function () {
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			fs.readFile(path, function (error, data) {
+				if (error) {
+					console.error(error);
+				}
 				assert.equal(error, undefined);
 				var receipt = JSON.parse(data.toString());
 				receipt.data = {};
 				iap.validate(iap.GOOGLE, receipt, function (error, response) {
+					if (error) {
+						console.error(error);
+					}
 					assert(error);
-					assert.equal(error.message, 'receipt.data must be a string');
+					//assert.equal(error.message, 'receipt.data must be a string');
 					assert.equal(iap.isValidated(response), false);
 					done();
 				});
@@ -45,9 +51,53 @@ describe('iap', function () {
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			fs.readFile(path, function (error, data) {
+				if (error) {
+					console.error(error);
+				}
 				assert.equal(error, undefined);
 				var receipt = data.toString();
 				iap.validate(iap.GOOGLE, JSON.parse(receipt), function (error, response) {
+					if (error) {
+						console.error(error);
+					}
+					assert.equal(error, undefined);
+					assert.equal(iap.isValidated(response), true);
+					var data = iap.getPurchaseData(response);
+					for (var i = 0, len = data.length; i < len; i++) {
+						assert(data[i].productId);
+						assert(data[i].purchaseDate);
+						assert(data[i].quantity);
+					}
+					console.log(data);
+					done();
+				});
+			});
+		});
+	
+	});
+		
+	it('Can auto-stringify purchase receipt object and validate google in-app-purchase', function (done) {
+		
+		var path = process.argv[process.argv.length - 2].replace('--path=', '');
+		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+
+		var iap = require('../');
+		iap.config({
+			googlePublicKeyPath: pkPath
+		});
+		iap.setup(function (error) {
+			assert.equal(error, undefined);
+			fs.readFile(path, function (error, data) {
+				if (error) {
+					console.error(error);
+				}
+				assert.equal(error, undefined);
+				var receipt = JSON.parse(data.toString());
+				receipt.data = JSON.parse(receipt.data);
+				iap.validate(iap.GOOGLE, receipt, function (error, response) {
+					if (error) {
+						console.error(error);
+					}
 					assert.equal(error, undefined);
 					assert.equal(iap.isValidated(response), true);
 					var data = iap.getPurchaseData(response);
@@ -76,6 +126,9 @@ describe('iap', function () {
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			iap.validate(iap.GOOGLE, { data: 'fake-receipt', signature: 'fake' }, function (error, response) {
+				if (error) {
+					console.error(error);
+				}
 				assert(error);
 				assert.equal(iap.isValidated(response), false);
 				done();
@@ -88,7 +141,7 @@ describe('iap', function () {
 	* With Public Key As String *
 	****************************/
 		
-	it('Can validate google in-app-purchase with public key as string "publicKeyStrLive"', function (done) {
+	it('Can validate google in-app-purchase with public key as string "googlePublicKeyStrLive"', function (done) {
 	
 		var exec = require('child_process').exec;	
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
@@ -97,11 +150,14 @@ describe('iap', function () {
 		var iap = require('../');
 		iap.reset();
 		fs.readFile(pkPath + 'iap-live', 'utf-8', function (error, pkeyValue) {
+			if (error) {
+				console.error(error);
+			}
 			assert.equal(error, undefined);
 			iap.config({
 				googlePublicKeyPath: null,
-				publicKeyStrLive: pkeyValue.replace(/(\r\n|\n|\r)/gm, ''),
-				publicKeyStrSandbox: pkeyValue.replace(/(\r\n|\n|\r)/gm, '')
+				googlePublicKeyStrLive: pkeyValue.replace(/(\r\n|\n|\r)/gm, ''),
+				googlePublicKeyStrSandbox: pkeyValue.replace(/(\r\n|\n|\r)/gm, '')
 			});
 			fs.readFile(pkPath + 'iap-sandbox', 'utf8', function (error, pk) {
 				assert.equal(error, undefined);
@@ -112,6 +168,9 @@ describe('iap', function () {
 						assert.equal(error, undefined);
 						var receipt = data.toString();
 						iap.validate(iap.GOOGLE, JSON.parse(receipt), function (error, response) {
+							if (error) {
+								console.error(error);
+							}
 							console.log(error, response);
 							assert.equal(error, undefined);
 							assert.equal(iap.isValidated(response), true);
@@ -156,6 +215,9 @@ describe('iap', function () {
 						assert.equal(error, undefined);
 						var receipt = data.toString();
 						iap.validate(iap.GOOGLE, JSON.parse(receipt), function (error, response) {
+							if (error) {
+								console.error(error);
+							}
 							assert.equal(error, undefined);
 							assert.equal(iap.isValidated(response), true);
 							var data = iap.getPurchaseData(response);

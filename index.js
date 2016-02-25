@@ -101,3 +101,11 @@ module.exports.reset = function () {
 	// resets google setup
 	google.reset();
 };
+
+module.exports.refreshGoogleToken = function (cb) {
+	
+	google.refreshToken(function(error, response){
+		cb(error, response);
+	});
+
+};

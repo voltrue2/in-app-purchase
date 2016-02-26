@@ -462,7 +462,7 @@ describe('iap', function () {
 				    			assert(data[i].purchaseDate);
 				    			assert(data[i].quantity);
 				    			assert(data[i].expirationDate);
-				    			assert(data[i].purchaseToken);
+				    			assert(data[i].transactionId);
 				    		}
 				    		done();
 				    	});

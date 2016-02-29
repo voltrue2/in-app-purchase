@@ -104,8 +104,6 @@ module.exports.reset = function () {
 
 module.exports.refreshGoogleToken = function (cb) {
 	
-	google.refreshToken(function(error, response){
-		cb(error, response);
-	});
+	google.refreshToken(cb);
 
 };

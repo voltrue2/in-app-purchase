@@ -295,7 +295,7 @@ describe('iap', function () {
 	* Providing subscription info *
 	/*******************************/
 
-	it('Cannot access to subscription info due to an invalid access token', function (done) {
+	it('Access to subscription even info has an invalid access token', function (done) {
 		
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
 		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
@@ -329,9 +329,8 @@ describe('iap', function () {
 						if (error) {
 							console.error(error);
 						}
-						assert(error);
-						assert.equal(iap.isValidated(response), false);
-						assert.equal(response.message, 'Invalid Credentials');
+						assert.equal(error, undefined);
+						assert.equal(iap.isValidated(response), true);
 						done();
 					});
 				});
@@ -414,63 +413,5 @@ describe('iap', function () {
 		});
 		
 	});
-
-	it('Can validate google in-app-purchase when api info is provided', function (done) {
-		
-		var path = process.argv[process.argv.length - 2].replace('--path=', '');
-		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
-		var api = process.argv[process.argv.length - 3].replace('--api=', '');
-		
-		var iap = require('../');
-		iap.reset();
-		fs.readFile(api, function(error, data){
-			if(error){
-				console.error(error);
-			}
-			assert.equal(error, undefined);
-			var apiInfo = JSON.parse(data.toString());
-			iap.config({
-				googlePublicKeyPath: pkPath,
-				googleAccToken: apiInfo.googleAccToken,
-				googleRefToken: apiInfo.googleRefToken,
-				googleClientID: apiInfo.googleClientID,
-				googleClientSecret: apiInfo.googleClientSecret
-			});
-			iap.setup(function (error) {
-				assert.equal(error, undefined);
-
-				iap.refreshGoogleToken(function(error, response){
-				    if(error){
-				        console.error(error);
-				    }
-				    assert.equal(error, undefined);
-				    fs.readFile(path, function (error, data) {
-				    	if(error){
-				    		console.error(error);
-				    	}
-				    	assert.equal(error, undefined);
-				    	var receipt = JSON.parse(data.toString());
-				    	iap.validate(iap.GOOGLE, receipt, function (error, response) {
-				    		if (error) {
-				    			console.error(error);
-				    		}
-				    		assert.equal(error, undefined);
-				    		assert.equal(iap.isValidated(response), true);
-				    		var data = iap.getPurchaseData(response);
-				    		for (var i = 0; i < data.length; i++) {
-				    			assert(data[i].productId);
-				    			assert(data[i].purchaseDate);
-				    			assert(data[i].quantity);
-				    			assert(data[i].expirationDate);
-				    			assert(data[i].transactionId);
-				    		}
-				    		done();
-				    	});
-				    });
-				});
-			});
-		});
-
-	});
-
+	
 });

@@ -305,7 +305,9 @@ describe('iap', function () {
 		iap.reset();
 		fs.readFile(api, function(error, data){
 			if(error){
+				// assuming that no api info was provided
 				console.error(error);
+				return done();
 			}
 			assert.equal(error, undefined);
 			var apiInfo = JSON.parse(data.toString());
@@ -349,7 +351,9 @@ describe('iap', function () {
 		iap.reset();
 		fs.readFile(api, function(error, data){
 			if(error){
+				// assuming that no api info was provided
 				console.error(error);
+				return done();
 			}
 			assert.equal(error, undefined);
 			var apiInfo = JSON.parse(data.toString());
@@ -388,7 +392,9 @@ describe('iap', function () {
 		iap.reset();
 		fs.readFile(api, function(error, data){
 			if(error){
+				// assuming that no api info was provided
 				console.error(error);
+				return done();
 			}
 			assert.equal(error, undefined);
 			var apiInfo = JSON.parse(data.toString());

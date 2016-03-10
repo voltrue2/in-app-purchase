@@ -306,7 +306,7 @@ describe('iap', function () {
 		fs.readFile(api, function(error, data){
 			if(error){
 				// assuming that no api info was provided
-				console.error(error);
+				console.error('Skipped test:', error);
 				return done();
 			}
 			assert.equal(error, undefined);
@@ -352,7 +352,7 @@ describe('iap', function () {
 		fs.readFile(api, function(error, data){
 			if(error){
 				// assuming that no api info was provided
-				console.error(error);
+				console.error('Skipped test:', error);
 				return done();
 			}
 			assert.equal(error, undefined);
@@ -393,7 +393,7 @@ describe('iap', function () {
 		fs.readFile(api, function(error, data){
 			if(error){
 				// assuming that no api info was provided
-				console.error(error);
+				console.error('Skipped test:', error);
 				return done();
 			}
 			assert.equal(error, undefined);

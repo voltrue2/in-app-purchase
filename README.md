@@ -48,13 +48,24 @@ Returns a parsed purchase data as an array.
 
 For apple and windows, the returned array may contain more than 1 purchase data.
 
-For windows purchase data and Apple iTunes (recurring subscription only), each purchase data in the array contains `expirationDate`.
+For Windows purchase data and Apple iTunes (recurring subscription only), each purchase data in the array contains `expirationDate`.
+
+For Google Play purchases (recurring subscription only), each purchase data in the array contains `expirationDate` only if you provide google play store information.
+
+#### .refreshGoogleToken(callback [function]);
+
+For Android only!
+
+Returns a callback function with `error` and `response` as arguments.
+
+This method should be used when trying to query the Google Play Store API, but the access token is no longer valid.
+
 
 ##### Options
 
 ```
 {
-	ignoreExpired: <boolean>
+    ignoreExpired: <boolean>
 }
 ```
 
@@ -68,11 +79,11 @@ The purchase data structure is:
 
 ```
 {
-	transactionId: <string>,
-	productId: <string>,
-	purchaseDate: <number>,
-	quantity: <number>,
-	*expirationDate: <number> // iTunes and windows and amazon subscription only
+    transactionId: <string>,
+    productId: <string>,
+    purchaseDate: <number>,
+    quantity: <number>,
+    *expirationDate: <number> // iTunes, windows and amazon subscription only. Google subscriptions only with google play store api info
 }
 ```
 
@@ -80,26 +91,26 @@ Example:
 
 ```javascript
 iap.setup(function (error) {
-	if (error) {
-		// error hmm
-	}
-	iap.validate(iap.APPLE, receipt, function (error, response) {
-		if (error) {
-			// error
-		}
-		if (iap.isValidated(response)) {
-			var purcahseDataList = iap.getPurchaseData(response);
-			/*
-				[
-					{
-						productId: xxx,
-						purchasedDate: yyy,
-						quantity: zzz
-					}
-				]
-			*/
-		}
-	});
+    if (error) {
+        // error hmm
+    }
+    iap.validate(iap.APPLE, receipt, function (error, response) {
+        if (error) {
+            // error
+        }
+        if (iap.isValidated(response)) {
+            var purchaseDataList = iap.getPurchaseData(response);
+            /*
+                [
+                    {
+                        productId: xxx,
+                        purchasedDate: yyy,
+                        quantity: zzz
+                    }
+                ]
+            */
+        }
+    });
 });
 ```
 
@@ -107,29 +118,30 @@ iap.setup(function (error) {
 
 Returns `true` if a purchased item has been expired.
 
-**NOTE:** This function is for only `windows` and `apple` iTunes (recurring subscription only)
+**NOTE:** This function is for `windows` and `apple` iTunes (recurring subscription only). This can also be used for `google` subscriptions since you provide google play store api information.
+
 
 Example For Checking Expiration Manually:
 
 ```javascript
 iap.setup(function (error) {
-	if (error) {
-		// handle error properly here
-	}
-	iap.validate(iap.APPLE, receipt, function (error, response) {
-		if (error) {
-			// oh no error...
-		}
-		if (iap.isValidated(response)) {
-			// now check if any of the items validated has been exipred or not
-			var purchaseDataList = iap.getPurchaseData(response);
-			for (var i = 0, len = purchaseDataList.length; i < len; i++) {
-				if (iap.isExpired(purchaseDataList[i])) {
-					// this item has been expired...
-				}
-			}
-		}
-	});
+    if (error) {
+        // handle error properly here
+    }
+    iap.validate(iap.APPLE, receipt, function (error, response) {
+        if (error) {
+            // oh no error...
+        }
+        if (iap.isValidated(response)) {
+            // now check if any of the items validated has been exipred or not
+            var purchaseDataList = iap.getPurchaseData(response);
+            for (var i = 0, len = purchaseDataList.length; i < len; i++) {
+                if (iap.isExpired(purchaseDataList[i])) {
+                    // this item has been expired...
+                }
+            }
+        }
+    });
 });
 ```
 
@@ -137,21 +149,21 @@ Example For Ignoring Expired Items:
 
 ```javascript
 iap.setup(function (error) {
-	if (error) {
-		// handle error properly here
-	}
-	iap.validate(iap.APPLE, receipt, function (error, response) {
-		if (error) {
-			// oh no error...
-		}
-		if (iap.isValidated(response)) {
-			// get the purchased items that have not been expired ONLY
-			var options = {
-				ignoreExipred: true
-			};
-			var purchaseDataList = iap.getPurchaseData(response, options);
-		}
-	});
+    if (error) {
+        // handle error properly here
+    }
+    iap.validate(iap.APPLE, receipt, function (error, response) {
+        if (error) {
+            // oh no error...
+        }
+        if (iap.isValidated(response)) {
+            // get the purchased items that have not been expired ONLY
+            var options = {
+                ignoreExipred: true
+            };
+            var purchaseDataList = iap.getPurchaseData(response, options);
+        }
+    });
 });
 ```
 
@@ -184,8 +196,8 @@ Example:
 ```
 var inAppPurchase = require('in-app-purchase');
 inAppPurchase.config({
-	applePassword: "1234567890abcdef1234567890abcdef", // this comes from iTunes Connect
-	googlePublicKeyPath: "path/to/public/key/directory/" // this is the path to the directory containing iap-sanbox/iap-live files
+    applePassword: "1234567890abcdef1234567890abcdef", // this comes from iTunes Connect
+    googlePublicKeyPath: "path/to/public/key/directory/" // this is the path to the directory containing iap-sanbox/iap-live files
 });
 ```
 
@@ -198,9 +210,9 @@ Example:
 ```javascript
 // set timeout to be 5 seconds
 iap.config({
-	requestDefaults: {
-		timeout: 5000
-	}
+    requestDefaults: {
+        timeout: 5000
+    }
 });
 ```
 
@@ -226,7 +238,7 @@ This would be the public key value for live
 
 **NOTE**: This works exactly the same as you were to use file(s) with one expection. You do **NOT** need to call `.config()` for GooglePlay since it will be using environment variables instead.
 
-### GooglPlay Public Key As String
+### GooglePlay Public Key As String
 
 The module also allows you to feed GooglePlay public key value as string. For example, you may store the key value in a database and read from it to use it etc.
 
@@ -235,8 +247,8 @@ Example:
 ```
 var iap = require('in-app-purchase');
 iap.config({
-	googlePublicKeyStrSandbox: publicKeySandboxString,
-	googlePublicKeyStrLive: publicKeyLiveString
+    googlePublicKeyStrSandbox: publicKeySandboxString,
+    googlePublicKeyStrLive: publicKeyLiveString
 });
 //... proceed with the rest of your code here
 ```
@@ -248,21 +260,21 @@ Example: Apple
 ```javascript
 var iap = require('in-app-purchase');
 iap.config({
-	applePassword: "1234567890abcdef1234567890abcdef"
+    applePassword: "1234567890abcdef1234567890abcdef"
 });
 iap.setup(function (error) {
-	if (error) {
-		return console.error('something went wrong...');
-	}
-	// iap is ready
-	iap.validate(iap.APPLE, appleReceipt, function (err, appleRes) {
-		if (err) {
-			return console.error(err);
-		}
-		if (iap.isValidated(appRes)) {
-			// yay good!
-		}
-	});
+    if (error) {
+        return console.error('something went wrong...');
+    }
+    // iap is ready
+    iap.validate(iap.APPLE, appleReceipt, function (err, appleRes) {
+        if (err) {
+            return console.error(err);
+        }
+        if (iap.isValidated(appRes)) {
+            // yay good!
+        }
+    });
 });
 ```
 
@@ -275,28 +287,28 @@ For google iap, you need to name your public key file as:
 iap-sanbox or iap-live
 */
 iap.config({
-	googlePublicKeyPath: "/path/to/google/public/key/dir/"
+    googlePublicKeyPath: "/path/to/google/public/key/dir/"
 });
 iap.setup(function (error) {
-	if (error) {
-		return console.error('something went wrong...');
-	}
-	/*
-		google receipt must be provided as an object
-		{
-			"data": "{stringified data object}",
-			"signature": "signature from google"
-		}
-	*/
-	// iap is ready
-	iap.validate(iap.GOOGLE, googleReceipt, function (err, googleRes) {
-		if (err) {
-			return console.error(err);
-		}
-		if (iap.isValidated(googleRes)) {
-			// yay good!
-		}
-	});
+    if (error) {
+        return console.error('something went wrong...');
+    }
+    /*
+        google receipt must be provided as an object
+        {
+            "data": "{stringified data object}",
+            "signature": "signature from google"
+        }
+    */
+    // iap is ready
+    iap.validate(iap.GOOGLE, googleReceipt, function (err, googleRes) {
+        if (err) {
+            return console.error(err);
+        }
+        if (iap.isValidated(googleRes)) {
+            // yay good!
+        }
+    });
 });
 ```
 
@@ -304,17 +316,17 @@ Example: Amazon
 
 ```javascript
 iap.setup(function (error) {
-	if (error) {
-		// oh no...
-	}
-	iap.validate(iap.AMAZON, amazonReceipt, function (err, response) {
-		if (err) {
-			return console.error(err);
-		}
-		if (iap.isValidated(response)) {
-			// goody validated
-		}
-	});
+    if (error) {
+        // oh no...
+    }
+    iap.validate(iap.AMAZON, amazonReceipt, function (err, response) {
+        if (err) {
+            return console.error(err);
+        }
+        if (iap.isValidated(response)) {
+            // goody validated
+        }
+    });
 });
 ```
 
@@ -323,19 +335,58 @@ Example: Windows
 ```javascript
 var iap = require('in-app-purchase');
 iap.setup(function (error) {
-	if (erorr) {
-		// oops
-	}
-	iap.validate(iap.WINDOWS, windowsReceipt, function (err, windowsRes) {
-		if (err) {
-			// failed to validate the purchase
-		}
-		if (iap.isValidated(windowsRes)) {
-			// yay good!
-		}
-	});
+    if (erorr) {
+        // oops
+    }
+    iap.validate(iap.WINDOWS, windowsReceipt, function (err, windowsRes) {
+        if (err) {
+            // failed to validate the purchase
+        }
+        if (iap.isValidated(windowsRes)) {
+            // yay good!
+        }
+    });
 });
 ```
+## Google Play Store API
+
+You can use Google Play Store API to check the state of a subscription (if the subscription is still valid, auto-renewal, etc). To do so, you need to setup iap module with Google Play Store API Information.
+
+Example:
+
+```javascript
+iap.config({
+        googlePublicKeyPath: "/path/to/google/public/key/dir/",
+        googleAccToken: "PLAY_STORE_API_ACCESS_TOKEN",
+        googleRefToken: "PLAY_STORE_API_REFRESH_TOKEN",
+        googleClientID: "PLAY_STORE_API_CLIENT_ID",
+        googleClientSecret: "PLAY_STORE_API_CLIENT_SECRET"
+});
+
+iap.setup(function (error) {
+    if (error) {
+        // error hmm
+    }
+    iap.validate(iap.GOOGLE, receipt, function (error, response) {
+        if (error) {
+            // error
+        }
+        if (iap.isValidated(response)) {
+            var purchaseDataList = iap.getPurchaseData(response);
+            /*
+                [
+                    {
+                        productId: xxx,
+                        purchasedDate: yyy,
+                        quantity: zzz
+                    }
+                ]
+            */
+        }
+    });
+});
+```
+**NOTE:** If one of the keys (`googleAccToken`, `googleRefToken`, `googleClientID` or `googleClientSecret`) is missing in the `config()` function, iap module will only perform the validation of the receipt, and won't do any check using Google Play Store API.
 
 ## Google In-app-Billing Set Up
 
@@ -346,6 +397,16 @@ To set up your server-side Android in-app-billing correctly, you must provide th
 Once you copy the public key string from the Developer Console account for your application, you simply need to copy and paste it to a file and name it `iap-live` as shown in the example above.
 
 **NOTE:** The public key string you copy from the Developer Console account is actually a base64 string. You do NOT have to convert this to anything yourself. The module converts it to the public key automatically for you.
+
+### Google Play Store API
+
+To check expiration date or auto renewal status of an Android subscription, you should first setup the access to the Google Play Store API. You should follow these steps:
+
+- Enable an API Project and create an OAuth 2.0 Client https://developers.google.com/android-publisher/authorization#creating_an_apis_console_project
+
+- Generate a refresh token https://developers.google.com/android-publisher/authorization#generating_a_refresh_token
+
+Now you are able to query for Android subscription status!
 
 ## Amazon App Store Reference
 

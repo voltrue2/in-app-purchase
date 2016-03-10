@@ -36,7 +36,7 @@ describe('iap', function () {
 				});
 			});
 		});
-	
+
 	});
 		
 	it('Can validate google in-app-purchase', function (done) {
@@ -55,8 +55,8 @@ describe('iap', function () {
 					console.error(error);
 				}
 				assert.equal(error, undefined);
-				var receipt = data.toString();
-				iap.validate(iap.GOOGLE, JSON.parse(receipt), function (error, response) {
+				var receipt = JSON.parse(data.toString());
+				iap.validate(iap.GOOGLE, receipt, function (error, response) {
 					if (error) {
 						console.error(error);
 					}
@@ -68,7 +68,6 @@ describe('iap', function () {
 						assert(data[i].purchaseDate);
 						assert(data[i].quantity);
 					}
-					console.log(data);
 					done();
 				});
 			});
@@ -93,7 +92,7 @@ describe('iap', function () {
 				}
 				assert.equal(error, undefined);
 				var receipt = JSON.parse(data.toString());
-				receipt.data = JSON.parse(receipt.data);
+				// receipt.data = JSON.parse(receipt.data);
 				iap.validate(iap.GOOGLE, receipt, function (error, response) {
 					if (error) {
 						console.error(error);
@@ -106,7 +105,6 @@ describe('iap', function () {
 						assert(data[i].purchaseDate);
 						assert(data[i].quantity);
 					}
-					console.log(data);
 					done();
 				});
 			});
@@ -137,9 +135,9 @@ describe('iap', function () {
 	
 	});
 
-	/****************************
-	* With Public Key As String *
-	****************************/
+	// /****************************
+	// * With Public Key As String *
+	// ****************************/
 		
 	it('Can validate google in-app-purchase with public key as string "googlePublicKeyStrLive"', function (done) {
 	
@@ -171,7 +169,6 @@ describe('iap', function () {
 							if (error) {
 								console.error(error);
 							}
-							console.log(error, response);
 							assert.equal(error, undefined);
 							assert.equal(iap.isValidated(response), true);
 							var data = iap.getPurchaseData(response);
@@ -180,8 +177,6 @@ describe('iap', function () {
 								assert(data[i].purchaseDate);
 								assert(data[i].quantity);
 							}
-							console.log(data);
-							console.log('response:', response);
 							exec('unset GOOGLE_IAB_PUBLICKEY_SANDBOX', done);
 						});
 					});
@@ -226,7 +221,6 @@ describe('iap', function () {
 								assert(data[i].purchaseDate);
 								assert(data[i].quantity);
 							}
-							console.log(data);
 							exec('unset GOOGLE_IAB_PUBLICKEY_SANDBOX', done);
 						});
 					});
@@ -268,7 +262,6 @@ describe('iap', function () {
 							assert(data[i].purchaseDate);
 							assert(data[i].quantity);
 						}
-						console.log(data);
 						exec('unset GOOGLE_IAB_PUBLICKEY_SANDBOX', done);
 					});
 				});
@@ -291,11 +284,140 @@ describe('iap', function () {
 			iap.validate(iap.GOOGLE, { data: 'fake-receipt', signature: 'fake' }, function (error, response) {
 				assert(error);
 				assert.equal(iap.isValidated(response), false);
-				console.log(response);
 				done();
 			});
 		});
 	
 	});
 
+
+	/*******************************
+	* Providing subscription info *
+	/*******************************/
+
+	it('Access to subscription even info has an invalid access token', function (done) {
+		
+		var path = process.argv[process.argv.length - 2].replace('--path=', '');
+		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+		var api = process.argv[process.argv.length - 3].replace('--api=', '');
+		
+		var iap = require('../');
+		iap.reset();
+		fs.readFile(api, function(error, data){
+			if(error){
+				// assuming that no api info was provided
+				console.error(error);
+				return done();
+			}
+			assert.equal(error, undefined);
+			var apiInfo = JSON.parse(data.toString());
+			apiInfo.googleAccToken += 'a';
+			iap.config({
+				googlePublicKeyPath: pkPath,
+				googleAccToken: apiInfo.googleAccToken,
+				googleRefToken: apiInfo.googleRefToken,
+				googleClientID: apiInfo.googleClientID,
+				googleClientSecret: apiInfo.googleClientSecret
+			});
+			iap.setup(function (error) {
+				assert.equal(error, undefined);
+				fs.readFile(path, function (error, data) {
+					if (error) {
+						console.error(error);
+					}
+					assert.equal(error, undefined);
+					var receipt = JSON.parse(data.toString());
+					iap.validate(iap.GOOGLE, receipt, function (error, response) {
+						if (error) {
+							console.error(error);
+						}
+						assert.equal(error, undefined);
+						assert.equal(iap.isValidated(response), true);
+						done();
+					});
+				});
+			});
+		});
+
+	});
+
+	it('Cannot refresh access due to an invalid refresh token', function (done) {
+		
+		var path = process.argv[process.argv.length - 2].replace('--path=', '');
+		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+		var api = process.argv[process.argv.length - 3].replace('--api=', '');
+		
+		var iap = require('../');
+		iap.reset();
+		fs.readFile(api, function(error, data){
+			if(error){
+				// assuming that no api info was provided
+				console.error(error);
+				return done();
+			}
+			assert.equal(error, undefined);
+			var apiInfo = JSON.parse(data.toString());
+			apiInfo.googleRefToken = 'dummy_token';
+			iap.config({
+				googlePublicKeyPath: pkPath,
+				googleAccToken: apiInfo.googleAccToken,
+				googleRefToken: apiInfo.googleRefToken,
+				googleClientID: apiInfo.googleClientID,
+				googleClientSecret: apiInfo.googleClientSecret
+			});
+			iap.setup(function (error) {
+				assert.equal(error, undefined);
+				iap.refreshGoogleToken(function(error, response){
+					if(error){
+						console.error(error);
+					}
+					assert(error, true);
+					assert(error, 'invalid_grant');
+					assert(response.message, 'invalid_grant');
+					done();
+				});
+
+			});
+		});
+		
+	});
+
+	it('Cannot call refresh access function if did not provide needed information', function (done) {
+		
+		var path = process.argv[process.argv.length - 2].replace('--path=', '');
+		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+		var api = process.argv[process.argv.length - 3].replace('--api=', '');
+		
+		var iap = require('../');
+		iap.reset();
+		fs.readFile(api, function(error, data){
+			if(error){
+				// assuming that no api info was provided
+				console.error(error);
+				return done();
+			}
+			assert.equal(error, undefined);
+			var apiInfo = JSON.parse(data.toString());
+			iap.config({
+				googlePublicKeyPath: pkPath,
+				googleAccToken: apiInfo.googleAccToken,
+				googleClientID: apiInfo.googleClientID,
+				googleClientSecret: apiInfo.googleClientSecret
+			});
+			iap.setup(function (error) {
+				assert.equal(error, undefined);
+				iap.refreshGoogleToken(function(error, response){
+					if(error){
+						console.error(error);
+					}
+					assert(error, true);
+					assert(error, 'missing google play api info');
+					done();
+				});
+
+			});
+		});
+		
+	});
+	
 });

@@ -38,6 +38,16 @@ Validation error will have a response object as `{ status: <status code>, messag
 
 For Google Play validation, the `data` must be a string, but if you pass it as an object, the module can automatically correct the data format and validate it still.
 
+**NOTE 4:**
+
+For Apple purchase, if `in_app` in the validated receipt is empty, the module considers invalid since the receipt indicates that the user purchased nothing:
+
+Related reads:
+
+<a href="https://forums.developer.apple.com/thread/8954">Apple Developer Thread 8954</a>
+
+<a href="https://developer.apple.com/library/mac/technotes/tn2413/_index.html#//apple_ref/doc/uid/DTS40016228-CH1-RECEIPT-HOW_DO_I_USE_THE_CANCELLATION_DATE_FIELD_">Aplle Purchase</a>
+
 #### .isValidated(response [object])
 
 Returns a boolean.

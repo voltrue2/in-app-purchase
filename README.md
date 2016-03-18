@@ -89,6 +89,7 @@ The purchase data structure is:
 
 ```
 {
+    bundleId: <string>,
     transactionId: <string>,
     productId: <string>,
     purchaseDate: <number>,

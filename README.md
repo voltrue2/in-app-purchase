@@ -89,7 +89,8 @@ The purchase data structure is:
 
 ```
 {
-    bundleId: <string>,
+    bundleId: <string>, // Apple only
+    orderId: <string>, // Google only
     transactionId: <string>,
     productId: <string>,
     purchaseDate: <number>,

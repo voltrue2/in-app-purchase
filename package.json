@@ -17,6 +17,9 @@
 	"devDependencies": {
 		"mocha": "1.18.2"
 	},
+	"scripts": {
+		"test": "./precommit.sh"
+	},
 	"engine": "node >= 0.10.20",
 	"contributors": [],
 	"keywords": [

@@ -1,11 +1,20 @@
 var assert = require('assert');
 var fs = require('fs');
+var fixedPath = process.cwd() + '/test/receipts/amazon';
+var fixedKeyPath = process.cwd() + '/test/receipts/amazon.secret';
 
 describe('iap', function () {
 	
 	var sharedKey = process.argv[process.argv.length - 2].replace('--sharedKey=', '');
 	var path = process.argv[process.argv.length - 1].replace('--path=', '');
 	var iap = require('../');
+
+	if (sharedKey === 'false') {
+		sharedKey = fixedKeyPath;
+	}
+	if (path === 'false') {
+		path = fixedPath;
+	}
 
 	it('Can NOT validate amazon in-app-purchase with incorrect receipt', function (done) {
 		var fakeReceipt = { userId: null, receiptId: 'fake-receipt' };

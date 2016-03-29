@@ -1,5 +1,7 @@
 var assert = require('assert'); 
 var fs = require('fs');
+var fixedPath = process.cwd() + '/test/receipts/google';
+var fixedPkPath = process.cwd() + '/test/receipts/google_pub/';
 
 describe('iap', function () {
 
@@ -11,6 +13,13 @@ describe('iap', function () {
 		
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
 		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
 
 		var iap = require('../');
 		iap.config({
@@ -43,6 +52,13 @@ describe('iap', function () {
 		
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
 		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
 
 		var iap = require('../');
 		iap.config({
@@ -79,6 +95,13 @@ describe('iap', function () {
 		
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
 		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
 
 		var iap = require('../');
 		iap.config({
@@ -117,6 +140,13 @@ describe('iap', function () {
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
 		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
 
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
+
 		var iap = require('../');
 		iap.config({
 			googlePublicKeyPath: pkPath
@@ -144,6 +174,13 @@ describe('iap', function () {
 		var exec = require('child_process').exec;	
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
 		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
 
 		var iap = require('../');
 		iap.reset();
@@ -191,6 +228,13 @@ describe('iap', function () {
 		var exec = require('child_process').exec;	
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
 		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
 
 		var iap = require('../');
 		iap.reset();
@@ -240,6 +284,13 @@ describe('iap', function () {
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
 		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
 
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
+
 		var iap = require('../');
 		iap.reset();
 		fs.readFile(pkPath + 'iap-live', 'utf8', function (error, pk) {
@@ -275,6 +326,13 @@ describe('iap', function () {
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
 		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
 
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
+
 		var iap = require('../');
 		iap.config({
 			googlePublicKeyPath: pkPath
@@ -300,6 +358,13 @@ describe('iap', function () {
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
 		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
 		var api = process.argv[process.argv.length - 3].replace('--api=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
 		
 		var iap = require('../');
 		iap.reset();
@@ -346,6 +411,13 @@ describe('iap', function () {
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
 		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
 		var api = process.argv[process.argv.length - 3].replace('--api=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
 		
 		var iap = require('../');
 		iap.reset();
@@ -387,6 +459,13 @@ describe('iap', function () {
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
 		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
 		var api = process.argv[process.argv.length - 3].replace('--api=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
 		
 		var iap = require('../');
 		iap.reset();

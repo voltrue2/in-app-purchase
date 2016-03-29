@@ -1,11 +1,16 @@
 var assert = require('assert'); 
 var fs = require('fs');
+var fixedPath = process.cwd() + '/test/receipts/windows';
 
 describe('iap', function () {
 	
 	it('Can validate windows in-app-purchase', function (done) {
 		
 		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
 
 		var iap = require('../');
 		iap.setup(function (error) {
@@ -35,6 +40,10 @@ describe('iap', function () {
 		
 		var path = process.argv[process.argv.length - 1].replace('--path=', '');
 
+		if (path === 'false') {
+			path = fixedPath;
+		}
+
 		var iap = require('../');
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
@@ -58,6 +67,10 @@ describe('iap', function () {
 		
 		var path = process.argv[process.argv.length - 1].replace('--path=', '');
 
+		if (path === 'false') {
+			path = fixedPath;
+		}
+
 		var iap = require('../');
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
@@ -73,6 +86,10 @@ describe('iap', function () {
 	it('Can get an error response', function (done) {
 		
 		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
 
 		var iap = require('../');
 		iap.setup(function (error) {

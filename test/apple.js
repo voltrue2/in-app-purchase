@@ -1,11 +1,16 @@
 var assert = require('assert'); 
 var fs = require('fs');
+var fixedPath = process.cwd() + '/test/receipts/apple';
 
 describe('iap', function () {
 	
 	it('Can validate apple in-app-purchase', function (done) {
 		
 		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
 
 		var iap = require('../');
 		iap.config({
@@ -41,6 +46,10 @@ describe('iap', function () {
 		
 		var path = process.argv[process.argv.length - 1].replace('--path=', '');
 
+		if (path === 'false') {
+			path = fixedPath;
+		}
+
 		var iap = require('../');
 		iap.config({
 			sandbox: true
@@ -59,6 +68,10 @@ describe('iap', function () {
 	it('Can get an error response', function (done) {
 		
 		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
 
 		var iap = require('../');
 		iap.config({

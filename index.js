@@ -1,4 +1,4 @@
-var async = require('async');
+var async = require('./lib/async');
 
 var apple = require('./lib/apple');
 var google = require('./lib/google');
@@ -81,7 +81,6 @@ module.exports.getPurchaseData = function (purchaseData, options) {
 	if (!purchaseData || !purchaseData.service) {
 		return null;
 	}
-	var data = {};
 	switch (purchaseData.service) {
 		case module.exports.APPLE:
 			return apple.getPurchaseData(purchaseData, options);

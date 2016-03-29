@@ -17,6 +17,9 @@ describe('iap', function () {
 				assert.equal(error, undefined);
 				var receipt = data.toString();
 				iap.validate(iap.APPLE, receipt, function (error, response) {
+					if (error) {
+						console.error(error, response);
+					}
 					assert.equal(error, undefined);
 					assert.equal(iap.isValidated(response), true);
 					var data = iap.getPurchaseData(response, { ignoreExpired: true });

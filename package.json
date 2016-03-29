@@ -1,7 +1,7 @@
 {
 	"name": "in-app-purchase",
 	"description": "In-App-Purchase validation and subscription management for iOS, Android, Amazon, and Windows",
-	"version": "0.7.4",
+	"version": "1.0.0",
 	"author": {
 		"name": "Nobuyori Takahashi",
 		"email": "voltrue2@yahoo.com"
@@ -11,8 +11,6 @@
 		"url": "https://github.com/voltrue2/in-app-purchase.git"
 	},
 	"dependencies": {
-		"async": "0.8.0",
-		"request": "2.67.0",
 		"xmldom": "0.1.19",
 		"xml-crypto": "0.8.2"
 	},
@@ -35,5 +33,33 @@
 		"Validation",
 		"IAP"
 	],
+	"jshintConfig": {
+                "node": true,
+                "bitwise": false,
+                "camelcase": true,
+                "curly": true,
+                "eqeqeq": true,
+                "forin": false,
+                "immed": true,
+                "latedef": false,
+                "newcap": true,
+                "noarg": true,
+                "noempty": true,
+                "undef": true,
+                "unused": true,
+                "nonew": true,
+                "white": true,
+                "maxdepth": 5,
+                "quotmark": "single",
+                "globals": {
+                        "mocha": false,
+                        "describe": false,
+                        "it": false,
+                        "before": false,
+                        "beforeEach": false,
+                        "after": false,
+                        "afterEach": false
+                }
+        },
 	"license": "MIT"
 }

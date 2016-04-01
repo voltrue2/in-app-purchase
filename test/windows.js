@@ -4,6 +4,36 @@ var fixedPath = process.cwd() + '/test/receipts/windows';
 
 describe('iap', function () {
 	
+	it('Can validate windows in-app-purchase w/o waiting for .setup()', function (done) {
+		
+		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+
+		var iap = require('../');
+		iap.setup();
+		fs.readFile(path, function (error, data) {
+			assert.equal(error, undefined);
+			var receipt = data.toString();
+			iap.validate(iap.WINDOWS, receipt, function (error, response) {
+				assert.equal(error, undefined);
+				assert.equal(iap.isValidated(response), true);
+				var data = iap.getPurchaseData(response);
+				for (var i = 0, len = data.length; i < len; i++) {
+					assert(data[i].productId);
+					assert(data[i].purchaseDate);
+					assert(data[i].expirationDate);
+					assert(data[i].quantity);
+				}
+				console.log(data);
+				done();
+			});
+		});
+	
+	});
+	
 	it('Can validate windows in-app-purchase', function (done) {
 		
 		var path = process.argv[process.argv.length - 1].replace('--path=', '');

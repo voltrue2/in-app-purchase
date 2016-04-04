@@ -164,6 +164,47 @@ describe('iap', function () {
 		});
 	
 	});
+		
+	it('Can validate google in-app-purchase and check subscription state and fail', function (done) {
+		
+		var path = process.argv[process.argv.length - 2].replace('--path=', '');
+		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
+
+		var iap = require('../');
+		iap.config({
+			googlePublicKeyPath: pkPath,
+			googleAccToken: 111,
+			googleRefToken: 222,
+			googleClientID: 333,
+			googleClientSecret: 444
+		});
+		iap.setup(function (error) {
+			assert.equal(error, undefined);
+			fs.readFile(path, function (error, data) {
+				if (error) {
+					console.error(error);
+				}
+				assert.equal(error, undefined);
+				var receipt = JSON.parse(data.toString());
+				iap.validate(iap.GOOGLE, receipt, function (error, response) {
+					if (error) {
+						console.error(error);
+					}
+					assert.equal(error.message, 'invalid_client');
+					assert(error);
+					done();
+				});
+			});
+		});
+	
+	});
 
 	// /****************************
 	// * With Public Key As String *

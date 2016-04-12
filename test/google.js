@@ -3,7 +3,7 @@ var fs = require('fs');
 var fixedPath = process.cwd() + '/test/receipts/google';
 var fixedPkPath = process.cwd() + '/test/receipts/google_pub/';
 
-describe('iap', function () {
+describe('#### Google ####', function () {
 
 	/**************************
 	* With Public Key From FS *
@@ -23,21 +23,16 @@ describe('iap', function () {
 
 		var iap = require('../');
 		iap.config({
+			verbose: true,
 			googlePublicKeyPath: pkPath
 		});
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			fs.readFile(path, function (error, data) {
-				if (error) {
-					console.error(error);
-				}
 				assert.equal(error, undefined);
 				var receipt = JSON.parse(data.toString());
 				receipt.data = {};
 				iap.validate(iap.GOOGLE, receipt, function (error, response) {
-					if (error) {
-						console.error(error);
-					}
 					assert(error);
 					//assert.equal(error.message, 'receipt.data must be a string');
 					assert.equal(iap.isValidated(response), false);
@@ -62,20 +57,15 @@ describe('iap', function () {
 
 		var iap = require('../');
 		iap.config({
+			verbose: true,
 			googlePublicKeyPath: pkPath
 		});
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			fs.readFile(path, function (error, data) {
-				if (error) {
-					console.error(error);
-				}
 				assert.equal(error, undefined);
 				var receipt = JSON.parse(data.toString());
 				iap.validate(iap.GOOGLE, receipt, function (error, response) {
-					if (error) {
-						console.error(error);
-					}
 					assert.equal(error, undefined);
 					assert.equal(iap.isValidated(response), true);
 					var data = iap.getPurchaseData(response);
@@ -105,21 +95,16 @@ describe('iap', function () {
 
 		var iap = require('../');
 		iap.config({
+			verbose: true,
 			googlePublicKeyPath: pkPath
 		});
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			fs.readFile(path, function (error, data) {
-				if (error) {
-					console.error(error);
-				}
 				assert.equal(error, undefined);
 				var receipt = JSON.parse(data.toString());
 				// receipt.data = JSON.parse(receipt.data);
 				iap.validate(iap.GOOGLE, receipt, function (error, response) {
-					if (error) {
-						console.error(error);
-					}
 					assert.equal(error, undefined);
 					assert.equal(iap.isValidated(response), true);
 					var data = iap.getPurchaseData(response);
@@ -149,14 +134,12 @@ describe('iap', function () {
 
 		var iap = require('../');
 		iap.config({
+			verbose: true,
 			googlePublicKeyPath: pkPath
 		});
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			iap.validate(iap.GOOGLE, { data: 'fake-receipt', signature: 'fake' }, function (error, response) {
-				if (error) {
-					console.error(error);
-				}
 				assert(error);
 				assert.equal(iap.isValidated(response), false);
 				done();
@@ -179,6 +162,7 @@ describe('iap', function () {
 
 		var iap = require('../');
 		iap.config({
+			verbose: true,
 			googlePublicKeyPath: pkPath,
 			googleAccToken: 111,
 			googleRefToken: 222,
@@ -188,15 +172,9 @@ describe('iap', function () {
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			fs.readFile(path, function (error, data) {
-				if (error) {
-					console.error(error);
-				}
 				assert.equal(error, undefined);
 				var receipt = JSON.parse(data.toString());
 				iap.validate(iap.GOOGLE, receipt, function (error, response) {
-					if (error) {
-						console.error(error);
-					}
 					assert.equal(error.message, 'invalid_client');
 					assert(error);
 					done();
@@ -226,11 +204,9 @@ describe('iap', function () {
 		var iap = require('../');
 		iap.reset();
 		fs.readFile(pkPath + 'iap-live', 'utf-8', function (error, pkeyValue) {
-			if (error) {
-				console.error(error);
-			}
 			assert.equal(error, undefined);
 			iap.config({
+				verbose: true,
 				googlePublicKeyPath: null,
 				googlePublicKeyStrLive: pkeyValue.replace(/(\r\n|\n|\r)/gm, ''),
 				googlePublicKeyStrSandbox: pkeyValue.replace(/(\r\n|\n|\r)/gm, '')
@@ -244,9 +220,6 @@ describe('iap', function () {
 						assert.equal(error, undefined);
 						var receipt = data.toString();
 						iap.validate(iap.GOOGLE, JSON.parse(receipt), function (error, response) {
-							if (error) {
-								console.error(error);
-							}
 							assert.equal(error, undefined);
 							assert.equal(iap.isValidated(response), true);
 							var data = iap.getPurchaseData(response);
@@ -282,6 +255,7 @@ describe('iap', function () {
 		fs.readFile(pkPath + 'iap-live', 'utf-8', function (error, pkeyValue) {
 			assert.equal(error, undefined);
 			iap.config({
+				verbose: true,
 				googlePublicKeyPath: null,
 				googlePublicKeyStrLive: pkeyValue.replace(/(\r\n|\n|\r)/gm, ''),
 				googlePublicKeyStrSandbox: pkeyValue.replace(/(\r\n|\n|\r)/gm, '')
@@ -295,9 +269,6 @@ describe('iap', function () {
 						assert.equal(error, undefined);
 						var receipt = data.toString();
 						iap.validate(iap.GOOGLE, JSON.parse(receipt), function (error, response) {
-							if (error) {
-								console.error(error);
-							}
 							assert.equal(error, undefined);
 							assert.equal(iap.isValidated(response), true);
 							var data = iap.getPurchaseData(response);
@@ -376,6 +347,7 @@ describe('iap', function () {
 
 		var iap = require('../');
 		iap.config({
+			verbose: true,
 			googlePublicKeyPath: pkPath
 		});
 		iap.setup(function (error) {
@@ -419,6 +391,7 @@ describe('iap', function () {
 			var apiInfo = JSON.parse(data.toString());
 			apiInfo.googleAccToken += 'a';
 			iap.config({
+				verbose: true,
 				googlePublicKeyPath: pkPath,
 				googleAccToken: apiInfo.googleAccToken,
 				googleRefToken: apiInfo.googleRefToken,
@@ -428,15 +401,9 @@ describe('iap', function () {
 			iap.setup(function (error) {
 				assert.equal(error, undefined);
 				fs.readFile(path, function (error, data) {
-					if (error) {
-						console.error(error);
-					}
 					assert.equal(error, undefined);
 					var receipt = JSON.parse(data.toString());
 					iap.validate(iap.GOOGLE, receipt, function (error, response) {
-						if (error) {
-							console.error(error);
-						}
 						assert.equal(error, undefined);
 						assert.equal(iap.isValidated(response), true);
 						done();
@@ -472,6 +439,7 @@ describe('iap', function () {
 			var apiInfo = JSON.parse(data.toString());
 			apiInfo.googleRefToken = 'dummy_token';
 			iap.config({
+				verbose: true,
 				googlePublicKeyPath: pkPath,
 				googleAccToken: apiInfo.googleAccToken,
 				googleRefToken: apiInfo.googleRefToken,
@@ -481,9 +449,6 @@ describe('iap', function () {
 			iap.setup(function (error) {
 				assert.equal(error, undefined);
 				iap.refreshGoogleToken(function(error, response){
-					if(error){
-						console.error(error);
-					}
 					assert(error, true);
 					assert(error, 'invalid_grant');
 					assert(response.message, 'invalid_grant');
@@ -519,6 +484,7 @@ describe('iap', function () {
 			assert.equal(error, undefined);
 			var apiInfo = JSON.parse(data.toString());
 			iap.config({
+				verbose: true,
 				googlePublicKeyPath: pkPath,
 				googleAccToken: apiInfo.googleAccToken,
 				googleClientID: apiInfo.googleClientID,
@@ -527,9 +493,6 @@ describe('iap', function () {
 			iap.setup(function (error) {
 				assert.equal(error, undefined);
 				iap.refreshGoogleToken(function(error, response){
-					if(error){
-						console.error(error);
-					}
 					assert(error, true);
 					assert(error, 'missing google play api info');
 					done();

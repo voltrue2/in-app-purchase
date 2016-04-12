@@ -2,7 +2,7 @@ var assert = require('assert');
 var fs = require('fs');
 var fixedPath = process.cwd() + '/test/receipts/windows';
 
-describe('iap', function () {
+describe('#### Windows ####', function () {
 	
 	it('Can validate windows in-app-purchase w/o waiting for .setup()', function (done) {
 		
@@ -13,6 +13,7 @@ describe('iap', function () {
 		}
 
 		var iap = require('../');
+		iap.config({ verbose: true });
 		iap.setup();
 		fs.readFile(path, function (error, data) {
 			assert.equal(error, undefined);
@@ -27,7 +28,6 @@ describe('iap', function () {
 					assert(data[i].expirationDate);
 					assert(data[i].quantity);
 				}
-				console.log(data);
 				done();
 			});
 		});
@@ -43,6 +43,7 @@ describe('iap', function () {
 		}
 
 		var iap = require('../');
+		iap.config({ verbose: true });
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			fs.readFile(path, function (error, data) {
@@ -58,7 +59,6 @@ describe('iap', function () {
 						assert(data[i].expirationDate);
 						assert(data[i].quantity);
 					}
-					console.log(data);
 					done();
 				});
 			});
@@ -75,6 +75,7 @@ describe('iap', function () {
 		}
 
 		var iap = require('../');
+		iap.config({ verbose: true });
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			fs.readFile(path, function (error, data) {
@@ -85,7 +86,6 @@ describe('iap', function () {
 					assert.equal(iap.isValidated(response), true);
 					var data = iap.getPurchaseData(response, { ignoreExpired: true });
 					assert.equal(data.length, 0);
-					console.log(data);
 					done();
 				});
 			});
@@ -102,6 +102,7 @@ describe('iap', function () {
 		}
 
 		var iap = require('../');
+		iap.config({ verbose: true });
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			iap.validate(iap.WINDOWS, 'fake-receipt', function (error, response) {
@@ -122,6 +123,7 @@ describe('iap', function () {
 		}
 
 		var iap = require('../');
+		iap.config({ verbose: true });
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			iap.validate(iap.WINDOWS, 'fake-receipt', function (error, response) {
@@ -129,7 +131,6 @@ describe('iap', function () {
 				assert(response.status);
                                 assert(response.message);
 				assert.equal(iap.isValidated(response), false);
-				console.log(response);
 				done();
 			});
 		});

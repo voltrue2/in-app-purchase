@@ -6,6 +6,19 @@
 
 A Node.js module for In-App-Purchase validation for iOS, Android, Amazon, and Windows.
 
+### Debug Logging
+
+The module can optionally turn on verbose debug log.
+
+In order to enable the verbose logging, give the following to `.config()` **BEFORE** calling `.setup([callback])`:
+
+```javascript
+var iap = require('in-app-purchase');
+iap.config({
+	verbose: true
+});
+```
+
 ### Methods
 
 #### .validate(service [constant], receipt [string or object], callback [function])
@@ -46,7 +59,7 @@ Related reads:
 
 <a href="https://forums.developer.apple.com/thread/8954">Apple Developer Thread 8954</a>
 
-<a href="https://developer.apple.com/library/mac/technotes/tn2413/_index.html#//apple_ref/doc/uid/DTS40016228-CH1-RECEIPT-HOW_DO_I_USE_THE_CANCELLATION_DATE_FIELD_">Aplle Purchase</a>
+<a href="https://developer.apple.com/library/mac/technotes/tn2413/_index.html#//apple_ref/doc/uid/DTS40016228-CH1-RECEIPT-HOW_DO_I_USE_THE_CANCELLATION_DATE_FIELD_">Apple Purchase</a>
 
 #### .isValidated(response [object])
 

@@ -6,6 +6,10 @@
 
 A Node.js module for In-App-Purchase validation for iOS, Android, Amazon, and Windows.
 
+### Online Demo and Doc
+
+<a href="http://iap.gracenode.org" target="_blank">Online Demo</a>
+
 ### Debug Logging
 
 The module can optionally turn on verbose debug log.
@@ -221,6 +225,7 @@ Example:
 ```
 var inAppPurchase = require('in-app-purchase');
 inAppPurchase.config({
+    secret: "abcdefghijklmnoporstuvwxyz", // this comes from Amazon
     applePassword: "1234567890abcdef1234567890abcdef", // this comes from iTunes Connect
     googlePublicKeyPath: "path/to/public/key/directory/" // this is the path to the directory containing iap-sanbox/iap-live files
 });
@@ -340,6 +345,9 @@ iap.setup(function (error) {
 Example: Amazon
 
 ```javascript
+iap.config({
+	secret: 'shared secret from Amazon'
+});
 iap.setup(function (error) {
     if (error) {
         // oh no...

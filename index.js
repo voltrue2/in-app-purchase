@@ -5,6 +5,7 @@ var google = require('./lib/google');
 var windows = require('./lib/windows');
 var amazon = require('./lib/amazon');
 var constants = require('./constants');
+var verbose = require('./lib/verbose');
 
 module.exports.APPLE = constants.SERVICES.APPLE;
 module.exports.GOOGLE = constants.SERVICES.GOOGLE;
@@ -16,6 +17,7 @@ module.exports.config = function (configIn) {
 	google.readConfig(configIn);
 	windows.readConfig(configIn);
 	amazon.readConfig(configIn);
+	verbose.setup(configIn);
 };
 
 module.exports.setup = function (cb) {
@@ -33,47 +35,48 @@ module.exports.setup = function (cb) {
 };
 
 module.exports.validate = function (service, receipt, cb) {
-	var validator;
 	switch (service) {
 		case module.exports.APPLE:
-			validator = apple.validatePurchase;
+			apple.validatePurchase(null, receipt, cb);
 			break;
 		case module.exports.GOOGLE:
-			validator = google.validatePurchase;
+			google.validatePurchase(null, receipt, cb);
 			break;
 		case module.exports.WINDOWS:
-			validator = windows.validatePurchase;
+			windows.validatePurchase(receipt, cb);
 			break;
 		case module.exports.AMAZON:
-			validator = amazon.validatePurchase;
+			amazon.validatePurchase(null, receipt, cb);
 			break;
 		default:
 			return cb(new Error('invalid service given: ' + service));
 	}
-	// FIXME: change it to validator(null, receipt, cb);
-	validator(receipt, cb);
 };
 
 module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
-	var validator;
+	
+	if (!secretOrPubKey) {
+		verbose.log('<.validateOnce>', service, receipt);
+		return cb(new Error('missing secret or public key for dynamic validation:' + service));
+	}
+	
 	switch (service) {
 		case module.exports.APPLE:
-			validator = apple.validatePurchase;
+			apple.validatePurchase(secretOrPubKey, receipt, cb);
 			break;
 		case module.exports.GOOGLE:
-			validator = google.validatePurchase;
+			google.validatePurchase(secretOrPubKey, receipt, cb);
 			break;
 		case module.exports.WINDOWS:
-			validator = windows.validatePurchase;
+			windows.validatePurchase(receipt, cb);
 			break;
 		case module.exports.AMAZON:
-			validator = amazon.validatePurchase;
+			amazon.validatePurchase(secretOrPubKey, receipt, cb);
 			break;
 		default:
+			verbose.log('<.validateOnce>', secretOrPubKey, receipt);
 			return cb(new Error('invalid service given: ' + service));
 	}
-	// FIXME: change it to validator(secretOrPubKey, receipt, cb);
-	validator(receipt, cb);
 };
 
 module.exports.isValidated = function (response) {

@@ -65,6 +65,12 @@ Related reads:
 
 <a href="https://developer.apple.com/library/mac/technotes/tn2413/_index.html#//apple_ref/doc/uid/DTS40016228-CH1-RECEIPT-HOW_DO_I_USE_THE_CANCELLATION_DATE_FIELD_">Apple Purchase</a>
 
+#### .validateOnce(service [constant], secretOrPubKey [string], receipt [string or object], callback [function]);
+
+Validates an in-app-purchase receipt with a dynamically fed secret or public key. 
+
+This is usefuly when you need to validate multiple apps' receipts with a single back-end.
+
 #### .isValidated(response [object])
 
 Returns a boolean.

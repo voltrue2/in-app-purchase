@@ -74,4 +74,33 @@ describe('#### Amazon ####', function () {
 		});
 	});
 
+	it('Can validate amazon in-app-purchase with dynamically fed secret', function (done) {
+		fs.readFile(path, 'UTF-8', function (error, data) {
+			assert.equal(error, null);
+			iap.config({
+				verbose: true,
+				secret: null
+			});
+			iap.setup(function (error) {
+				assert.equal(error, null);
+				var receipt = JSON.parse(data.toString());
+				fs.readFile(sharedKey, 'UTF-8', function (error, secret) {
+					assert.equal(error, null);
+					secret = secret.replace(/(\r|\n)/g, '');
+					iap.validateOnce(iap.AMAZON, secret, receipt, function (error, response) {
+						assert.equal(error, null);
+						assert.equal(iap.isValidated(response), true);
+						var pdata = iap.getPurchaseData(response);
+						for (var i = 0, len = pdata.length; i < len; i++) {
+							assert(pdata[i].productId);
+							assert(pdata[i].purchaseDate);
+							assert(pdata[i].quantity);
+						}
+						done();
+					});
+				});
+			});
+		});
+	});
+
 });

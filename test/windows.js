@@ -66,6 +66,38 @@ describe('#### Windows ####', function () {
 	
 	});
 	
+	it('Can validate windows in-app-purchase using .validateOnce()', function (done) {
+		
+		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+
+		var iap = require('../');
+		iap.config({ verbose: true });
+		iap.setup(function (error) {
+			assert.equal(error, undefined);
+			fs.readFile(path, function (error, data) {
+				assert.equal(error, undefined);
+				var receipt = data.toString();
+				iap.validateOnce(iap.WINDOWS, null, receipt, function (error, response) {
+					assert.equal(error, undefined);
+					assert.equal(iap.isValidated(response), true);
+					var data = iap.getPurchaseData(response);
+					for (var i = 0, len = data.length; i < len; i++) {
+						assert(data[i].productId);
+						assert(data[i].purchaseDate);
+						assert(data[i].expirationDate);
+						assert(data[i].quantity);
+					}
+					done();
+				});
+			});
+		});
+	
+	});
+	
 	it('Can validate windows in-app-purchase and ignores expired item', function (done) {
 		
 		var path = process.argv[process.argv.length - 1].replace('--path=', '');

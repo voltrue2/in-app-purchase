@@ -55,7 +55,7 @@ module.exports.validate = function (service, receipt, cb) {
 
 module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
 	
-	if (!secretOrPubKey) {
+	if (!secretOrPubKey && service !== module.exports.WINDOWS) {
 		verbose.log('<.validateOnce>', service, receipt);
 		return cb(new Error('missing secret or public key for dynamic validation:' + service));
 	}

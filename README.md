@@ -6,6 +6,23 @@
 
 A Node.js module for In-App-Purchase validation for iOS, Android, Amazon, and Windows.
 
+### Online Demo and Doc
+
+<a href="http://iap.gracenode.org" target="_blank">Online Demo</a>
+
+### Debug Logging
+
+The module can optionally turn on verbose debug log.
+
+In order to enable the verbose logging, give the following to `.config()` **BEFORE** calling `.setup([callback])`:
+
+```javascript
+var iap = require('in-app-purchase');
+iap.config({
+	verbose: true
+});
+```
+
 ### Methods
 
 #### .validate(service [constant], receipt [string or object], callback [function])
@@ -46,7 +63,7 @@ Related reads:
 
 <a href="https://forums.developer.apple.com/thread/8954">Apple Developer Thread 8954</a>
 
-<a href="https://developer.apple.com/library/mac/technotes/tn2413/_index.html#//apple_ref/doc/uid/DTS40016228-CH1-RECEIPT-HOW_DO_I_USE_THE_CANCELLATION_DATE_FIELD_">Aplle Purchase</a>
+<a href="https://developer.apple.com/library/mac/technotes/tn2413/_index.html#//apple_ref/doc/uid/DTS40016228-CH1-RECEIPT-HOW_DO_I_USE_THE_CANCELLATION_DATE_FIELD_">Apple Purchase</a>
 
 #### .isValidated(response [object])
 
@@ -208,6 +225,7 @@ Example:
 ```
 var inAppPurchase = require('in-app-purchase');
 inAppPurchase.config({
+    secret: "abcdefghijklmnoporstuvwxyz", // this comes from Amazon
     applePassword: "1234567890abcdef1234567890abcdef", // this comes from iTunes Connect
     googlePublicKeyPath: "path/to/public/key/directory/" // this is the path to the directory containing iap-sanbox/iap-live files
 });
@@ -327,6 +345,9 @@ iap.setup(function (error) {
 Example: Amazon
 
 ```javascript
+iap.config({
+	secret: 'shared secret from Amazon'
+});
 iap.setup(function (error) {
     if (error) {
         // oh no...

@@ -2,7 +2,7 @@ var assert = require('assert');
 var fs = require('fs');
 var fixedPath = process.cwd() + '/test/receipts/apple';
 
-describe('iap', function () {
+describe('#### Apple ####', function () {
 	
 	it('Can validate apple in-app-purchase', function (done) {
 		
@@ -14,7 +14,7 @@ describe('iap', function () {
 
 		var iap = require('../');
 		iap.config({
-			sandbox: true
+			verbose: true
 		});
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
@@ -22,9 +22,6 @@ describe('iap', function () {
 				assert.equal(error, undefined);
 				var receipt = data.toString();
 				iap.validate(iap.APPLE, receipt, function (error, response) {
-					if (error) {
-						console.error(error, response);
-					}
 					assert.equal(error, undefined);
 					assert.equal(iap.isValidated(response), true);
 					var data = iap.getPurchaseData(response, { ignoreExpired: true });
@@ -33,8 +30,6 @@ describe('iap', function () {
 						assert(data[i].purchaseDate);
 						assert(data[i].quantity);
 					}
-					console.log(data);
-					console.log('response:', response);
 					done();
 				});
 			});
@@ -52,7 +47,7 @@ describe('iap', function () {
 
 		var iap = require('../');
 		iap.config({
-			sandbox: true
+			verbose: true
 		});
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
@@ -75,7 +70,7 @@ describe('iap', function () {
 
 		var iap = require('../');
 		iap.config({
-			sandbox: true
+			verbose: true
 		});
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
@@ -83,7 +78,6 @@ describe('iap', function () {
 				assert(error);
 				assert(response);
 				assert.equal(iap.isValidated(response), false);
-				console.log(response);
 				done();
 			});
 		});
@@ -96,8 +90,6 @@ describe('iap', function () {
 		iap.setup(function (error) {
 			assert.equal(error, undefined);
 			iap.validate(iap.APPLE, receipt, function (error, response) {
-				console.log(error);
-				console.log(response);
 				assert(error);
 				assert.equal(iap.isValidated(response), false);
 				done();

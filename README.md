@@ -6,6 +6,8 @@
 
 A Node.js module for In-App-Purchase validation for iOS, Android, Amazon, and Windows.
 
+It can also validate multiple app's receipt with a single back-end using `.validateOnce()` that allows you to change `secret` or `public key` dynamically.
+
 ### Online Demo and Doc
 
 <a href="http://iap.gracenode.org" target="_blank">Online Demo</a>

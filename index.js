@@ -50,9 +50,30 @@ module.exports.validate = function (service, receipt, cb) {
 		default:
 			return cb(new Error('invalid service given: ' + service));
 	}
-	validator(receipt, function (error, response) {
-		cb(error, response);
-	});
+	// FIXME: change it to validator(null, receipt, cb);
+	validator(receipt, cb);
+};
+
+module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
+	var validator;
+	switch (service) {
+		case module.exports.APPLE:
+			validator = apple.validatePurchase;
+			break;
+		case module.exports.GOOGLE:
+			validator = google.validatePurchase;
+			break;
+		case module.exports.WINDOWS:
+			validator = windows.validatePurchase;
+			break;
+		case module.exports.AMAZON:
+			validator = amazon.validatePurchase;
+			break;
+		default:
+			return cb(new Error('invalid service given: ' + service));
+	}
+	// FIXME: change it to validator(secretOrPubKey, receipt, cb);
+	validator(receipt, cb);
 };
 
 module.exports.isValidated = function (response) {

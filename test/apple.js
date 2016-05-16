@@ -97,4 +97,117 @@ describe('#### Apple ####', function () {
 		});
 	});
 
+	it('can parse both in_app and latest_receipt_info array with .getPurchaseData()', function () {
+		var iap = require('../');
+		var rec = {
+			service: iap.APPLE,
+			receipt: {
+				in_app: [ 
+					{ quantity: '1',
+					product_id: 'in_app.0',
+					transaction_id: '210000259386802',
+					original_transaction_id: '210000259386802',
+					purchase_date: '2016-04-14 16:03:33 Etc/GMT',
+					purchase_date_ms: '1460649813000',
+					purchase_date_pst: '2016-04-14 09:03:33 America/Los_Angeles',
+					original_purchase_date: '2016-04-14 16:03:34 Etc/GMT',
+					original_purchase_date_ms: '1460649814000',
+					original_purchase_date_pst: '2016-04-14 09:03:34 America/Los_Angeles',
+					expires_date: '2016-05-14 16:03:33 Etc/GMT',
+					expires_date_ms: '1463241813000',
+					expires_date_pst: '2016-05-14 09:03:33 America/Los_Angeles',
+					web_order_line_item_id: '210000038560504',
+					is_trial_period: 'false' }
+				],
+				latest_receipt_info: [
+					{ quantity: '1',
+					product_id: 'latest_receipt_info.0',
+					transaction_id: '210000259386802',
+					original_transaction_id: '210000259386802',
+					purchase_date: '2016-04-14 16:03:33 Etc/GMT',
+					purchase_date_ms: '1460649813982',
+					purchase_date_pst: '2016-04-14 09:03:33 America/Los_Angeles',
+					original_purchase_date: '2016-04-14 16:03:34 Etc/GMT',
+					original_purchase_date_ms: '1460649814000',
+					original_purchase_date_pst: '2016-04-14 09:03:34 America/Los_Angeles',
+					expires_date: '2016-05-14 16:03:33 Etc/GMT',
+					expires_date_ms: '1463241813982',
+					expires_date_pst: '2016-05-14 09:03:33 America/Los_Angeles',
+					web_order_line_item_id: '210000038560504',
+					is_trial_period: 'false' },
+					{ quantity: '1',
+					product_id: 'latest_receipt_info.1',
+					transaction_id: '210000265773203',
+					original_transaction_id: '210000259386802',
+					purchase_date: '2016-05-14 16:03:33 Etc/GMT',
+					purchase_date_ms: '1463241813000',
+					purchase_date_pst: '2016-05-14 09:03:33 America/Los_Angeles',
+					original_purchase_date: '2016-05-14 10:03:37 Etc/GMT',
+					original_purchase_date_ms: '1463220217552',
+					original_purchase_date_pst: '2016-05-14 03:03:37 America/Los_Angeles',
+					expires_date: '2016-06-14 16:03:33 Etc/GMT',
+					expires_date_ms: '1465920213000',
+					expires_date_pst: '2016-06-14 09:03:33 America/Los_Angeles',
+					web_order_line_item_id: '210000038560503',
+					is_trial_period: 'false' }
+				]
+			}
+		};
+		iap.config({
+			verbose: true
+		});
+		var parsed = iap.getPurchaseData(rec);
+		var res = [
+			'in_app.0',
+			'latest_receipt_info.0',
+			'latest_receipt_info.1'
+		];
+		for (var i = 0, len = parsed.length; i < len; i++) {
+			if (res.indexOf(parsed[i].productId) === -1) {
+				throw new Error('missing purchase data');
+			}
+			console.log(parsed[i].productId);
+		}
+
+	});
+
+	it('can parse without latest_receipt_info array with .getPurchaseData()', function () {
+		var iap = require('../');
+		var rec = {
+			service: iap.APPLE,
+			receipt: {
+				in_app: [ 
+					{ quantity: '1',
+					product_id: 'in_app.0',
+					transaction_id: '210000259386802',
+					original_transaction_id: '210000259386802',
+					purchase_date: '2016-04-14 16:03:33 Etc/GMT',
+					purchase_date_ms: '1460649813000',
+					purchase_date_pst: '2016-04-14 09:03:33 America/Los_Angeles',
+					original_purchase_date: '2016-04-14 16:03:34 Etc/GMT',
+					original_purchase_date_ms: '1460649814000',
+					original_purchase_date_pst: '2016-04-14 09:03:34 America/Los_Angeles',
+					expires_date: '2016-05-14 16:03:33 Etc/GMT',
+					expires_date_ms: '1463241813000',
+					expires_date_pst: '2016-05-14 09:03:33 America/Los_Angeles',
+					web_order_line_item_id: '210000038560504',
+					is_trial_period: 'false' }
+				]
+			}
+		};
+		iap.config({
+			verbose: true
+		});
+		var parsed = iap.getPurchaseData(rec);
+		var res = [
+			'in_app.0',
+		];
+		for (var i = 0, len = parsed.length; i < len; i++) {
+			if (res.indexOf(parsed[i].productId) === -1) {
+				throw new Error('missing purchase data');
+			}
+			console.log(parsed[i].productId);
+		}
+	});
+
 });

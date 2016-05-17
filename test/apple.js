@@ -166,7 +166,7 @@ describe('#### Apple ####', function () {
 			if (res.indexOf(parsed[i].productId) === -1) {
 				throw new Error('missing purchase data');
 			}
-			console.log(parsed[i].productId);
+			console.log(parsed[i].productId, parsed[i].transactionId);
 		}
 
 	});
@@ -206,7 +206,7 @@ describe('#### Apple ####', function () {
 			if (res.indexOf(parsed[i].productId) === -1) {
 				throw new Error('missing purchase data');
 			}
-			console.log(parsed[i].productId);
+			console.log(parsed[i].productId, parsed[i].transactionId);
 		}
 	});
 

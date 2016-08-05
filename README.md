@@ -443,9 +443,35 @@ Once you copy the public key string from the Developer Console account for your 
 
 To check expiration date or auto renewal status of an Android subscription, you should first setup the access to the Google Play Store API. You should follow these steps:
 
-- Enable an API Project and create an OAuth 2.0 Client https://developers.google.com/android-publisher/authorization#creating_an_apis_console_project
+##### Part 1 - Get ClientID and ClientSecret
+1. Go to https://play.google.com/apps/publish/
+2. Click on `Settings`
+3. Click on `API Access`
+4. There should be a linked project already, if not, create one. If you have it, click it.
+* You should now be at: https://console.developers.google.com/apis/library?project=xxxx
+5. Under Mobile API's, make sure "Google Play Developer API is enabled".
+6. Go back, on the left click on `Credentials`
+7. Click `Create Credentials` button
+8. Choose `OAuth Client ID`
+9. Choose `Web Application`
+ * Give it a name, skip the `Authorized JS origins`
+ * Aadd this to `Authorized Redirect URIs`: https://developers.google.com/oauthplayground
+ * Hit Save and copy the **clientID** and **clientSecret** somewhere safe.
 
-- Generate a refresh token https://developers.google.com/android-publisher/authorization#generating_a_refresh_token
+##### Part 2 - Get Access and Refresh Tokens
+1. Go to: https://developers.google.com/oauthplayground
+2. On the right, hit the gear/settings.
+3. Check the box: `Use your own OAuth credentials`
+	* Enter in clientID and clientSecret
+	* Close
+4. On the left, find "Google Play Developer API v2"
+ * Select "https://www.googleapis.com/auth/androidpublisher"
+5. Hit Authorize Api's button
+6. Save `Authorization Code` 
+ * This is your: **googleAccToken**
+7. Hit `Exchange Authorization code for token`
+8. Grab: `Refresh Token`
+ * This is your: **googleRefToken**
 
 Now you are able to query for Android subscription status!
 

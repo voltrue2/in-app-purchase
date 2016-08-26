@@ -90,6 +90,10 @@ module.exports.isExpired = function (purchasedItem) {
 	if (!purchasedItem || !purchasedItem.transactionId) {
 		throw new Error('invalid purchased item given:\n' + JSON.stringify(purchasedItem));
 	}
+	if (purchasedItem.cancellationDate) {
+		// it has been cancelled
+		return true;
+	}
 	if (!purchasedItem.expirationDate) {
 		// there is no exipiration date with this item
 		return false;
@@ -119,14 +123,14 @@ module.exports.getPurchaseData = function (purchaseData, options) {
 	}
 };
 
-// test use only
-module.exports.reset = function () {
-	// resets google setup
-	google.reset();
-};
-
 module.exports.refreshGoogleToken = function (cb) {
 	
 	google.refreshToken(cb);
 
+};
+
+// test use only
+module.exports.reset = function () {
+	// resets google setup
+	google.reset();
 };

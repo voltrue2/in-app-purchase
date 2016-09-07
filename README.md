@@ -170,7 +170,7 @@ iap.setup(function (error) {
             // oh no error...
         }
         if (iap.isValidated(response)) {
-            // now check if any of the items validated has been exipred or not
+            // now check if any of the items validated has been expired or not
             var purchaseDataList = iap.getPurchaseData(response);
             for (var i = 0, len = purchaseDataList.length; i < len; i++) {
                 if (iap.isExpired(purchaseDataList[i])) {
@@ -196,7 +196,7 @@ iap.setup(function (error) {
         if (iap.isValidated(response)) {
             // get the purchased items that have not been expired ONLY
             var options = {
-                ignoreExipred: true
+                ignoreExpired: true
             };
             var purchaseDataList = iap.getPurchaseData(response, options);
         }

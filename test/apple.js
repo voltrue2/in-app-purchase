@@ -26,6 +26,7 @@ describe('#### Apple ####', function () {
 					assert.equal(iap.isValidated(response), true);
 					var data = iap.getPurchaseData(response, { ignoreExpired: true });
 					for (var i = 0, len = data.length; i < len; i++) {
+						console.log('parsedPurchaseData:', i, data);
 						assert(data[i].productId);
 						assert(data[i].purchaseDate);
 						assert(data[i].quantity);
@@ -197,6 +198,7 @@ describe('#### Apple ####', function () {
 		];
 		for (var i = 0, len = parsed.length; i < len; i++) {
 			if (res.indexOf(parsed[i].productId) === -1) {
+				console.error(parsed[i]);
 				throw new Error('missing purchase data');
 			}
 			console.log(parsed[i].productId, parsed[i].transactionId);

@@ -66,10 +66,12 @@ describe('#### Google ####', function () {
 				assert.equal(error, undefined);
 				var receipt = JSON.parse(data.toString());
 				iap.validate(iap.GOOGLE, receipt, function (error, response) {
+				console.log('>>>>>>>>>>>>>>>>', response);
 					assert.equal(error, undefined);
 					assert.equal(iap.isValidated(response), true);
 					var data = iap.getPurchaseData(response);
 					for (var i = 0, len = data.length; i < len; i++) {
+						console.log('parsed purchased data', i, data[i]);
 						assert(data[i].productId);
 						assert(data[i].transactionId);
 						assert(data[i].purchaseDate);

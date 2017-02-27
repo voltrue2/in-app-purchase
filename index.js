@@ -23,7 +23,7 @@ module.exports.config = function (configIn) {
 };
 
 module.exports.setup = function(cb) {
-	if(!cb && Promise) {
+	if (!cb && Promise) {
 		return new Promise(function(resolve,reject) {
 			self.setup(function(error) {
 				return error ? reject(error) : resolve();
@@ -45,7 +45,7 @@ module.exports.setup = function(cb) {
 };
 
 module.exports.validate = function(service,receipt,cb) {
-	if(!cb && Promise) {
+	if (!cb && Promise) {
 		return new Promise(function(resolve,reject) {
 			self.validate(service,receipt,function(error,response) {
 				return error ? reject(error) : resolve(response);
@@ -53,7 +53,7 @@ module.exports.validate = function(service,receipt,cb) {
 		});
 	}
 
-	switch(service) {
+	switch (service) {
 		case module.exports.APPLE:
 			apple.validatePurchase(null, receipt, cb);
 			break;
@@ -73,7 +73,7 @@ module.exports.validate = function(service,receipt,cb) {
 };
 
 module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
-	if(!cb && Promise) {
+	if (!cb && Promise) {
 		return new Promise(function(resolve,reject) {
 			self.validate(service,receipt,function(error,response) {
 				return error ? reject(error) : resolve(response);
@@ -148,7 +148,7 @@ module.exports.getPurchaseData = function (purchaseData, options) {
 };
 
 module.exports.refreshGoogleToken = function (cb) {
-	if(!cb && Promise) {
+	if (!cb && Promise) {
 		return new Promise(function(resolve,reject) {
 			google.refreshToken(function(error,response) {
 				return error ? reject(error) : resolve(response);

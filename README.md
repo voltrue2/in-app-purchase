@@ -93,7 +93,7 @@ For Google Play purchases (recurring subscription only), each purchase data in t
 
 #### .refreshGoogleToken(callback [function]);
 
-For Android only!
+**For Android only!**
 
 Returns a callback function with `error` and `response` as arguments.
 
@@ -237,11 +237,18 @@ Example:
 ```
 var inAppPurchase = require('in-app-purchase');
 inAppPurchase.config({
+    amazonAPIVersion: 2,
     secret: "abcdefghijklmnoporstuvwxyz", // this comes from Amazon
     applePassword: "1234567890abcdef1234567890abcdef", // this comes from iTunes Connect
     googlePublicKeyPath: "path/to/public/key/directory/" // this is the path to the directory containing iap-sanbox/iap-live files
 });
 ```
+
+#### Amazon API Version
+
+You may add `amazonAPIVersion: 2` to your configuration to enable Amazon API version 2.
+
+The default is version 1.
 
 #### HTTP Request Configuration
 

@@ -8,6 +8,7 @@ var amazon = require('./lib/amazon2');
 var constants = require('./constants');
 var verbose = require('./lib/verbose');
 
+var self = module.exports;
 module.exports.APPLE = constants.SERVICES.APPLE;
 module.exports.GOOGLE = constants.SERVICES.GOOGLE;
 module.exports.WINDOWS = constants.SERVICES.WINDOWS;
@@ -21,7 +22,15 @@ module.exports.config = function (configIn) {
 	verbose.setup(configIn);
 };
 
-module.exports.setup = function (cb) {
+module.exports.setup = function(cb) {
+	if (!cb && Promise) {
+		return new Promise(function(resolve,reject) {
+			self.setup(function(error) {
+				return error ? reject(error) : resolve();
+			});
+		});
+	}
+
 	async.parallel([
 		function (next) {
 			apple.setup(next);
@@ -35,7 +44,15 @@ module.exports.setup = function (cb) {
 	], cb);
 };
 
-module.exports.validate = function (service, receipt, cb) {
+module.exports.validate = function(service,receipt,cb) {
+	if (!cb && Promise) {
+		return new Promise(function(resolve,reject) {
+			self.validate(service,receipt,function(error,response) {
+				return error ? reject(error) : resolve(response);
+			});
+		});
+	}
+
 	switch (service) {
 		case module.exports.APPLE:
 			apple.validatePurchase(null, receipt, cb);
@@ -50,12 +67,20 @@ module.exports.validate = function (service, receipt, cb) {
 			amazon.validatePurchase(null, receipt, cb);
 			break;
 		default:
-			return cb(new Error('invalid service given: ' + service));
+			cb(new Error('invalid service given: ' + service));
+			break;
 	}
 };
 
 module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
-	
+	if (!cb && Promise) {
+		return new Promise(function(resolve,reject) {
+			self.validate(service,receipt,function(error,response) {
+				return error ? reject(error) : resolve(response);
+			});
+		});
+	}
+
 	if (!secretOrPubKey && service !== module.exports.APPLE && service !== module.exports.WINDOWS) {
 		verbose.log('<.validateOnce>', service, receipt);
 		return cb(new Error('missing secret or public key for dynamic validation:' + service));
@@ -75,16 +100,14 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
 			amazon.validatePurchase(secretOrPubKey, receipt, cb);
 			break;
 		default:
-			verbose.log('<.validateOnce>', secretOrPubKey, receipt);
-			return cb(new Error('invalid service given: ' + service));
+			verbose.log('<.validateOnce>',secretOrPubKey,receipt);
+			cb(new Error('invalid service given: ' + service));
+			break;
 	}
 };
 
 module.exports.isValidated = function (response) {
-	if (response && response.status === constants.VALIDATION.SUCCESS) {
-		return true;
-	}
-	return false;
+	return response && response.status === constants.VALIDATION.SUCCESS;
 };
 
 module.exports.isExpired = function (purchasedItem) {
@@ -125,9 +148,15 @@ module.exports.getPurchaseData = function (purchaseData, options) {
 };
 
 module.exports.refreshGoogleToken = function (cb) {
-	
-	google.refreshToken(cb);
+	if (!cb && Promise) {
+		return new Promise(function(resolve,reject) {
+			google.refreshToken(function(error,response) {
+				return error ? reject(error) : resolve(response);
+			});
+		});
+	}
 
+	google.refreshToken(cb);
 };
 
 // test use only

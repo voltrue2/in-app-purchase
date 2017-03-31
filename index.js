@@ -3,8 +3,8 @@ var async = require('./lib/async');
 var apple = require('./lib/apple');
 var google = require('./lib/google');
 var windows = require('./lib/windows');
-//var amazon = require('./lib/amazon2');
-var amazon = require('./lib/amazon');
+var amazon = require('./lib/amazon2');
+//var amazon = require('./lib/amazon');
 var constants = require('./constants');
 var verbose = require('./lib/verbose');
 

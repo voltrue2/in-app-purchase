@@ -3,10 +3,11 @@ var async = require('./lib/async');
 var apple = require('./lib/apple');
 var google = require('./lib/google');
 var windows = require('./lib/windows');
-//var amazon = require('./lib/amazon2');
-var amazon = require('./lib/amazon');
+var amazonManager = require('./lib/amazonManager');
 var constants = require('./constants');
 var verbose = require('./lib/verbose');
+
+var amazon;
 
 module.exports.APPLE = constants.SERVICES.APPLE;
 module.exports.GOOGLE = constants.SERVICES.GOOGLE;
@@ -17,7 +18,7 @@ module.exports.config = function (configIn) {
 	apple.readConfig(configIn);
 	google.readConfig(configIn);
 	windows.readConfig(configIn);
-	amazon.readConfig(configIn);
+	amazon = amazonManager.create(configIn);
 	verbose.setup(configIn);
 };
 

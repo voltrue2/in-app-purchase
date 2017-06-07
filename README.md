@@ -16,6 +16,14 @@ It can also validate multiple app's receipt with a single back-end using `.valid
 
 <a href="http://iap.gracenode.org" target="_blank">Online Demo</a>
 
+### Auto-service detection has been added
+
+You no longer need to pass `iap.APPLE`, `iap.GOOGLE`, `iap.AMAZON`, or `iap.WINDIWS`.
+
+The module automatically detects the service without you telling it!
+
+For more details: [HERE](#auto-service-detection)
+
 ### Debug Logging
 
 The module can optionally turn on verbose debug log.

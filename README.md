@@ -98,7 +98,7 @@ Here is how it works:
 
 Instead of passing `iap.APPLE`, `iap.GOOGLE`, `iap.AMAZON`, or `iap.WINDOWS` to `iap.validate()` and `iap.validateOnce()`, you may write:
 
-### .validate
+### .validate(receipt [mixed], callback [Function])
 
 ```javascript
 .validate(receipt, function (...) {
@@ -106,7 +106,7 @@ Instead of passing `iap.APPLE`, `iap.GOOGLE`, `iap.AMAZON`, or `iap.WINDOWS` to 
 });
 ```
 
-### .validateOnce
+### .validateOnce(receipt [mixed], secretPublicKey [string], callback [function])
 
 ```javascript
 .validateOnce(receipt, secretPublicKey, function (...) {

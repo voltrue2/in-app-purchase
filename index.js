@@ -7,6 +7,8 @@ var amazonManager = require('./lib/amazonManager');
 var constants = require('./constants');
 var verbose = require('./lib/verbose');
 
+var IS_WINDOWS = '<\/Receipt>';
+
 var amazon;
 
 module.exports.APPLE = constants.SERVICES.APPLE;
@@ -36,7 +38,38 @@ module.exports.setup = function (cb) {
 	], cb);
 };
 
+module.exports.getService = function (receipt) {
+	if (receipt.indexOf && receipt.indexOf(IS_WINDOWS) !== -1) {
+		return module.exports.WINDOWS;
+	}
+	if (typeof receipt === 'object') {
+		// receipt could be either Google or Amazon
+		if (receipt.signature) {
+			return module.exports.GOOGLE;
+		} else {
+			return module.exports.AMAZON;
+		}
+	}
+	try {
+		// receipt could be either Google or Amazon
+		var parsed = JSON.parse(receipt);
+		if (parsed.signature) {
+			return module.exports.GOOGLE;
+		} else {
+			return module.exports.AMAZON;
+		}
+	} catch (error) {
+		return module.exports.APPLE;
+	}
+};
+
 module.exports.validate = function (service, receipt, cb) {
+	if (cb === undefined && typeof receipt === 'function') {
+		// we are given 2 arguemnts as: .validate(receipt, cb)
+		cb = receipt;
+		receipt = service;
+		service = module.exports.getService(receipt); 
+	}
 	switch (service) {
 		case module.exports.APPLE:
 			apple.validatePurchase(null, receipt, cb);
@@ -56,6 +89,12 @@ module.exports.validate = function (service, receipt, cb) {
 };
 
 module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
+	if (cb === undefined && typeof receipt === 'function') {
+		// we are given 3 arguemnts as: .validateOnce(receipt, secretPubKey, cb)
+		cb = receipt;
+		receipt = service;
+		service = module.exports.getService(receipt); 
+	}
 	
 	if (!secretOrPubKey && service !== module.exports.APPLE && service !== module.exports.WINDOWS) {
 		verbose.log('<.validateOnce>', service, receipt);

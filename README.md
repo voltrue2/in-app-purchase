@@ -45,6 +45,10 @@ constant for Windows: `iap.WINDOWS`
 
 constant for Amazon: `iap.AMAZON`
 
+As of version 1.4.0, we now have built-in auto-service detection in `.validate(receipt, callback)` and `.validateOnce(receipt, secretPubKey, callback)`.
+
+For more detail please read [here](#auto-service-detection)
+
 - For Apple validation, receipt is a base64 encoded string.
 
 - For Google validation, receipt is an object `{ data: "stringified purchase data", signature: "yyyy" }`.
@@ -76,6 +80,35 @@ Related reads:
 Validates an in-app-purchase receipt with a dynamically fed secret or public key. 
 
 This is usefuly when you need to validate multiple apps' receipts with a single back-end.
+
+<a name="auto-service-detection"></a>
+## Detect service automatically
+
+`in-app-purchase` module now supports auto-service detection as of version 1.4.0.
+
+Here is how it works:
+
+Instead of passing `iap.APPLE`, `iap.GOOGLE`, `iap.AMAZON`, or `iap.WINDOWS` to `iap.validate()` and `iap.validateOnce()`, you may write:
+
+### .validate
+
+```javascript
+.validate(receipt, function (...) {
+	// do something
+});
+```
+
+### .validateOnce
+
+```javascript
+.validateOnce(receipt, secretPublicKey, function (...) {
+	// do something
+})
+```
+
+### .getService(receipt [mixed])
+
+Returns a service name from the given receipt.
 
 #### .isValidated(response [object])
 

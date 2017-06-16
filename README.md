@@ -37,6 +37,19 @@ iap.config({
 });
 ```
 
+### Test Mode
+
+For Apple and Google, the module can run in test mode so that it skipps production validation.
+
+To enable test mode, set the following value to your configurations:
+
+```javascript
+var iap = require('in-app-purchase');
+iap.config({
+	test: true
+});
+```
+
 ### Methods
 
 #### .validate(service [constant], receipt [string or object], callback [function])

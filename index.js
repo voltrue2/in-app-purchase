@@ -25,6 +25,13 @@ module.exports.config = function (configIn) {
 };
 
 module.exports.setup = function (cb) {
+	if (!cb && Promise) {
+		return new Promise(function (resolve, reject) {
+			module.exports.setup(function (error) {
+				return error ? reject(error) : resolve();
+			});
+		});
+	}
 	async.parallel([
 		function (next) {
 			apple.setup(next);
@@ -70,6 +77,13 @@ module.exports.validate = function (service, receipt, cb) {
 		receipt = service;
 		service = module.exports.getService(receipt); 
 	}
+	if (!cb && Promise) {
+		return new Promise(function (resolve, reject) {
+			module.exports.validate(service, receipt, function (error, response) {
+				return error ? reject(error) : resolve(response);
+			});
+		});
+	}
 	switch (service) {
 		case module.exports.APPLE:
 			apple.validatePurchase(null, receipt, cb);
@@ -89,6 +103,13 @@ module.exports.validate = function (service, receipt, cb) {
 };
 
 module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
+	if (!cb && Promise) {
+		return new Promise(function (resolve, reject) {
+			self.validate(service, secretOrPubKey, receipt, function(error, response) {
+				return error ? reject(error) : resolve(response);
+			});
+		});
+	}
 	if (cb === undefined && typeof receipt === 'function') {
 		// we are given 3 arguemnts as: .validateOnce(receipt, secretPubKey, cb)
 		cb = receipt;
@@ -165,7 +186,13 @@ module.exports.getPurchaseData = function (purchaseData, options) {
 };
 
 module.exports.refreshGoogleToken = function (cb) {
-	
+	if (!cb && Promise) {
+		return new Promise(function (resolve, reject) {
+			module.exports.refreshGoogleToken(function (error, response) {
+				return error ? reject(error) : resolve(response);
+			});
+		});
+	}
 	google.refreshToken(cb);
 
 };

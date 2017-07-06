@@ -103,18 +103,19 @@ module.exports.validate = function (service, receipt, cb) {
 };
 
 module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
-	if (!cb && Promise) {
-		return new Promise(function (resolve, reject) {
-			self.validate(service, secretOrPubKey, receipt, function(error, response) {
-				return error ? reject(error) : resolve(response);
-			});
-		});
-	}
 	if (cb === undefined && typeof receipt === 'function') {
 		// we are given 3 arguemnts as: .validateOnce(receipt, secretPubKey, cb)
 		cb = receipt;
 		receipt = service;
 		service = module.exports.getService(receipt); 
+	}
+	
+	if (!cb && Promise) {
+		return new Promise(function (resolve, reject) {
+			self.validateOnce(service, secretOrPubKey, receipt, function(error, response) {
+				return error ? reject(error) : resolve(response);
+			});
+		});
 	}
 	
 	if (!secretOrPubKey && service !== module.exports.APPLE && service !== module.exports.WINDOWS) {

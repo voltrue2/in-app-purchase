@@ -112,7 +112,7 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
 	
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
-			self.validateOnce(service, secretOrPubKey, receipt, function(error, response) {
+			module.exports.validateOnce(service, secretOrPubKey, receipt, function(error, response) {
 				return error ? reject(error) : resolve(response);
 			});
 		});

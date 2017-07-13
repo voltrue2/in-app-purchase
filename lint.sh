@@ -10,7 +10,7 @@
 if [ -z "$JSHINT" ]; then
 	JSHINT="jshint"
 fi
-name="gracenode-server";
+name="in-app-purchase";
 cwd=`pwd`;
 # list directories/files to lint
 list=();

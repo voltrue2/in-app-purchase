@@ -24,6 +24,20 @@ The module automatically detects the service without you telling it!
 
 For more details: [HERE](#auto-service-detection)
 
+### Support for Promise
+
+The following methods now support Promise.
+
+Thanks to [superandrew213](https://github.com/superandrew213) for the [PR](https://github.com/voltrue2/in-app-purchase/pull/99).
+
+- `.setup()`
+
+- `.validate()`
+
+- `.validateOnce()`
+
+- `.refreshGoogleToken()`
+
 ### Debug Logging
 
 The module can optionally turn on verbose debug log.

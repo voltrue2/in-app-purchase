@@ -7,6 +7,10 @@ init:
 	npm install
 	@echo 'done'
 
+.PHONY: lint
+lint:
+	./lint.sh
+
 .PHONY: test
 test:
 	./node_modules/mocha/bin/mocha test/apple.js -R spec -b --timeout=5000 --path=false

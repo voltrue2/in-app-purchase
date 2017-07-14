@@ -84,6 +84,52 @@ describe('#### Google ####', function () {
 	
 	});
 		
+	it('Can validate google in-app-purchase w/ Promise & auto service detection', function (done) {
+	
+		if (!Promise) {
+			return done();
+		}
+	
+		var path = process.argv[process.argv.length - 2].replace('--path=', '');
+		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
+
+		var iap = require('../');
+		iap.config({
+			verbose: true,
+			googlePublicKeyPath: pkPath
+		});
+		var receipt = JSON.parse(fs.readFileSync(path, 'utf8'));
+		var promise = iap.setup();
+		promise.then(function () {
+			var val = iap.validate(receipt);
+			val.then(function (response) {
+				console.log('Validate w/ Promise >>>>>>>>>>>>>>>>', response);
+				assert.equal(iap.isValidated(response), true);
+				var data = iap.getPurchaseData(response);
+				for (var i = 0, len = data.length; i < len; i++) {
+					console.log('parsed purchased data', i, data[i]);
+					assert(data[i].productId);
+					assert(data[i].transactionId);
+					assert(data[i].purchaseDate);
+					assert(data[i].quantity);
+				}
+				done();
+			}).catch(function (error) {
+				throw error;
+			});
+		}).catch(function (error) {
+			throw error;
+		});
+	
+	});
+		
 	it('Can validate google in-app-purchase', function (done) {
 		
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');

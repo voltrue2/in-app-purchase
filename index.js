@@ -73,6 +73,11 @@ module.exports.getService = function (receipt) {
 };
 
 module.exports.validate = function (service, receipt, cb) {
+	if (receipt === undefined && cb === undefined) {
+		// we are given 1 argument as: const promise = .validate(receipt)
+		receipt = service;
+		service = module.exports.getService(receipt);
+	}
 	if (cb === undefined && typeof receipt === 'function') {
 		// we are given 2 arguemnts as: .validate(receipt, cb)
 		cb = receipt;
@@ -105,6 +110,11 @@ module.exports.validate = function (service, receipt, cb) {
 };
 
 module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
+	if (receipt === undefined && cb === undefined) {
+		// we are given 2 arguments as: const promise = .validateOnce(receipt, secretOrPubKey)
+		receipt = service;
+		service = module.exports.getService(receipt);
+	}
 	if (cb === undefined && typeof receipt === 'function') {
 		// we are given 3 arguemnts as: .validateOnce(receipt, secretPubKey, cb)
 		cb = receipt;

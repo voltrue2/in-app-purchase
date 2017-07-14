@@ -41,6 +41,43 @@ describe('#### Apple ####', function () {
 	
 	});
 	
+	it('Can validate apple in-app-purchase w/ Promise & auto service detection', function (done) {
+		
+		if (!Promise) {
+			return done();
+		}
+	
+		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+
+		var iap = require('../');
+		iap.config({
+			verbose: true
+		});
+		var receipt = fs.readFileSync(path, 'utf8');
+		var promise = iap.setup();
+		promise.then(function () {
+			var val = iap.validate(receipt);
+			val.then(function (response) {
+				var data = iap.getPurchaseData(response, { ignoreExpired: true });
+				for (var i = 0, len = data.length; i < len; i++) {
+					console.log('parsedPurchaseData:', i, data);
+					assert(data[i].productId);
+					assert(data[i].purchaseDate);
+					assert(data[i].quantity);
+				}
+				done();
+			}).catch(function (error) {
+				throw error;
+			});
+		}).catch(function (error) {
+			throw error;
+		});	
+	});
+	
 	it('Can validate apple in-app-purchase', function (done) {
 		
 		var path = process.argv[process.argv.length - 1].replace('--path=', '');

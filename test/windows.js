@@ -34,6 +34,42 @@ describe('#### Windows ####', function () {
 	
 	});
 	
+	it('Can validate windows in-app-purchase w/ Promise & auto-service detection', function (done) {
+		
+		if (!Promise) {
+			return done();
+		}
+	
+		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		
+		var iap = require('../');
+		var receipt = fs.readFileSync(path, 'utf8');
+		var promise = iap.setup();
+		promise.then(function () {
+			var val = iap.validate(receipt);
+			val.then(function (response) {
+				assert.equal(iap.isValidated(response), true);
+				var data = iap.getPurchaseData(response);
+				for (var i = 0, len = data.length; i < len; i++) {
+					assert(data[i].productId);
+					assert(data[i].purchaseDate);
+					assert(data[i].expirationDate);
+					assert(data[i].quantity);
+				}
+				done();
+			}).catch(function (error) {
+				throw error;
+			});
+		}).catch(function (error) {
+			throw error;
+		});
+	
+	});
+	
 	it('Can validate windows in-app-purchase w/ auto-service detection', function (done) {
 		
 		var path = process.argv[process.argv.length - 1].replace('--path=', '');

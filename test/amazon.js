@@ -46,6 +46,40 @@ describe('#### Amazon ####', function () {
 		});
 	});
 
+	it('Can validate amazon in-app-purchase w/ Promise & auto-service detection', function (done) {
+		
+		if (!Promise) {
+			return done();
+		}
+
+		fs.readFile(path, 'UTF-8', function (error, data) {
+			assert.equal(error, null);
+			iap.config({
+				verbose: true,
+				secret: sharedKey
+			});
+			var promise = iap.setup();
+			promise.then(function () {
+				var receipt = JSON.parse(data.toString());
+				var val = iap.validate(receipt);
+				val.then(function (response) {
+					assert.equal(iap.isValidated(response), true);
+					var pdata = iap.getPurchaseData(response);
+					for (var i = 0, len = pdata.length; i < len; i++) {
+						assert(pdata[i].productId);
+						assert(pdata[i].purchaseDate);
+						assert(pdata[i].quantity);
+					}
+					done();
+				}).catch(function (error) {
+					throw error;
+				});
+			}).catch(function (error) {
+				throw error;
+			});
+		});
+	});
+
 	it('Can validate amazon in-app-purchase w/ auto-service detection', function (done) {
 		fs.readFile(path, 'UTF-8', function (error, data) {
 			assert.equal(error, null);

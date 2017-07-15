@@ -1,3 +1,5 @@
+'use strict';
+
 var async = require('./lib/async');
 
 var apple = require('./lib/apple');
@@ -25,6 +27,13 @@ module.exports.config = function (configIn) {
 };
 
 module.exports.setup = function (cb) {
+	if (!cb && Promise) {
+		return new Promise(function (resolve, reject) {
+			module.exports.setup(function (error) {
+				return error ? reject(error) : resolve();
+			});
+		});
+	}
 	async.parallel([
 		function (next) {
 			apple.setup(next);
@@ -64,11 +73,23 @@ module.exports.getService = function (receipt) {
 };
 
 module.exports.validate = function (service, receipt, cb) {
+	if (receipt === undefined && cb === undefined) {
+		// we are given 1 argument as: const promise = .validate(receipt)
+		receipt = service;
+		service = module.exports.getService(receipt);
+	}
 	if (cb === undefined && typeof receipt === 'function') {
 		// we are given 2 arguemnts as: .validate(receipt, cb)
 		cb = receipt;
 		receipt = service;
 		service = module.exports.getService(receipt); 
+	}
+	if (!cb && Promise) {
+		return new Promise(function (resolve, reject) {
+			module.exports.validate(service, receipt, function (error, response) {
+				return error ? reject(error) : resolve(response);
+			});
+		});
 	}
 	switch (service) {
 		case module.exports.APPLE:
@@ -89,11 +110,24 @@ module.exports.validate = function (service, receipt, cb) {
 };
 
 module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
+	if (receipt === undefined && cb === undefined) {
+		// we are given 2 arguments as: const promise = .validateOnce(receipt, secretOrPubKey)
+		receipt = service;
+		service = module.exports.getService(receipt);
+	}
 	if (cb === undefined && typeof receipt === 'function') {
 		// we are given 3 arguemnts as: .validateOnce(receipt, secretPubKey, cb)
 		cb = receipt;
 		receipt = service;
 		service = module.exports.getService(receipt); 
+	}
+	
+	if (!cb && Promise) {
+		return new Promise(function (resolve, reject) {
+			module.exports.validateOnce(service, secretOrPubKey, receipt, function (error, response) {
+				return error ? reject(error) : resolve(response);
+			});
+		});
 	}
 	
 	if (!secretOrPubKey && service !== module.exports.APPLE && service !== module.exports.WINDOWS) {
@@ -165,7 +199,13 @@ module.exports.getPurchaseData = function (purchaseData, options) {
 };
 
 module.exports.refreshGoogleToken = function (cb) {
-	
+	if (!cb && Promise) {
+		return new Promise(function (resolve, reject) {
+			module.exports.refreshGoogleToken(function (error, response) {
+				return error ? reject(error) : resolve(response);
+			});
+		});
+	}
 	google.refreshToken(cb);
 
 };

@@ -13,7 +13,7 @@ var IS_WINDOWS = '<\/Receipt>';
 
 var amazon;
 
-function handlePromiseFunctionCb(error, response) {
+function handlePromisedFunctionCb(error, response) {
 	if(error) {
 		if (response !== null && typeof response === 'object') {
 			return this.reject(JSON.stringify(response));
@@ -39,7 +39,7 @@ module.exports.config = function (configIn) {
 module.exports.setup = function (cb) {
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
-			module.exports.setup(handlePromiseFunctionCb.bind({ resolve: resolve, reject: reject }));
+			module.exports.setup(handlePromisedFunctionCb.bind({ resolve: resolve, reject: reject }));
 		});
 	}
 	async.parallel([
@@ -94,7 +94,7 @@ module.exports.validate = function (service, receipt, cb) {
 	}
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
-			module.exports.validate(service, receipt, handlePromiseFunctionCb.bind({ resolve: resolve, reject: reject }));
+			module.exports.validate(service, receipt, handlePromisedFunctionCb.bind({ resolve: resolve, reject: reject }));
 		});
 	}
 	switch (service) {
@@ -130,7 +130,7 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
 	
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
-			module.exports.validateOnce(service, secretOrPubKey, receipt, handlePromiseFunctionCb.bind({ resolve: resolve, reject: reject }));
+			module.exports.validateOnce(service, secretOrPubKey, receipt, handlePromisedFunctionCb.bind({ resolve: resolve, reject: reject }));
 		});
 	}
 	
@@ -205,7 +205,7 @@ module.exports.getPurchaseData = function (purchaseData, options) {
 module.exports.refreshGoogleToken = function (cb) {
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
-			module.exports.refreshGoogleToken(handlePromiseFunctionCb.bind({ resolve: resolve, reject: reject }));
+			module.exports.refreshGoogleToken(handlePromisedFunctionCb.bind({ resolve: resolve, reject: reject }));
 		});
 	}
 	google.refreshToken(cb);

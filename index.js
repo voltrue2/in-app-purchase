@@ -13,6 +13,16 @@ var IS_WINDOWS = '<\/Receipt>';
 
 var amazon;
 
+function handlePromiseFunctionCb(error, response) {
+	if(error) {
+		if (response !== null && typeof response === 'object') {
+			return this.reject(JSON.stringify(response));
+		}
+		return this.reject({ status: null, message: error });
+	}
+	return this.resolve(response);
+};
+
 module.exports.APPLE = constants.SERVICES.APPLE;
 module.exports.GOOGLE = constants.SERVICES.GOOGLE;
 module.exports.WINDOWS = constants.SERVICES.WINDOWS;
@@ -29,9 +39,7 @@ module.exports.config = function (configIn) {
 module.exports.setup = function (cb) {
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
-			module.exports.setup(function (error) {
-				return error ? reject(JSON.stringify({ status: null, message: error })) : resolve();
-			});
+			module.exports.setup(handlePromiseFunctionCb.bind({ resolve: resolve, reject: reject }));
 		});
 	}
 	async.parallel([
@@ -86,15 +94,7 @@ module.exports.validate = function (service, receipt, cb) {
 	}
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
-			module.exports.validate(service, receipt, function (error, response) {
-				if(error) {
-					if (response !== null && typeof response === 'object') {
-						return reject(JSON.stringify(response));
-				    	}
-				    	return reject(error);
-				}
-				return resolve(response);
-			});
+			module.exports.validate(service, receipt, handlePromiseFunctionCb.bind({ resolve: resolve, reject: reject }));
 		});
 	}
 	switch (service) {
@@ -130,15 +130,7 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
 	
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
-			module.exports.validateOnce(service, secretOrPubKey, receipt, function (error, response) {
-				if(error) {
-					if (response !== null && typeof response === 'object') {
-						return reject(JSON.stringify(response));
-				    	}
-				    	return reject(error);
-				}
-				return resolve(response);
-			});
+			module.exports.validateOnce(service, secretOrPubKey, receipt, handlePromiseFunctionCb.bind({ resolve: resolve, reject: reject }));
 		});
 	}
 	
@@ -213,15 +205,7 @@ module.exports.getPurchaseData = function (purchaseData, options) {
 module.exports.refreshGoogleToken = function (cb) {
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
-			module.exports.refreshGoogleToken(function (error, response) {
-				if(error) {
-					if (response !== null && typeof response === 'object') {
-						return reject(JSON.stringify(response));
-				    	}
-				    	return reject(error);
-				}
-				return resolve(response);
-			});
+			module.exports.refreshGoogleToken(handlePromiseFunctionCb.bind({ resolve: resolve, reject: reject }));
 		});
 	}
 	google.refreshToken(cb);

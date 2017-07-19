@@ -15,10 +15,12 @@ var amazon;
 
 function handlePromisedFunctionCb(error, response) {
 	if(error) {
+		var errorData = { error: error, status: null, message: null };
 		if (response !== null && typeof response === 'object') {
-			return this.reject(JSON.stringify(response));
+			errorData.status = response.status;
+			errorData.message = response.message;
 		}
-		return this.reject({ status: null, message: error });
+		return this.reject(JSON.stringify(errorData));
 	}
 	return this.resolve(response);
 };

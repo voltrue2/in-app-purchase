@@ -30,7 +30,7 @@ module.exports.setup = function (cb) {
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
 			module.exports.setup(function (error) {
-				return error ? reject(JSON.stringify({ status: null, message: error }) : resolve();
+				return error ? reject(JSON.stringify({ status: null, message: error })) : resolve();
 			});
 		});
 	}
@@ -87,7 +87,13 @@ module.exports.validate = function (service, receipt, cb) {
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
 			module.exports.validate(service, receipt, function (error, response) {
-				return error ? reject(JSON.stringify(response)) : resolve(response);
+				if(error) {
+					if (response !== null && typeof response === 'object') {
+						return reject(JSON.stringify(response));
+				    	}
+				    	return reject(error);
+				}
+				return resolve(response);
 			});
 		});
 	}
@@ -125,7 +131,13 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
 			module.exports.validateOnce(service, secretOrPubKey, receipt, function (error, response) {
-				return error ? reject(JSON.stringify(response)) : resolve(response);
+				if(error) {
+					if (response !== null && typeof response === 'object') {
+						return reject(JSON.stringify(response));
+				    	}
+				    	return reject(error);
+				}
+				return resolve(response);
 			});
 		});
 	}
@@ -202,7 +214,13 @@ module.exports.refreshGoogleToken = function (cb) {
 	if (!cb && Promise) {
 		return new Promise(function (resolve, reject) {
 			module.exports.refreshGoogleToken(function (error, response) {
-				return error ? reject(JSON.stringify(response)) : resolve(response);
+				if(error) {
+					if (response !== null && typeof response === 'object') {
+						return reject(JSON.stringify(response));
+				    	}
+				    	return reject(error);
+				}
+				return resolve(response);
 			});
 		});
 	}

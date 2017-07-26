@@ -14,7 +14,7 @@ var IS_WINDOWS = '<\/Receipt>';
 var amazon;
 
 function handlePromisedFunctionCb(error, response) {
-	if(error) {
+	if (error) {
 		var errorData = { error: error, status: null, message: null };
 		if (response !== null && typeof response === 'object') {
 			errorData.status = response.status;

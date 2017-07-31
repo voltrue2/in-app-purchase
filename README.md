@@ -64,6 +64,26 @@ iap.config({
 });
 ```
 
+### Google Play Subscriptions
+
+As of version `1.6.0`, the module now automatically detects subscription receipts and validates them accordingly.
+
+In order to make this work properly, you must provide the following:
+
+```
+iap.config({
+	googleClientID: '<Google Play client ID>',
+	googleClientSecret: '<Google Play client secret>',
+	googleRefToken: '<Google Play refresh token>'
+});
+```
+
+**NOTE**: `googleAccToken` is not required.
+
+This also makes `.isExpired()` compatible with Google Play purchases.
+
+**TODO**: `.validateOnce(...)` must be updated to support multiple Google Play API tokens (You may still use it by feeding the tokens via `.config(...)`).
+
 ### Methods
 
 #### .validate(service [constant], receipt [string or object], callback [function])

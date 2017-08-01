@@ -82,7 +82,24 @@ iap.config({
 
 This also makes `.isExpired()` compatible with Google Play purchases.
 
-**TODO**: `.validateOnce(...)` must be updated to support multiple Google Play API tokens (You may still use it by feeding the tokens via `.config(...)`).
+**TODO**: 
+
+As of version `1.6.1` `.validateOnce(...)` supports this by giving:
+
+```javascript
+const params = {
+	clientId: '<Google Play client ID>',
+	clientSecret: '<Google Play client secret>',
+	refreshToken: '<Google Play refresh token>'
+};
+iap.validateOnce(receipt, params, (...) => {
+	// do things..
+});
+``` 
+
+### .getPurchaseData() w/ ignoreExpired for Android works
+
+As of version `1.6.1`, `ignoreExpired` options for Android is supported. 
 
 ### Methods
 
@@ -153,10 +170,16 @@ Instead of passing `iap.APPLE`, `iap.GOOGLE`, `iap.AMAZON`, or `iap.WINDOWS` to 
 });
 ```
 
-### .validateOnce(receipt [mixed], secretPublicKey [string], callback [function])
+### .validateOnce(receipt [mixed], params [mixed], callback [function])
+
+#### params [mixed]
+
+For Apple subscription, set params as a `string` of shared password.
+
+For Google Play subscription, set params as an `object` of `{ clientId, clientSecret, refreshToken }`.
 
 ```javascript
-.validateOnce(receipt, secretPublicKey, function (...) {
+.validateOnce(receipt, params, function (...) {
 	// do something
 })
 ```
@@ -365,13 +388,13 @@ You will need to set the public key value, which is the same value as you would 
 
 This would be the public key value for sandbox.
 
-`export=GOOGLE_IAB_PUBLICKEY_SANDBOX=xxxxxxxxxxxxxxxxxxxxxxxx`.
+`export=GOOGLE_IAB_PUBLICKEY_SANDBOX=xxx`.
 
 #### GOOGLE_IAB_PUBLICKEY_LIVE
 
 This would be the public key value for live
 
-`export=GOOGLE_IAB_PUBLICKEY_LIVE=yyyyyyyyyyyyyyyyyyyyyyyyyy`.
+`export=GOOGLE_IAB_PUBLICKEY_LIVE=yyy`.
 
 **NOTE**: This works exactly the same as you were to use file(s) with one expection. You do **NOT** need to call `.config()` for GooglePlay since it will be using environment variables instead.
 

@@ -13,7 +13,6 @@ lint:
 
 .PHONY: test
 test:
-	./lint.sh
 	./node_modules/mocha/bin/mocha test/apple.js -R spec -b --timeout=5000 --path=false
 	./node_modules/mocha/bin/mocha test/google.js -R spec -b --path=false --pk=false
 	./node_modules/mocha/bin/mocha test/amazon.js -R spec -b --timeout=5000 --sharedKey=false --path=false

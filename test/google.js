@@ -294,8 +294,10 @@ describe('#### Google ####', function () {
 				assert.equal(error, undefined);
 				var receipt = JSON.parse(data.toString());
 				iap.validate(iap.GOOGLE, receipt, function (error, response) {
-					assert.equal(error.message, 'invalid_client');
 					assert(error);
+					if (error.message) {
+						assert.equal(error.message, '{"error":"invalid_client","error_description":"The OAuth client was not found."}');
+					}
 					done();
 				});
 			});

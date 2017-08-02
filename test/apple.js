@@ -315,7 +315,13 @@ describe('#### Apple ####', function () {
 				expires_date_pst: '2016-06-14 09:03:33 America/Los_Angeles',
 				web_order_line_item_id: '210000038560503',
 				is_trial_period: 'false' }
-			]
+			],
+			pending_renewal_info: 
+   		[ { expiration_intent: '1',
+   	    auto_renew_product_id: 'com.foo.test.subscription.sub.allaccess',
+   	    is_in_billing_retry_period: '0',
+   	    product_id: 'com.foo.test.subscription.sub.oneaweek.monthly',
+   	    auto_renew_status: '0' } ]
 		};
 		iap.config({
 			verbose: true
@@ -332,6 +338,10 @@ describe('#### Apple ####', function () {
 				throw new Error('missing purchase data');
 			}
 			console.log(parsed[i].productId, parsed[i].transactionId);
+		}
+		
+		if (parsed[parsed.length - 1].expirationIntent === undefined) {
+			throw new Error('missing purchase renewal data');
 		}
 
 	});

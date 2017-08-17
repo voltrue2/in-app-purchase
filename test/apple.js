@@ -134,6 +134,7 @@ describe('#### Apple ####', function () {
 					assert.equal(iap.isValidated(response), true);
 					var data = iap.getPurchaseData(response, { ignoreExpired: true });
 					for (var i = 0, len = data.length; i < len; i++) {
+						console.log('parsedPurchaseData:', i, data);
 						assert(data[i].productId);
 						assert(data[i].purchaseDate);
 						assert(data[i].quantity);
@@ -167,6 +168,7 @@ describe('#### Apple ####', function () {
 					assert.equal(iap.isValidated(response), true);
 					var data = iap.getPurchaseData(response, { ignoreExpired: true });
 					for (var i = 0, len = data.length; i < len; i++) {
+						console.log('parsedPurchaseData:', i, data);
 						assert(data[i].productId);
 						assert(data[i].purchaseDate);
 						assert(data[i].quantity);

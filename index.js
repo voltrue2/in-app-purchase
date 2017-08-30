@@ -27,6 +27,7 @@ function handlePromisedFunctionCb(resolve, reject) {
 	};
 }
 
+module.exports.UNITY = constants.SERVICES.UNITY;
 module.exports.APPLE = constants.SERVICES.APPLE;
 module.exports.GOOGLE = constants.SERVICES.GOOGLE;
 module.exports.WINDOWS = constants.SERVICES.WINDOWS;
@@ -64,7 +65,10 @@ module.exports.getService = function (receipt) {
 		return module.exports.WINDOWS;
 	}
 	if (typeof receipt === 'object') {
-		// receipt could be either Google or Amazon
+		// receipt could be either Google, Amazon, or Unity (Apple or Google)
+		if (isUnityReceipt(receipt)) {
+			return module.exports.UNITY;
+		}
 		if (receipt.signature) {
 			return module.exports.GOOGLE;
 		} else {
@@ -102,6 +106,8 @@ module.exports.validate = function (service, receipt, cb) {
 		});
 	}
 	switch (service) {
+		case module.exports.UNITY:
+			
 		case module.exports.APPLE:
 			apple.validatePurchase(null, receipt, cb);
 			break;
@@ -141,6 +147,11 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
 	if (!secretOrPubKey && service !== module.exports.APPLE && service !== module.exports.WINDOWS) {
 		verbose.log('<.validateOnce>', service, receipt);
 		return cb(new Error('missing secret or public key for dynamic validation:' + service));
+	}
+
+	if (service === module.exports.UNITY) {
+		service = getServiceFromUnityReceipt(receipt);
+		receipt = parseUnityReceipt(receipt);
 	}
 	
 	switch (service) {
@@ -215,6 +226,36 @@ module.exports.refreshGoogleToken = function (cb) {
 	google.refreshToken(cb);
 
 };
+
+function isUnityReceipt(receipt) {
+	if (receipt.Store) {
+		if (receipt.Store === constants.UNITY.GOOGLE || receipt.UNIT.APPLE) {
+			return true;
+		}
+	}
+	return false;
+}
+
+function getServiceFromUnityReceipt(receipt) {
+	switch (receipt.Store) {
+		case constants.UNITY.GOOGLE:
+			return module.exports.GOOGLE;
+		case constants.UNITY.APPLE:
+			return module.exports.APPLE;
+	}
+}
+
+function parseUnityReceipt(receipt) {
+	switch (receipt.Store) {
+		case constants.UNITY.GOOGLE:
+			return {
+				data: receipt.Payload.json,
+				signature: receipt.Payload.signature
+			};			
+		case constants.UNITY.APPLE:
+			return receipt.Payload;
+	}
+}
 
 // test use only
 module.exports.reset = function () {

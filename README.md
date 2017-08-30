@@ -24,6 +24,19 @@ The module automatically detects the service without you telling it!
 
 For more details: [HERE](#auto-service-detection)
 
+### Support for Unity Receipts
+
+I have added support for Unity receipts in this version of the module: [github](https://github.com/voltrue2/in-app-purchase)
+
+The code is untested for now. If anyone how is willing to either test the code or give me receipts to test, it would be really great!
+
+```javascript
+const iap = require('in-app-purchase');
+iap.validate(unityReceipt, () => {
+	...
+});
+```
+
 ### Support for Promise
 
 The following methods now support Promise.

@@ -4,6 +4,80 @@ var fixedPath = process.cwd() + '/test/receipts/apple';
 
 describe('#### Apple ####', function () {
 	
+	it('Can validate apple in-app-purchase w/ auto-service detection', function (done) {
+		
+		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+
+		var iap = require('../');
+		iap.config({
+			verbose: true
+		});
+		iap.setup(function (error) {
+			assert.equal(error, undefined);
+			fs.readFile(path, function (error, data) {
+				assert.equal(error, undefined);
+				var receipt = data.toString();
+				iap.validate(receipt, function (error, response) {
+					if (error) {
+						console.error('Error >>>>', error);
+					}
+					assert.equal(error, undefined);
+					assert.equal(iap.isValidated(response), true);
+					var data = iap.getPurchaseData(response, { ignoreExpired: true });
+					for (var i = 0, len = data.length; i < len; i++) {
+						console.log('parsedPurchaseData:', i, data);
+						assert(data[i].productId);
+						assert(data[i].purchaseDate);
+						assert(data[i].quantity);
+					}
+					done();
+				});
+			});
+		});
+	
+	});
+	
+	it('Can validate apple in-app-purchase w/ Promise & auto service detection', function (done) {
+		
+		if (!Promise) {
+			return done();
+		}
+	
+		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+
+		var iap = require('../');
+		iap.config({
+			verbose: true
+		});
+		var receipt = fs.readFileSync(path, 'utf8');
+		var promise = iap.setup();
+		promise.then(function () {
+			var val = iap.validate(receipt);
+			val.then(function (response) {
+				var data = iap.getPurchaseData(response, { ignoreExpired: true });
+				for (var i = 0, len = data.length; i < len; i++) {
+					console.log('parsedPurchaseData:', i, data);
+					assert(data[i].productId);
+					assert(data[i].purchaseDate);
+					assert(data[i].quantity);
+				}
+				done();
+			}).catch(function (error) {
+				throw error;
+			});
+		}).catch(function (error) {
+			throw error;
+		});	
+	});
+	
 	it('Can validate apple in-app-purchase', function (done) {
 		
 		var path = process.argv[process.argv.length - 1].replace('--path=', '');
@@ -26,6 +100,41 @@ describe('#### Apple ####', function () {
 					assert.equal(iap.isValidated(response), true);
 					var data = iap.getPurchaseData(response, { ignoreExpired: true });
 					for (var i = 0, len = data.length; i < len; i++) {
+						console.log('parsedPurchaseData:', i, data);
+						assert(data[i].productId);
+						assert(data[i].purchaseDate);
+						assert(data[i].quantity);
+					}
+					done();
+				});
+			});
+		});
+	
+	});
+	
+	it('Can validate apple in-app-purchase w/ .validateOnce() and w/ auto-service detection', function (done) {
+		
+		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+
+		var iap = require('../');
+		iap.config({
+			verbose: true
+		});
+		iap.setup(function (error) {
+			assert.equal(error, undefined);
+			fs.readFile(path, function (error, data) {
+				assert.equal(error, undefined);
+				var receipt = data.toString();
+				iap.validateOnce(receipt, null, function (error, response) {
+					assert.equal(error, undefined);
+					assert.equal(iap.isValidated(response), true);
+					var data = iap.getPurchaseData(response, { ignoreExpired: true });
+					for (var i = 0, len = data.length; i < len; i++) {
+						console.log('parsedPurchaseData:', i, data);
 						assert(data[i].productId);
 						assert(data[i].purchaseDate);
 						assert(data[i].quantity);
@@ -59,12 +168,36 @@ describe('#### Apple ####', function () {
 					assert.equal(iap.isValidated(response), true);
 					var data = iap.getPurchaseData(response, { ignoreExpired: true });
 					for (var i = 0, len = data.length; i < len; i++) {
+						console.log('parsedPurchaseData:', i, data);
 						assert(data[i].productId);
 						assert(data[i].purchaseDate);
 						assert(data[i].quantity);
 					}
 					done();
 				});
+			});
+		});
+	
+	});
+	
+	it('Can NOT validate apple in-app-purchase with incorrect receipt w/ auto-service detection', function (done) {
+		
+		var path = process.argv[process.argv.length - 1].replace('--path=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+
+		var iap = require('../');
+		iap.config({
+			verbose: true
+		});
+		iap.setup(function (error) {
+			assert.equal(error, undefined);
+			iap.validate('fake-receipt', function (error, response) {
+				assert(error);
+				assert.equal(iap.isValidated(response), false);
+				done();
 			});
 		});
 	
@@ -197,6 +330,7 @@ describe('#### Apple ####', function () {
 		];
 		for (var i = 0, len = parsed.length; i < len; i++) {
 			if (res.indexOf(parsed[i].productId) === -1) {
+				console.error(parsed[i]);
 				throw new Error('missing purchase data');
 			}
 			console.log(parsed[i].productId, parsed[i].transactionId);

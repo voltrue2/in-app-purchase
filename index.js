@@ -78,6 +78,10 @@ module.exports.getService = function (receipt) {
 	try {
 		// receipt could be either Google or Amazon
 		var parsed = JSON.parse(receipt);
+		// receipt could be either Google, Amazon, or Unity (Apple or Google)
+		if (isUnityReceipt(parsed)) {
+			return module.exports.UNITY;
+		}
 		if (parsed.signature) {
 			return module.exports.GOOGLE;
 		} else {
@@ -105,9 +109,13 @@ module.exports.validate = function (service, receipt, cb) {
 			module.exports.validate(service, receipt, handlePromisedFunctionCb(resolve, reject));
 		});
 	}
+	
+	if (service === module.exports.UNITY) {
+		service = getServiceFromUnityReceipt(receipt);
+		receipt = parseUnityReceipt(receipt);
+	}
+		
 	switch (service) {
-		case module.exports.UNITY:
-			
 		case module.exports.APPLE:
 			apple.validatePurchase(null, receipt, cb);
 			break;
@@ -143,15 +151,15 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
 			module.exports.validateOnce(service, secretOrPubKey, receipt, handlePromisedFunctionCb(resolve, reject));
 		});
 	}
-	
-	if (!secretOrPubKey && service !== module.exports.APPLE && service !== module.exports.WINDOWS) {
-		verbose.log('<.validateOnce>', service, receipt);
-		return cb(new Error('missing secret or public key for dynamic validation:' + service));
-	}
 
 	if (service === module.exports.UNITY) {
 		service = getServiceFromUnityReceipt(receipt);
 		receipt = parseUnityReceipt(receipt);
+	}
+	
+	if (!secretOrPubKey && service !== module.exports.APPLE && service !== module.exports.WINDOWS) {
+		verbose.log('<.validateOnce>', service, receipt);
+		return cb(new Error('missing secret or public key for dynamic validation:' + service));
 	}
 	
 	switch (service) {
@@ -229,7 +237,7 @@ module.exports.refreshGoogleToken = function (cb) {
 
 function isUnityReceipt(receipt) {
 	if (receipt.Store) {
-		if (receipt.Store === constants.UNITY.GOOGLE || receipt.UNIT.APPLE) {
+		if (receipt.Store === constants.UNITY.GOOGLE || constants.UNITY.APPLE) {
 			return true;
 		}
 	}
@@ -237,15 +245,25 @@ function isUnityReceipt(receipt) {
 }
 
 function getServiceFromUnityReceipt(receipt) {
+	if (typeof receipt !== 'object') {
+		// at this point we have already established the fact that receipt is a valid JSON string
+		receipt = JSON.parse(receipt);
+	}
 	switch (receipt.Store) {
 		case constants.UNITY.GOOGLE:
 			return module.exports.GOOGLE;
 		case constants.UNITY.APPLE:
 			return module.exports.APPLE;
 	}
+	// invalid Store value
+	return null;
 }
 
 function parseUnityReceipt(receipt) {
+	if (typeof receipt !== 'object') {
+		// at this point we have already established the fact that receipt is a valid JSON string
+		receipt = JSON.parse(receipt);
+	}
 	switch (receipt.Store) {
 		case constants.UNITY.GOOGLE:
 			return {

@@ -43,6 +43,44 @@ describe('#### Google ####', function () {
 
 	});
 		
+	it('Can validate Unity google in-app-purchase w/ auto-service detection', function (done) {
+	
+		var path = process.cwd() + '/test/receipts/unity_google';	
+		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
+
+		var iap = require('../');
+		iap.config({
+			verbose: true,
+			googlePublicKeyPath: pkPath
+		});
+		iap.setup(function (error) {
+			assert.equal(error, undefined);
+			fs.readFile(path, function (error, data) {
+				assert.equal(error, undefined);
+				var receipt = JSON.parse(data.toString());
+				iap.validate(receipt, function (error, response) {
+				console.log('>>>>>>>>>>>>>>>>', response);
+					assert.equal(error, undefined);
+					assert.equal(iap.isValidated(response), true);
+					var data = iap.getPurchaseData(response);
+					for (var i = 0, len = data.length; i < len; i++) {
+						console.log('parsed purchased data', i, data[i]);
+						assert(data[i].productId);
+						assert(data[i].transactionId);
+						assert(data[i].purchaseDate);
+						assert(data[i].quantity);
+					}
+					done();
+				});
+			});
+		});
+	
+	});
+		
 	it('Can validate google in-app-purchase w/ auto-service detection', function (done) {
 		
 		var path = process.argv[process.argv.length - 2].replace('--path=', '');
@@ -630,6 +668,52 @@ describe('#### Google ####', function () {
 	// /**********************************
 	// * With Dynamically Fed Public Key *
 	// **********************************/
+		
+	it('Can validate Unity google in-app-purchase with dynamically fed public key', function (done) {
+	
+		var exec = require('child_process').exec;	
+		var path = process.cwd() + '/test/receipts/unity_google';
+		var pkPath = process.argv[process.argv.length - 1].replace('--pk=', '');
+
+		if (path === 'false') {
+			path = fixedPath;
+		}
+		if (pkPath === 'false') {
+			pkPath = fixedPkPath;
+		}
+
+		var iap = require('../');
+		iap.reset();
+		fs.readFile(pkPath + 'iap-live', 'utf-8', function (error, pkeyValue) {
+			assert.equal(error, undefined);
+			iap.config({
+				verbose: true,
+			});
+			var pubkey = pkeyValue.replace(/(\r\n|\n|\r)/gm, '');
+			assert.equal(error, undefined);
+			// now test
+			iap.setup(function (error) {
+				assert.equal(error, undefined);
+				fs.readFile(path, function (error, data) {
+					assert.equal(error, undefined);
+					var receipt = data.toString();
+					iap.validateOnce(JSON.parse(receipt), pubkey, function (error, response) {
+						assert.equal(error, undefined);
+						assert.equal(iap.isValidated(response), true);
+						var data = iap.getPurchaseData(response);
+						for (var i = 0, len = data.length; i < len; i++) {
+							assert(data[i].transactionId);
+							assert(data[i].productId);
+							assert(data[i].purchaseDate);
+							assert(data[i].quantity);
+						}
+						exec('unset GOOGLE_IAB_PUBLICKEY_SANDBOX', done);
+					});
+				});
+			});
+		});
+	
+	});
 		
 	it('Can validate google in-app-purchase with dynamically fed public key', function (done) {
 	

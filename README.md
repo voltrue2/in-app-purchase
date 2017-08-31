@@ -26,9 +26,13 @@ For more details: [HERE](#auto-service-detection)
 
 ### Support for Unity Receipts
 
-I have added support for Unity receipts in this version of the module: [github](https://github.com/voltrue2/in-app-purchase)
+As of version `1.7.0`, the module supports Unity receipts. [Unity Purchase](https://docs.unity3d.com/Manual/UnityIAPPurchaseReceipts.html)
 
-The code is untested for now. If anyone how is willing to either test the code or give me receipts to test, it would be really great!
+The receipt is a JSON that looks like as below:
+
+```
+{ "Store": "AppleAppStore", "Payload": "Apple Receipt" }
+```
 
 ```javascript
 const iap = require('in-app-purchase');
@@ -121,6 +125,8 @@ As of version `1.6.1`, `ignoreExpired` options for Android is supported.
 Validates an in-app-purchase receipt.
 
 **NOTE 1:**
+
+constant for Unity: `iap.UNITY`
 
 constant for iOS: `iap.APPLE`
 

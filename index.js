@@ -237,7 +237,7 @@ module.exports.refreshGoogleToken = function (cb) {
 
 function isUnityReceipt(receipt) {
 	if (receipt.Store) {
-		if (receipt.Store === constants.UNITY.GOOGLE || constants.UNITY.APPLE) {
+		if (receipt.Store === constants.UNITY.GOOGLE || receipt.Store === constants.UNITY.APPLE) {
 			return true;
 		}
 	}

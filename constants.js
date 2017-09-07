@@ -6,7 +6,8 @@ exports.SERVICES = {
 	APPLE: 'apple',
 	GOOGLE: 'google',
 	WINDOWS: 'windows',
-	AMAZON: 'amazon'
+	AMAZON: 'amazon',
+	ROKU: 'roku'
 };
 
 exports.UNITY = {

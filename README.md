@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/voltrue2/in-app-purchase.svg?branch=master)](https://travis-ci.org/voltrue2/in-app-purchase)
 
-A Node.js module for In-App-Purchase validation for iOS, Android, Amazon, and Windows.
+A Node.js module for In-App-Purchase validation for iOS, Android, Amazon, Windows and Roku.
 
 It can also validate multiple app's receipt with a single back-end using `.validateOnce()` that allows you to change `secret` or `public key` dynamically.
 
@@ -18,7 +18,7 @@ It can also validate multiple app's receipt with a single back-end using `.valid
 
 ### Auto-service detection has been added
 
-You no longer need to pass `iap.APPLE`, `iap.GOOGLE`, `iap.AMAZON`, or `iap.WINDIWS`.
+You no longer need to pass `iap.APPLE`, `iap.GOOGLE`, `iap.AMAZON`, or `iap.WINDOWS`.
 
 The module automatically detects the service without you telling it!
 
@@ -197,6 +197,8 @@ For Apple subscription, set params as a `string` of shared password.
 
 For Google Play subscription, set params as an `object` of `{ clientId, clientSecret, refreshToken }`.
 
+For Roku purchases, set params as a `string` with the API Key.
+
 ```javascript
 .validateOnce(receipt, params, function (...) {
 	// do something
@@ -371,6 +373,7 @@ inAppPurchase.config({
     secret: "abcdefghijklmnoporstuvwxyz", // this comes from Amazon
     applePassword: "1234567890abcdef1234567890abcdef", // this comes from iTunes Connect
     googlePublicKeyPath: "path/to/public/key/directory/" // this is the path to the directory containing iap-sanbox/iap-live files
+    rokuApiKey: "1234567890abcdef1234567890abcdef" // this comes from Roku Developer Dashboard
 });
 ```
 
@@ -517,7 +520,7 @@ Example: Windows
 ```javascript
 var iap = require('in-app-purchase');
 iap.setup(function (error) {
-    if (erorr) {
+    if (error) {
         // oops
     }
     iap.validate(iap.WINDOWS, windowsReceipt, function (err, windowsRes) {
@@ -530,6 +533,25 @@ iap.setup(function (error) {
     });
 });
 ```
+
+Example: Roku
+```javascript
+var iap = require('in-app-purchase');
+iap.setup(function (error) {
+    if (error) {
+        // oops
+    }
+    iap.validate(iap.ROKU, rokuReceipt, function (err, rokuRes) {
+        if (err) {
+            // failed to validate the purchase
+        }
+        if (iap.isValidated(rokuRes)) {
+            // yay good!
+        }
+    });
+});
+```
+
 ## Google Play Store API
 
 You can use Google Play Store API to check the state of a subscription (if the subscription is still valid, auto-renewal, etc). To do so, you need to setup iap module with Google Play Store API Information.

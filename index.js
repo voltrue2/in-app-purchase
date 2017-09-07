@@ -6,6 +6,7 @@ var apple = require('./lib/apple');
 var google = require('./lib/google');
 var windows = require('./lib/windows');
 var amazonManager = require('./lib/amazonManager');
+var roku = require('./lib/roku');
 var constants = require('./constants');
 var verbose = require('./lib/verbose');
 
@@ -32,12 +33,14 @@ module.exports.APPLE = constants.SERVICES.APPLE;
 module.exports.GOOGLE = constants.SERVICES.GOOGLE;
 module.exports.WINDOWS = constants.SERVICES.WINDOWS;
 module.exports.AMAZON = constants.SERVICES.AMAZON;
+module.exports.ROKU = constants.SERVICES.ROKU;
 
 module.exports.config = function (configIn) {
 	apple.readConfig(configIn);
 	google.readConfig(configIn);
 	windows.readConfig(configIn);
 	amazon = amazonManager.create(configIn);
+	roku.readConfig(configIn);
 	verbose.setup(configIn);
 };
 
@@ -75,6 +78,12 @@ module.exports.getService = function (receipt) {
 			return module.exports.AMAZON;
 		}
 	}
+	if (typeof receipt !== 'string') {
+		var characters = receipt.match(/\w/g) || ''
+		var dashes = receipt.match(/-/g) || ''
+		if (characters.length === 32 && dashes.length === 4) {
+			return module.exports.ROKU;
+		}
 	try {
 		// receipt could be either Google or Amazon
 		var parsed = JSON.parse(receipt);
@@ -128,6 +137,9 @@ module.exports.validate = function (service, receipt, cb) {
 		case module.exports.AMAZON:
 			amazon.validatePurchase(null, receipt, cb);
 			break;
+		case module.exports.ROKU:
+			roku.validatePurchase(null, receipt, cb);
+			break;
 		default:
 			return cb(new Error('invalid service given: ' + service));
 	}
@@ -175,6 +187,9 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
 		case module.exports.AMAZON:
 			amazon.validatePurchase(secretOrPubKey, receipt, cb);
 			break;
+		case module.exports.ROKU:
+			roku.validatePurchase(secretOrPubKey, receipt, cb);
+			break;
 		default:
 			verbose.log('<.validateOnce>', secretOrPubKey, receipt);
 			return cb(new Error('invalid service given: ' + service));
@@ -220,6 +235,8 @@ module.exports.getPurchaseData = function (purchaseData, options) {
 			return windows.getPurchaseData(purchaseData, options);
 		case module.exports.AMAZON:
 			return amazon.getPurchaseData(purchaseData, options);
+		case module.exports.ROKU:
+			return roku.getPurchaseData(purchaseData, options);
 		default:
 			return null;
 	}

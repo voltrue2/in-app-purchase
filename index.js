@@ -78,12 +78,13 @@ module.exports.getService = function (receipt) {
 			return module.exports.AMAZON;
 		}
 	}
-	if (typeof receipt !== 'string') {
-		var characters = receipt.match(/\w/g) || ''
-		var dashes = receipt.match(/-/g) || ''
+	if (typeof receipt === 'string') {
+		var characters = receipt.match(/\w/g) || '';
+		var dashes = receipt.match(/-/g) || '';
 		if (characters.length === 32 && dashes.length === 4) {
 			return module.exports.ROKU;
 		}
+	}
 	try {
 		// receipt could be either Google or Amazon
 		var parsed = JSON.parse(receipt);

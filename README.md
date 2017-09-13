@@ -8,7 +8,7 @@ A Node.js module for In-App-Purchase validation for iOS, Android, Amazon, Window
 
 It can also validate multiple app's receipt with a single back-end using `.validateOnce()` that allows you to change `secret` or `public key` dynamically.
 
-**NOTE** Thank you (gastonelhordoy)[https://github.com/gastonelhordoy] for adding Roku support!
+**NOTE** Thank you [gastonelhordoy](https://github.com/gastonelhordoy) for adding Roku support!
 
 ### Required node.js Version
 

@@ -8,6 +8,8 @@ A Node.js module for In-App-Purchase validation for iOS, Android, Amazon, Window
 
 It can also validate multiple app's receipt with a single back-end using `.validateOnce()` that allows you to change `secret` or `public key` dynamically.
 
+**NOTE** Thank you (gastonelhordoy)[https://github.com/gastonelhordoy] for adding Roku support!
+
 ### Required node.js Version
 
 `0.12.0 >=`
@@ -18,7 +20,7 @@ It can also validate multiple app's receipt with a single back-end using `.valid
 
 ### Auto-service detection has been added
 
-You no longer need to pass `iap.APPLE`, `iap.GOOGLE`, `iap.AMAZON`, or `iap.WINDOWS`.
+You no longer need to pass `iap.APPLE`, `iap.GOOGLE`, `iap.AMAZON`, `iap.ROKU`, or `iap.WINDOWS`.
 
 The module automatically detects the service without you telling it!
 
@@ -135,6 +137,8 @@ constant for Android: `iap.GOOGLE`
 constant for Windows: `iap.WINDOWS`
 
 constant for Amazon: `iap.AMAZON`
+
+constant for Roku: `iap.ROKU`
 
 As of version 1.4.0, we now have built-in auto-service detection in `.validate(receipt, callback)` and `.validateOnce(receipt, secretPubKey, callback)`.
 

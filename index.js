@@ -19,8 +19,7 @@ function handlePromisedFunctionCb(resolve, reject) {
 		if (error) {
 			var errorData = { error: error, status: null, message: null };
 			if (response !== null && typeof response === 'object') {
-				errorData.status = response.status;
-				errorData.message = response.message;
+				Object.assign(errorData, response);
 			}
 			return reject(JSON.stringify(errorData));
 		}

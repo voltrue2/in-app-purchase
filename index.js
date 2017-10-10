@@ -278,16 +278,24 @@ function getServiceFromUnityReceipt(receipt) {
 }
 
 function parseUnityReceipt(receipt) {
+	verbose.log('Parse Unity receipt as ' + receipt.Store);
 	if (typeof receipt !== 'object') {
 		// at this point we have already established the fact that receipt is a valid JSON string
 		receipt = JSON.parse(receipt);
 	}
 	switch (receipt.Store) {
 		case constants.UNITY.GOOGLE:
+			if (typeof receipt.Payload === 'string') {
+				try {
+					receipt.Payload = JSON.parse(receipt.Payload);
+				} catch (error) {
+					throw error;
+				}
+			}
 			return {
 				data: receipt.Payload.json,
 				signature: receipt.Payload.signature
-			};			
+			};
 		case constants.UNITY.APPLE:
 			return receipt.Payload;
 	}

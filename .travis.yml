@@ -6,7 +6,6 @@ node_js:
 - 4.2
 - 4.1
 - 4.0
-- 0.12
 env:
 - CXX=g++-4.8
 addons:

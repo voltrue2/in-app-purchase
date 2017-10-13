@@ -1,7 +1,7 @@
 {
 	"name": "in-app-purchase",
 	"description": "In-App-Purchase validation and subscription management for iOS, Android, Amazon, and Windows",
-	"version": "1.8.3",
+	"version": "1.8.4",
 	"author": {
 		"name": "Nobuyori Takahashi",
 		"email": "voltrue2@yahoo.com"
@@ -13,7 +13,7 @@
 	"dependencies": {
 		"xmldom": "0.1.19",
 		"xml-crypto": "0.8.2",
-		"request": "2.81.0"
+		"request": "2.83.0"
 	},
 	"devDependencies": {
 		"mocha": "1.18.2"

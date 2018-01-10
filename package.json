@@ -12,7 +12,7 @@
 	},
 	"dependencies": {
 		"xmldom": "0.1.19",
-		"xml-crypto": "0.8.2",
+		"xml-crypto": "0.10.1",
 		"request": "2.83.0"
 	},
 	"devDependencies": {

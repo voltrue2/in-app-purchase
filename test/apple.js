@@ -3,6 +3,24 @@ var fs = require('fs');
 var fixedPath = process.cwd() + '/test/receipts/apple';
 
 describe('#### Apple ####', function () {
+
+	it('Can parse the validated subscription receipt with duplicates', function (done) {
+		var iap = require('../');
+		var list = [{"quantity":"1","product_id":"basicmembership","transaction_id":"1000000381600687","original_transaction_id":"1000000381600687","purchase_date":"2018-03-08 19:58:55 Etc/GMT","purchase_date_ms":"1520539135000","purchase_date_pst":"2018-03-08 11:58:55 America/Los_Angeles","original_purchase_date":"2018-03-08 19:58:56 Etc/GMT","original_purchase_date_ms":"1520539136000","original_purchase_date_pst":"2018-03-08 11:58:56 America/Los_Angeles","expires_date":"2018-03-08 20:03:55 Etc/GMT","expires_date_ms":"1520539435000","expires_date_pst":"2018-03-08 12:03:55 America/Los_Angeles","web_order_line_item_id":"1000000038056225","is_trial_period":"false","is_in_intro_offer_period":"false"},{"quantity":"1","product_id":"basicmembership","transaction_id":"1000000381600903","original_transaction_id":"1000000381600687","purchase_date":"2018-03-08 20:03:55 Etc/GMT","purchase_date_ms":"1520539435000","purchase_date_pst":"2018-03-08 12:03:55 America/Los_Angeles","original_purchase_date":"2018-03-08 19:58:56 Etc/GMT","original_purchase_date_ms":"1520539136000","original_purchase_date_pst":"2018-03-08 11:58:56 America/Los_Angeles","expires_date":"2018-03-08 20:08:55 Etc/GMT","expires_date_ms":"1520539735000","expires_date_pst":"2018-03-08 12:08:55 America/Los_Angeles","web_order_line_item_id":"1000000038056226","is_trial_period":"false","is_in_intro_offer_period":"false"},{"quantity":"1","product_id":"basicmembership","transaction_id":"1000000381601336","original_transaction_id":"1000000381600687","purchase_date":"2018-03-08 20:09:15 Etc/GMT","purchase_date_ms":"1520539755000","purchase_date_pst":"2018-03-08 12:09:15 America/Los_Angeles","original_purchase_date":"2018-03-08 19:58:56 Etc/GMT","original_purchase_date_ms":"1520539136000","original_purchase_date_pst":"2018-03-08 11:58:56 America/Los_Angeles","expires_date":"2018-03-08 20:14:15 Etc/GMT","expires_date_ms":"1520540055000","expires_date_pst":"2018-03-08 12:14:15 America/Los_Angeles","web_order_line_item_id":"1000000038056264","is_trial_period":"false","is_in_intro_offer_period":"false"},{"quantity":"1","product_id":"basicmembership","transaction_id":"1000000381601740","original_transaction_id":"1000000381600687","purchase_date":"2018-03-08 20:14:30 Etc/GMT","purchase_date_ms":"1520540070000","purchase_date_pst":"2018-03-08 12:14:30 America/Los_Angeles","original_purchase_date":"2018-03-08 19:58:56 Etc/GMT","original_purchase_date_ms":"1520539136000","original_purchase_date_pst":"2018-03-08 11:58:56 America/Los_Angeles","expires_date":"2018-03-08 20:19:30 Etc/GMT","expires_date_ms":"1520540370000","expires_date_pst":"2018-03-08 12:19:30 America/Los_Angeles","web_order_line_item_id":"1000000038056312","is_trial_period":"false","is_in_intro_offer_period":"false"},{"quantity":"1","product_id":"basicmembership","transaction_id":"1000000381602052","original_transaction_id":"1000000381600687","purchase_date":"2018-03-08 20:19:30 Etc/GMT","purchase_date_ms":"1520540370000","purchase_date_pst":"2018-03-08 12:19:30 America/Los_Angeles","original_purchase_date":"2018-03-08 19:58:56 Etc/GMT","original_purchase_date_ms":"1520539136000","original_purchase_date_pst":"2018-03-08 11:58:56 America/Los_Angeles","expires_date":"2018-03-08 20:24:30 Etc/GMT","expires_date_ms":"1520540670000","expires_date_pst":"2018-03-08 12:24:30 America/Los_Angeles","web_order_line_item_id":"1000000038056364","is_trial_period":"false","is_in_intro_offer_period":"false"},{"quantity":"1","product_id":"basicmembership","transaction_id":"1000000381602343","original_transaction_id":"1000000381600687","purchase_date":"2018-03-08 20:24:30 Etc/GMT","purchase_date_ms":"1520540670000","purchase_date_pst":"2018-03-08 12:24:30 America/Los_Angeles","original_purchase_date":"2018-03-08 19:58:56 Etc/GMT","original_purchase_date_ms":"1520539136000","original_purchase_date_pst":"2018-03-08 11:58:56 America/Los_Angeles","expires_date":"2018-03-08 20:29:30 Etc/GMT","expires_date_ms":"1520540970000","expires_date_pst":"2018-03-08 12:29:30 America/Los_Angeles","web_order_line_item_id":"1000000038056406","is_trial_period":"false","is_in_intro_offer_period":"false"}];
+		var data = {
+			service: iap.APPLE,
+			receipt: {
+				in_app: [],
+				latest_receipt_info: list	
+			}
+		};
+		var res = iap.getPurchaseData(data);
+		console.log(res);
+		assert.equal(res.length, 1);
+		assert.equal(res[0].originalTransactionId, '1000000381600687');
+		assert.equal(res[0].purchaseDateMs, 1520540670000);
+		done();
+	});
 	
 	it('Can validate Unity apple in-app-purchase w/ auto-service detection', function (done) {
 

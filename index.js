@@ -64,7 +64,9 @@ module.exports.setup = function (cb) {
 };
 
 module.exports.getService = function (receipt) {
-	if (!receipt) throw new Error('Receipt was null or undefined');
+	if (!receipt) {
+		throw new Error('Receipt was null or undefined');
+	}
 	if (receipt.indexOf && receipt.indexOf(IS_WINDOWS) !== -1) {
 		return module.exports.WINDOWS;
 	}

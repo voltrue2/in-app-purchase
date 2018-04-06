@@ -457,7 +457,7 @@ iap.setup(function (error) {
         if (err) {
             return console.error(err);
         }
-        if (iap.isValidated(appRes)) {
+        if (iap.isValidated(appleRes)) {
             // yay good!
         }
     });

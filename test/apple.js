@@ -19,6 +19,7 @@ describe('#### Apple ####', function () {
 		assert.equal(res.length, 1);
 		assert.equal(res[0].originalTransactionId, '1000000381600687');
 		assert.equal(res[0].purchaseDateMs, 1520540670000);
+		assert.equal(res[0].isTrial, false);
 		done();
 	});
 	

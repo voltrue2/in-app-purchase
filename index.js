@@ -256,6 +256,20 @@ module.exports.refreshGoogleToken = function (cb) {
 
 };
 
+module.exports.setAmazonValidationHost = function (vhost) {
+	if (amazon.setValidationHost) {
+		return amazon.setValidationHost(vhost);	
+	}
+	return false;
+};
+
+module.exports.resetAmazonValidationHost = function () {
+	if (amazon.resetValidationHost) {
+		return amazon.resetValidationHost();
+	}
+	return false;
+};
+
 function isUnityReceipt(receipt) {
 	if (receipt.Store) {
 		if (receipt.Store === constants.UNITY.GOOGLE || receipt.Store === constants.UNITY.APPLE) {

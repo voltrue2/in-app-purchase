@@ -177,4 +177,48 @@ describe('#### Amazon ####', function () {
 		});
 	});
 
+	it('Can change validation host w/ Amazon API version 2', function (done) {
+		fs.readFile(path, 'UTF-8', function (error, data) {
+			assert.equal(error, null);
+			iap.config({
+				verbose: true,
+				secret: sharedKey
+			});
+			iap.config({ amazonAPIVersion: 2 });
+			iap.setup(function (error) {
+				assert.equal(error);
+				var set = iap.setAmazonValidationHost('fooooooo');
+				assert.equal(set, true);
+				var receipt = JSON.parse(data.toString());
+				iap.validate(iap.AMAZON, receipt, function (error) {
+					assert.notEqual(error, null);
+					assert.notEqual(error.message.indexOf('fooooooo'), -1);
+					done();
+				});
+			});
+		});	
+	});
+
+	it('Can reset validation host w/ Amazon API version 2', function (done) {
+		fs.readFile(path, 'UTF-8', function (error, data) {
+			assert.equal(error, null);
+			iap.config({
+				verbose: true,
+				secret: sharedKey
+			});
+			iap.config({ amazonAPIVersion: 2 });
+			iap.setup(function (error) {
+				assert.equal(error);
+				var set = iap.resetAmazonValidationHost();
+				assert.equal(set, true);
+				var receipt = JSON.parse(data.toString());
+				iap.validate(iap.AMAZON, receipt, function (error) {
+					assert.notEqual(error, null);
+					assert.notEqual(error.message.indexOf('https://appstore-sdk.amazon.com'), -1);
+					done();
+				});
+			});
+		});	
+	});
+
 });

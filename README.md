@@ -240,11 +240,14 @@ This method should be used when trying to query the Google Play Store API, but t
 
 ```
 {
+    ignoreCanceled: <boolean>
     ignoreExpired: <boolean>
 }
 ```
 
-**ignoreExpired**: If `true`, the function will exclude expired items from the return array.
+**ignoreCanceled**: If `true`, the function will exclude canceled items from the returned array. (Only iOS for now)
+
+**ignoreExpired**: If `true`, the function will exclude expired items from the returned array.
 
 This is only for `windows` and `apple` iTunes (recurring subscription only).
 

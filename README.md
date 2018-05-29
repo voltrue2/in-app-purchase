@@ -41,9 +41,8 @@ iap.config({
 	googlePublicKeyPath: 'path/to/public/key/directory/' // this is the path to the directory containing iap-sanbox/iap-live files
 	googleAccToken: 'abcdef...', // optional, for Google Play subscriptions
 	googleRefToken: 'dddd...', // optional, for Google Play subscritions
-	clientId: 'aaaa', // optional, for Google Play subscriptions
-	clientSecret: 'bbbb', // optional, for Google Play subscriptions
-	refreshToken: 'cccc', // optional, for Google Play subscriptions	
+	googleClientID: 'aaaa', // optional, for Google Play subscriptions
+	googleClientSecret: 'bbbb', // optional, for Google Play subscriptions
 
 	/* Configurations for Roku */
 	rokuApiKey: 'aaaa...', // this comes from Roku Developer Dashboard
@@ -76,6 +75,66 @@ function onError(error) {
 }
 ```
 
+## Validate Receipts From Multiple Applications
+
+You may feed different Google public key or Apple password etc to validate receipts of different applications with the same code:
+
+### Windows is NOT Supported
+
+### Google Public Key
+
+**NOTE** Google subscription is NOT supported.
+
+```javascript
+iap.config(configObject);
+iap.setup()
+  .then(() => {
+    iap.validateOnce(receipt, pubKeyString).then(onSuccess).catch(onError);
+  })
+  .catch((error) => {
+    // error...
+  });
+```
+
+### Apple Subscription
+
+```javascript
+iap.config(configObject);
+iap.setup()
+  .then(() => {
+    iap.validateOnce(receipt, appleSecretString).then(onSuccess).catch(onError);
+  })
+  .catch((error) => {
+    // error...
+  });
+```
+
+### Amazon
+
+```javascript
+iap.config(configObject);
+iap.setup()
+  .then(() => {
+    iap.validateOnce(receipt, amazonSecretString).then(onSuccess).catch(onError);
+  })
+  .catch((error) => {
+    // error...
+  });
+```
+
+### Roku
+
+```javascript
+iap.config(configObject);
+iap.setup()
+  .then(() => {
+    iap.validateOnce(receipt, rokuApiKeyString).then(onSuccess).catch(onError);
+  })
+  .catch((error) => {
+    // error...
+  });
+```
+
 ## Google Play Public Key With An Environment Variable
 
 You may not want to keep the public key files on your server(s).
@@ -85,7 +144,8 @@ The module also supports environment variables for this.
 Instead of using `googlePublicKeyPath: 'path/to...'` in your configurations, you the following:
 
 ```
-export=GOOGLE_IAB_PUBLICKEY=PublicKeyHerePlz
+export=GOOGLE_IAB_PUBLICKEY_LIVE=PublicKeyHerePlz
+export=GOOGLE_IAB_PUBLICKEY_SANDBOX=PublicKeyHerePlz
 ```
 
 ## Google In-app-Billing Set Up

@@ -112,7 +112,7 @@ module.exports.validate = function (service, receipt, cb) {
 		service = module.exports.getService(receipt);
 	}
 	if (cb === undefined && typeof receipt === 'function') {
-		// we are given 2 arguemnts as: .validate(receipt, cb)
+		// we are given 2 arguments as: .validate(receipt, cb)
 		cb = receipt;
 		receipt = service;
 		service = module.exports.getService(receipt); 

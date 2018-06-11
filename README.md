@@ -83,8 +83,6 @@ You may feed different Google public key or Apple password etc to validate recei
 
 ### Google Public Key
 
-**NOTE** Google subscription is NOT supported.
-
 ```javascript
 iap.config(configObject);
 iap.setup()
@@ -94,6 +92,21 @@ iap.setup()
   .catch((error) => {
     // error...
   });
+```
+
+### Google Subscription
+
+```javascript
+iap.config(configObject);
+iap.setup()
+  .then(() => {
+    var credentials = {
+      clientId: 'xxxx',
+      clientSecret: 'yyyy',
+      refreshToken: 'zzzz'
+    };
+    iap.validateOnce(receipt, credentials).then(onSuccess).catch(onError);
+  })
 ```
 
 ### Apple Subscription

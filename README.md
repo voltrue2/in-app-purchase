@@ -1,5 +1,5 @@
+![alt text](https://github.com/baranpirincal/in-app-purchase/blob/develop/logo/75x75.png)
 
-https://github.com/baranpirincal/in-app-purchase/blob/develop/logo/75x75.png
 # in-app-purchase
 
 ©Nobuyori Takahashi < <voltrue2@yahoo.com> >

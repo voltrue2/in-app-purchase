@@ -231,3 +231,7 @@ in-app-purchase module supports the following algorithms:
 
 - SHA512 digests http://www.w3.org/2001/04/xmlenc#sha512
 
+## HTTP Request Configurations
+
+The module supports the same configurations as [npm request module] (https://www.npmjs.com/package/request#requestoptions-callback)
+

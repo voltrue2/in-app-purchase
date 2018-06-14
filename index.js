@@ -71,7 +71,7 @@ module.exports.getService = function (receipt) {
 		return module.exports.WINDOWS;
 	}
 	if (typeof receipt === 'object') {
-		// receipt could be either Google, Amazon, or Unity (Apple or Google)
+		// receipt could be either Google, Amazon, or Unity (Apple or Google or Amazon)
 		if (isUnityReceipt(receipt)) {
 			return module.exports.UNITY;
 		}
@@ -89,9 +89,8 @@ module.exports.getService = function (receipt) {
 		}
 	}
 	try {
-		// receipt could be either Google or Amazon
+		// receipt could be either Google, Amazon, or Unity (Apple or Google or Amazon)
 		var parsed = JSON.parse(receipt);
-		// receipt could be either Google, Amazon, or Unity (Apple or Google)
 		if (isUnityReceipt(parsed)) {
 			return module.exports.UNITY;
 		}

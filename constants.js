@@ -12,12 +12,8 @@ exports.SERVICES = {
 
 exports.UNITY = {
 	APPLE: 'AppleAppStore',
-	GOOGLE: 'GooglePlay'
-};
-
-exports.UNITY = {
-	APPLE: 'AppleAppStore',
-	GOOGLE: 'GooglePlay'
+	GOOGLE: 'GooglePlay',
+	AMAZON: 'AmazonApps'
 };
 
 // validation

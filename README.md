@@ -212,7 +212,7 @@ Now you are able to query for Android subscription status!
 
 ## Amazon App Store Reference
 
-https://developer.amazon.com/appsandservices/apis/earn/in-app-purchasing/docs/rvs
+https://developer.amazon.com/docs/in-app-purchasing/iap-rvs-for-android-apps.html
 
 ## Windows Signed XML
 

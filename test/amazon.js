@@ -80,6 +80,33 @@ describe('#### Amazon ####', function () {
 		});
 	});
 
+	it('Can validate Unity amazon in-app-purchase w/ autho-service detection', function(done) {
+		var path = process.cwd() + '/test/receipts/unity_amazon';
+
+		fs.readFile(path, 'UTF-8', function (error, data) {
+			assert.equal(error, null);
+			iap.config({
+				verbose: true,
+				secret: sharedKey
+			});
+			iap.setup(function (error) {
+				assert.equal(error, null);
+				var receipt = JSON.parse(data.toString());
+				iap.validate(receipt, function (error, response) {
+					assert.equal(error, null);
+					assert.equal(iap.isValidated(response), true);
+					var pdata = iap.getPurchaseData(response);
+					for (var i = 0, len = pdata.length; i < len; i++) {
+						assert(pdata[i].productId);
+						assert(pdata[i].purchaseDate);
+						assert(pdata[i].quantity);
+					}
+					done();
+				});
+			});
+		});
+	});
+
 	it('Can validate amazon in-app-purchase w/ auto-service detection', function (done) {
 		fs.readFile(path, 'UTF-8', function (error, data) {
 			assert.equal(error, null);

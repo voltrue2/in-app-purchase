@@ -288,6 +288,8 @@ function getServiceFromUnityReceipt(receipt) {
 			return module.exports.GOOGLE;
 		case constants.UNITY.APPLE:
 			return module.exports.APPLE;
+		case constants.UNITY.AMAZON:
+			return module.exports.AMAZON;
 	}
 	// invalid Store value
 	return null;
@@ -312,6 +314,15 @@ function parseUnityReceipt(receipt) {
 				data: receipt.Payload.json,
 				signature: receipt.Payload.signature
 			};
+		case constants.UNITY.AMAZON:
+			if (typeof receipt.Payload === 'string') {
+				try {
+					receipt.Payload = JSON.parse(receipt.Payload);
+				} catch (error) {
+					throw error;
+				}
+			}
+			return receipt.Payload;
 		case constants.UNITY.APPLE:
 			return receipt.Payload;
 	}

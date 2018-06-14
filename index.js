@@ -271,7 +271,7 @@ module.exports.resetAmazonValidationHost = function () {
 
 function isUnityReceipt(receipt) {
 	if (receipt.Store) {
-		if (receipt.Store === constants.UNITY.GOOGLE || receipt.Store === constants.UNITY.APPLE) {
+		if (receipt.Store === constants.UNITY.GOOGLE || receipt.Store === constants.UNITY.APPLE || receipt.Store === constants.UNITY.AMAZON) {
 			return true;
 		}
 	}

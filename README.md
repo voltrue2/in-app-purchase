@@ -1,7 +1,5 @@
 ![alt text](https://github.com/baranpirincal/in-app-purchase/blob/develop/logo/75x75.png)
 
-
-
 ©Nobuyori Takahashi < <voltrue2@yahoo.com> >
 
 [![Build Status](https://travis-ci.org/voltrue2/in-app-purchase.svg?branch=master)](https://travis-ci.org/voltrue2/in-app-purchase)
@@ -9,6 +7,8 @@
 A node.js module for in-app purchase (in-app billing) for Apple, Google Play, Amazon Store, Roku, and Windows.
 
 It supports Unity receipt also: [Unity Documentation](https://docs.unity3d.com/Manual/UnityIAPValidatingReceipts.html)
+
+**NOTE** Unity receipt surpports the following: Apple, Google Play, and Amazon.
 
 ## Required node.js version
 
@@ -34,8 +34,8 @@ iap.config({
 	
 	/* Configurations for Amazon Store */
 	amazonAPIVersion: 2, // tells the module to use API version 2
-  secret: 'abcdefghijklmnoporstuvwxyz', // this comes from Amazon
-  // amazonValidationHost: http://localhost:8080/RVSSandbox, // Local sandbox URL for testing amazon sandbox receipts.
+	secret: 'abcdefghijklmnoporstuvwxyz', // this comes from Amazon
+	// amazonValidationHost: http://localhost:8080/RVSSandbox, // Local sandbox URL for testing amazon sandbox receipts.
 	
 	/* Configurations for Apple */
 	applePassword: 'abcdefg...', // this comes from iTunes Connect (You need this to valiate subscriptions)	

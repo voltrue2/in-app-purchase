@@ -71,7 +71,7 @@ module.exports.getService = function (receipt) {
 		return module.exports.WINDOWS;
 	}
 	if (typeof receipt === 'object') {
-		// receipt could be either Google, Amazon, or Unity (Apple or Google)
+		// receipt could be either Google, Amazon, or Unity (Apple or Google or Amazon)
 		if (isUnityReceipt(receipt)) {
 			return module.exports.UNITY;
 		}
@@ -89,9 +89,8 @@ module.exports.getService = function (receipt) {
 		}
 	}
 	try {
-		// receipt could be either Google or Amazon
+		// receipt could be either Google, Amazon, or Unity (Apple or Google or Amazon)
 		var parsed = JSON.parse(receipt);
-		// receipt could be either Google, Amazon, or Unity (Apple or Google)
 		if (isUnityReceipt(parsed)) {
 			return module.exports.UNITY;
 		}
@@ -272,7 +271,7 @@ module.exports.resetAmazonValidationHost = function () {
 
 function isUnityReceipt(receipt) {
 	if (receipt.Store) {
-		if (receipt.Store === constants.UNITY.GOOGLE || receipt.Store === constants.UNITY.APPLE) {
+		if (receipt.Store === constants.UNITY.GOOGLE || receipt.Store === constants.UNITY.APPLE || receipt.Store === constants.UNITY.AMAZON) {
 			return true;
 		}
 	}
@@ -289,6 +288,8 @@ function getServiceFromUnityReceipt(receipt) {
 			return module.exports.GOOGLE;
 		case constants.UNITY.APPLE:
 			return module.exports.APPLE;
+		case constants.UNITY.AMAZON:
+			return module.exports.AMAZON;
 	}
 	// invalid Store value
 	return null;
@@ -313,6 +314,15 @@ function parseUnityReceipt(receipt) {
 				data: receipt.Payload.json,
 				signature: receipt.Payload.signature
 			};
+		case constants.UNITY.AMAZON:
+			if (typeof receipt.Payload === 'string') {
+				try {
+					receipt.Payload = JSON.parse(receipt.Payload);
+				} catch (error) {
+					throw error;
+				}
+			}
+			return receipt.Payload;
 		case constants.UNITY.APPLE:
 			return receipt.Payload;
 	}

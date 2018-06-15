@@ -34,7 +34,8 @@ iap.config({
 	
 	/* Configurations for Amazon Store */
 	amazonAPIVersion: 2, // tells the module to use API version 2
-	secret: 'abcdefghijklmnoporstuvwxyz', // this comes from Amazon
+  secret: 'abcdefghijklmnoporstuvwxyz', // this comes from Amazon
+  // amazonValidationHost: http://localhost:8080/RVSSandbox, // Local sandbox URL for testing amazon sandbox receipts.
 	
 	/* Configurations for Apple */
 	applePassword: 'abcdefg...', // this comes from iTunes Connect (You need this to valiate subscriptions)	
@@ -211,7 +212,7 @@ Now you are able to query for Android subscription status!
 
 ## Amazon App Store Reference
 
-https://developer.amazon.com/appsandservices/apis/earn/in-app-purchasing/docs/rvs
+https://developer.amazon.com/docs/in-app-purchasing/iap-rvs-for-android-apps.html
 
 ## Windows Signed XML
 

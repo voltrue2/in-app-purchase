@@ -1,6 +1,6 @@
 #!/bin/sh
 
-`echo ./lint.sh`;
+`echo ./bin/lint index.js lib/`;
 
 exitCode=$?;
 

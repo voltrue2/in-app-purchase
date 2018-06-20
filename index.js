@@ -50,7 +50,7 @@ module.exports.setup = function (cb) {
             module.exports.setup(handlePromisedFunctionCb(resolve, reject));
         });
     }
-    async.parallel([
+    async.series([
         function (next) {
             apple.setup(next);
         },

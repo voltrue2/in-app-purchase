@@ -63,10 +63,10 @@ iap.setup()
     // error...
   });
 
-function onSuccess(receipt, validatedData) {
-	// receipt: it is the receipt that was validated...
+function onSuccess(validatedData) {
 	// validatedData: the actual content of the validated receipt
-	var options = {
+	// validatedData also contains the original receipt
+    var options = {
 		ignoreCanceled: true, // Apple ONLY (for now...): purchaseData will NOT contain cancceled items
 		ignoreExpired: true // purchaseData will NOT contain exipired subscription items
 	};

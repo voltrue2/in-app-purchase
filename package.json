@@ -17,7 +17,7 @@
   "request": "2.86.0"
  },
  "devDependencies": {
-  "mocha": "1.18.2"
+  "mocha": "^5.2.0"
  },
  "scripts": {
   "test": "./precommit.sh"

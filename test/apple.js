@@ -109,24 +109,28 @@ describe('#### Apple ####', function () {
             verbose: true
         });
         var receipt = fs.readFileSync(path, 'utf8');
-        var promise = iap.setup();
-        promise.then(function () {
-            var val = iap.validate(receipt);
-            val.then(function (response) {
-                var data = iap.getPurchaseData(response, { ignoreExpired: true });
-                for (var i = 0, len = data.length; i < len; i++) {
-                    console.log('parsedPurchaseData:', i, data);
-                    assert(data[i].productId);
-                    assert(data[i].purchaseDate);
-                    assert(data[i].quantity);
-                }
-                done();
+        iap.setup()
+            .then(function () {
+                iap.validate(receipt).then(onSuccess).catch(onError);
             }).catch(function (error) {
                 throw error;
             });
-        }).catch(function (error) {
+
+        function onSuccess(response) {
+            var data = iap.getPurchaseData(response, { ignoreExpired: true });
+            for (var i = 0, len = data.length; i < len; i++) {
+                console.log('parsedPurchaseData:', i, data);
+                assert(data[i].productId);
+                assert(data[i].purchaseDate);
+                assert(data[i].quantity);
+            }
+            done();
+        }
+
+        function onError(error) {
             throw error;
-        });    
+        }
+
     });
     
     it('Can validate apple in-app-purchase', function (done) {

@@ -70,7 +70,7 @@ function onSuccess(validatedData) {
 		ignoreCanceled: true, // Apple ONLY (for now...): purchaseData will NOT contain cancceled items
 		ignoreExpired: true // purchaseData will NOT contain exipired subscription items
 	};
-	var purchaseData = iap.getPurchaseData(validateData, options);
+	var purchaseData = iap.getPurchaseData(validatedData, options);
 }
 
 function onError(error) {

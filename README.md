@@ -8,7 +8,7 @@ A node.js module for in-app purchase (in-app billing) for Apple, Google Play, Am
 
 It supports Unity receipt also: [Unity Documentation](https://docs.unity3d.com/Manual/UnityIAPValidatingReceipts.html)
 
-**NOTE** Unity receipt surpports the following: Apple, Google Play, and Amazon.
+**NOTE** Unity receipt supports the following: Apple, Google Play, and Amazon.
 
 ## Required node.js version
 

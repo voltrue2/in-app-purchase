@@ -1,4 +1,4 @@
-![Logo](https://github.com/voltrue2/in-app-purchase/blob/develop/logo/75x75.svg)
+![Logo](https://github.com/voltrue2/in-app-purchase/blob/develop/logo/75x75.png)
 
 ©Nobuyori Takahashi < <voltrue2@yahoo.com> >
 

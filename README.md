@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.org/voltrue2/in-app-purchase.svg?branch=master)](https://travis-ci.org/voltrue2/in-app-purchase)
 
-A node.js module for in-app purchase (in-app billing) for Apple, Google Play, Amazon Store, Roku, and Windows.
+A node.js module for in-app purchase (in-app billing) and subscription for Apple, Google Play, Amazon Store, Roku, and Windows.
 
 It supports Unity receipt also: [Unity Documentation](https://docs.unity3d.com/Manual/UnityIAPValidatingReceipts.html)
 
@@ -77,6 +77,54 @@ function onError(error) {
 	// failed to validate the receipt...
 }
 ```
+
+## Receipt data format
+
+### Apple
+
+An Apple's receipt is a base64 encoded string.
+
+### Google Play
+
+A Google Play's receipt consists of two components.
+
+- Signed Data: A JSON data of what the end user purchased.
+
+- Signature: A base64 encoded string.
+
+The module requires the above two compoents to be as a JSON object or a string.
+
+```
+{
+    "data": {Signed Data JSON},
+    "signature": "Base 64 encoded signature string"
+}
+```
+
+### Amazon
+
+An Amazon's receipt contains the following:
+
+- User ID: A string of Amazon Store user ID.
+
+- Receipt ID: A string of Amazon receipt.
+
+The module requires the above two components to be as a JSON object or a string
+
+```
+{
+    "userId": "User ID",
+    "receiptId": "Receipt ID"
+}
+```
+
+### Roku
+
+A Roku's receipt is a transaction ID string.
+
+### Windows
+
+A Windows' receipt is an XML string. 
 
 ## Validate Receipts From Multiple Applications
 

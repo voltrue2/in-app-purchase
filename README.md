@@ -199,6 +199,80 @@ iap.setup()
   });
 ```
 
+## Helper Methods
+
+### <object> getPurchaseData(<object> response, <object> options)
+
+Returns an object to be used by `isExpired` and `isCanceled`.
+
+#### <bool> options.ignoreCanceled
+
+If `true`, the returned purchaseData excludes canceled item(s).
+
+#### <bool> options.ignroreExipred
+
+If `true`, the returned purchaseData excludes expired item(s).
+
+### <bool> isValidated(<object> response)
+
+Returns a boolean `true` if the given response of a receipt validation is a valid.
+
+```javascript
+iap.validate(receipt)
+    .then((response) => {
+        if (iap.isValidated(response)) {
+            // valid receipt
+        }
+    })
+    .catch((error) => {
+        // error...
+    });
+```
+
+### <bool> isCanceled(<object> purchaseData)
+
+Returns a boolean `true` if a canceled receipt is validated.
+
+```javascript
+iap.validate(receipt)
+    .then((response) => {
+        var purchaseData = iap.getPurchaseData(response);
+        if (iap.isCanceled(purchaseData)) {
+            // receipt has been canceled
+        }
+    })
+    .catch((error) => {
+        // error...
+    });
+```
+
+### <bool> isExpired(<object> purchaseData)
+
+Returns a boolean `true` if a canceled receipt is validated.
+
+**NOTE** This is subscription only.
+
+```javascript
+iap.validate(receipt)
+    .then((response) => {
+        var purchaseData = iap.getPurchaseData(response);
+        if (iap.isExipred(purchaseData)) {
+            // receipt has been expired
+        }
+    })
+    .catch((error) => {
+        // error...
+    });
+```
+
+### <void> setAmazonValidationHost(<string> host)
+
+Allows you to set custom validation host name for tests.
+
+### <void> resetAmazonValidationHost()
+
+Resets to Amazon's validation host name.
+
 ## Google Play Public Key With An Environment Variable
 
 You may not want to keep the public key files on your server(s).

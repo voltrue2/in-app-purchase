@@ -219,10 +219,6 @@ module.exports.isExpired = function (purchasedItem) {
     if (!purchasedItem || !purchasedItem.transactionId) {
         throw new Error('invalid purchased item given:\n' + JSON.stringify(purchasedItem));
     }
-    if (purchasedItem.cancellationDate) {
-        // it has been cancelled
-        return true;
-    }
     if (!purchasedItem.expirationDate) {
         // there is no exipiration date with this item
         return false;
@@ -232,6 +228,17 @@ module.exports.isExpired = function (purchasedItem) {
     }
     // has not exipired yet
     return false;
+};
+
+module.exports.isCanceled = function (purchasedItem) {
+    if (!purchasedItem || !purchasedItem.transactionId) {
+        throw new Error('invalid purchased item given:\n' + JSON.stringify(purchasedItem));
+    }
+    if (purchasedItem.cancellationDate) {
+        // it has been cancelled
+        return true;
+    }
+    return false; 
 };
 
 module.exports.getPurchaseData = function (purchaseData, options) {

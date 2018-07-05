@@ -201,19 +201,19 @@ iap.setup()
 
 ## Helper Methods
 
-### <object> getPurchaseData(<object> response, <object> options)
+### [object] getPurchaseData([object] response, [object] options)
 
 Returns an object to be used by `isExpired` and `isCanceled`.
 
-#### <bool> options.ignoreCanceled
+#### [bool] options.ignoreCanceled
 
 If `true`, the returned purchaseData excludes canceled item(s).
 
-#### <bool> options.ignroreExipred
+#### [bool] options.ignroreExipred
 
 If `true`, the returned purchaseData excludes expired item(s).
 
-### <bool> isValidated(<object> response)
+### [bool] isValidated([object] response)
 
 Returns a boolean `true` if the given response of a receipt validation is a valid.
 
@@ -229,7 +229,7 @@ iap.validate(receipt)
     });
 ```
 
-### <bool> isCanceled(<object> purchaseData)
+### [bool] isCanceled([object] purchaseData)
 
 Returns a boolean `true` if a canceled receipt is validated.
 
@@ -246,7 +246,7 @@ iap.validate(receipt)
     });
 ```
 
-### <bool> isExpired(<object> purchaseData)
+### [bool] isExpired(object] purchaseData)
 
 Returns a boolean `true` if a canceled receipt is validated.
 
@@ -265,11 +265,11 @@ iap.validate(receipt)
     });
 ```
 
-### <void> setAmazonValidationHost(<string> host)
+### [void] setAmazonValidationHost([string] host)
 
 Allows you to set custom validation host name for tests.
 
-### <void> resetAmazonValidationHost()
+### [void] resetAmazonValidationHost()
 
 Resets to Amazon's validation host name.
 

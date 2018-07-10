@@ -209,7 +209,7 @@ Returns an object to be used by `isExpired` and `isCanceled`.
 
 If `true`, the returned purchaseData excludes canceled item(s).
 
-#### [bool] options.ignroreExipred
+#### [bool] options.ignoreExpired
 
 If `true`, the returned purchaseData excludes expired item(s).
 

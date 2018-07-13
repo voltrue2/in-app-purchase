@@ -70,6 +70,7 @@ function onSuccess(validatedData) {
 		ignoreCanceled: true, // Apple ONLY (for now...): purchaseData will NOT contain cancceled items
 		ignoreExpired: true // purchaseData will NOT contain exipired subscription items
 	};
+    // validatedData contains sandbox: true/false for Apple and Amazon
 	var purchaseData = iap.getPurchaseData(validatedData, options);
 }
 

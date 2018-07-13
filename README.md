@@ -256,7 +256,7 @@ Returns a boolean `true` if a canceled receipt is validated.
 iap.validate(receipt)
     .then((response) => {
         var purchaseData = iap.getPurchaseData(response);
-        if (iap.isExipred(purchaseData)) {
+        if (iap.isExpired(purchaseData)) {
             // receipt has been expired
         }
     })

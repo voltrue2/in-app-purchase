@@ -11,9 +11,9 @@
 		"url": "https://github.com/voltrue2/in-app-purchase.git"
 	},
 	"dependencies": {
-		"xmldom": "0.1.19",
+		"request": "2.86.0",
 		"xml-crypto": "0.10.1",
-		"request": "2.86.0"
+		"xmldom": "0.1.19"
 	},
 	"devDependencies": {
 		"mocha": "1.18.2"

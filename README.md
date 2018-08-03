@@ -42,6 +42,8 @@ iap.config({
 	
 	/* Configurations for Google Play */
 	googlePublicKeyPath: 'path/to/public/key/directory/' // this is the path to the directory containing iap-sanbox/iap-live files
+	googlePublicKeyStrSandBox: 'publicKeySandboxString', // this is the google iap-sandbox public key string
+	googlePublickKeyStrLive: 'publicKeyLiveString', // this is the google iap-live public key string
 	googleAccToken: 'abcdef...', // optional, for Google Play subscriptions
 	googleRefToken: 'dddd...', // optional, for Google Play subscritions
 	googleClientID: 'aaaa', // optional, for Google Play subscriptions

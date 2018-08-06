@@ -313,7 +313,7 @@ To check expiration date or auto renewal status of an Android subscription, you 
 8. Choose `OAuth Client ID`
 9. Choose `Web Application`
  * Give it a name, skip the `Authorized JS origins`
- * Aadd this to `Authorized Redirect URIs`: https://developers.google.com/oauthplayground
+ * Add this to `Authorized Redirect URIs`: https://developers.google.com/oauthplayground
  * Hit Save and copy the **clientID** and **clientSecret** somewhere safe.
 
 ##### Part 2 - Get Access and Refresh Tokens
@@ -322,7 +322,7 @@ To check expiration date or auto renewal status of an Android subscription, you 
 3. Check the box: `Use your own OAuth credentials`
 	* Enter in clientID and clientSecret
 	* Close
-4. On the left, find "Google Play Developer API v2"
+4. On the left, find "Google Play Developer API v3"
  * Select "https://www.googleapis.com/auth/androidpublisher"
 5. Hit Authorize Api's button
 6. Save `Authorization Code` 

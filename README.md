@@ -95,7 +95,7 @@ A Google Play's receipt consists of two components.
 
 - Signature: A base64 encoded string.
 
-The module requires the above two compoents to be as a JSON object or a string.
+The module requires the above two compoents to be as a JSON object.
 
 ```
 {
@@ -103,6 +103,8 @@ The module requires the above two compoents to be as a JSON object or a string.
     "signature": "Base 64 encoded signature string"
 }
 ```
+
+`data` property in the receipt object can be either an object or a stringified JSON string.
 
 ### Amazon
 

@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+const lint = require('./scripts/lint');
+lint(__dirname + '/lib/', __dirname + '/package.json', [], function (error) {
+    if (error) {
+        process.exit(1);
+    }
+    lint(__dirname + '/index.js', __dirname + '/package.json', [], function (error) {
+        if (error) {
+            process.exit(1);
+        }
+    });
+});

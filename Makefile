@@ -9,7 +9,7 @@ init:
 
 .PHONY: lint
 lint:
-	./lint.sh
+	./lint
 
 .PHONY: test
 test:

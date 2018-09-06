@@ -42,6 +42,8 @@ iap.config({
 	
 	/* Configurations for Google Play */
 	googlePublicKeyPath: 'path/to/public/key/directory/' // this is the path to the directory containing iap-sanbox/iap-live files
+	googlePublicKeyStrSandBox: 'publicKeySandboxString', // this is the google iap-sandbox public key string
+	googlePublicKeyStrLive: 'publicKeyLiveString', // this is the google iap-live public key string
 	googleAccToken: 'abcdef...', // optional, for Google Play subscriptions
 	googleRefToken: 'dddd...', // optional, for Google Play subscritions
 	googleClientID: 'aaaa', // optional, for Google Play subscriptions
@@ -93,7 +95,7 @@ A Google Play's receipt consists of two components.
 
 - Signature: A base64 encoded string.
 
-The module requires the above two compoents to be as a JSON object or a string.
+The module requires the above two compoents to be as a JSON object.
 
 ```
 {
@@ -101,6 +103,8 @@ The module requires the above two compoents to be as a JSON object or a string.
     "signature": "Base 64 encoded signature string"
 }
 ```
+
+`data` property in the receipt object can be either an object or a stringified JSON string.
 
 ### Amazon
 
@@ -313,7 +317,7 @@ To check expiration date or auto renewal status of an Android subscription, you 
 8. Choose `OAuth Client ID`
 9. Choose `Web Application`
  * Give it a name, skip the `Authorized JS origins`
- * Aadd this to `Authorized Redirect URIs`: https://developers.google.com/oauthplayground
+ * Add this to `Authorized Redirect URIs`: https://developers.google.com/oauthplayground
  * Hit Save and copy the **clientID** and **clientSecret** somewhere safe.
 
 ##### Part 2 - Get Access and Refresh Tokens
@@ -322,7 +326,7 @@ To check expiration date or auto renewal status of an Android subscription, you 
 3. Check the box: `Use your own OAuth credentials`
 	* Enter in clientID and clientSecret
 	* Close
-4. On the left, find "Google Play Developer API v2"
+4. On the left, find "Google Play Developer API v3"
  * Select "https://www.googleapis.com/auth/androidpublisher"
 5. Hit Authorize Api's button
 6. Save `Authorization Code` 

@@ -77,6 +77,8 @@ module.exports.getService = function (receipt) {
         }
         if (receipt.signature) {
             return module.exports.GOOGLE;
+        } else if (receipt.purchaseToken) {
+            return module.exports.GOOGLE;
         } else {
             return module.exports.AMAZON;
         }

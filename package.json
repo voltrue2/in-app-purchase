@@ -12,9 +12,10 @@
  },
  "dependencies": {
   "eslint": "4.18.2",
-  "xmldom": "0.1.19",
+  "jwt-simple": "^0.5.1",
+  "request": "2.87.0",
   "xml-crypto": "0.10.1",
-  "request": "2.87.0"
+  "xmldom": "0.1.19"
  },
  "devDependencies": {
   "mocha": "^5.2.0"

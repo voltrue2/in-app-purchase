@@ -49,6 +49,12 @@ iap.config({
 	googleClientID: 'aaaa', // optional, for Google Play subscriptions
 	googleClientSecret: 'bbbb', // optional, for Google Play subscriptions
 
+    /* Configurations for Google Service Account validation: You can validate with just packageName, productId, and purchaseToken */
+    googleServiceAccount: {
+        clientEmail: '<client email from Google API service account JSON key file>,'
+        privateKey: '<private key string from Google API service account JSON key file>'
+    },
+
 	/* Configurations for Roku */
 	rokuApiKey: 'aaaa...', // this comes from Roku Developer Dashboard
 	
@@ -105,6 +111,19 @@ The module requires the above two compoents to be as a JSON object.
 ```
 
 `data` property in the receipt object can be either an object or a stringified JSON string.
+
+### Google Play Using Google Service Account
+
+If you are using Google service account instead of OAuth for Google, the receipt should look like:
+
+```
+{
+    packageName: 'The packge name of the item purchased',
+    productId: 'The product ID of the item purchased',
+    purchaseToken: 'PurchaseToken of the receipt from Google',
+    subscription: true/false // if the receipt is a subscription, then true
+}
+```
 
 ### Amazon
 

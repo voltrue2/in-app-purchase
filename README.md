@@ -10,6 +10,12 @@ It supports Unity receipt also: [Unity Documentation](https://docs.unity3d.com/M
 
 **NOTE** Unity receipt supports the following: Apple, Google Play, and Amazon.
 
+## What is new
+
+As of version `1.10.0`, The module lets you validate Google's receipts using Google Service Account also!
+
+Thank you for the input [maxs15](https://github.com/maxs15)
+
 ## Required node.js version
 
 `0.12.0 >=`

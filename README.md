@@ -37,23 +37,23 @@ The module supports both Promise and callbacks.
 ```javascript
 var iap = require('in-app-purchase');
 iap.config({
-	
-	/* Configurations for Amazon Store */
-	amazonAPIVersion: 2, // tells the module to use API version 2
-	secret: 'abcdefghijklmnoporstuvwxyz', // this comes from Amazon
-	// amazonValidationHost: http://localhost:8080/RVSSandbox, // Local sandbox URL for testing amazon sandbox receipts.
-	
-	/* Configurations for Apple */
-	applePassword: 'abcdefg...', // this comes from iTunes Connect (You need this to valiate subscriptions)	
-	
-	/* Configurations for Google Play */
-	googlePublicKeyPath: 'path/to/public/key/directory/' // this is the path to the directory containing iap-sanbox/iap-live files
-	googlePublicKeyStrSandBox: 'publicKeySandboxString', // this is the google iap-sandbox public key string
-	googlePublicKeyStrLive: 'publicKeyLiveString', // this is the google iap-live public key string
-	googleAccToken: 'abcdef...', // optional, for Google Play subscriptions
-	googleRefToken: 'dddd...', // optional, for Google Play subscritions
-	googleClientID: 'aaaa', // optional, for Google Play subscriptions
-	googleClientSecret: 'bbbb', // optional, for Google Play subscriptions
+    
+    /* Configurations for Amazon Store */
+    amazonAPIVersion: 2, // tells the module to use API version 2
+    secret: 'abcdefghijklmnoporstuvwxyz', // this comes from Amazon
+    // amazonValidationHost: http://localhost:8080/RVSSandbox, // Local sandbox URL for testing amazon sandbox receipts.
+    
+    /* Configurations for Apple */
+    applePassword: 'abcdefg...', // this comes from iTunes Connect (You need this to valiate subscriptions)    
+    
+    /* Configurations for Google Play */
+    googlePublicKeyPath: 'path/to/public/key/directory/' // this is the path to the directory containing iap-sanbox/iap-live files
+    googlePublicKeyStrSandBox: 'publicKeySandboxString', // this is the google iap-sandbox public key string
+    googlePublicKeyStrLive: 'publicKeyLiveString', // this is the google iap-live public key string
+    googleAccToken: 'abcdef...', // optional, for Google Play subscriptions
+    googleRefToken: 'dddd...', // optional, for Google Play subscritions
+    googleClientID: 'aaaa', // optional, for Google Play subscriptions
+    googleClientSecret: 'bbbb', // optional, for Google Play subscriptions
 
     /* Configurations for Google Service Account validation: You can validate with just packageName, productId, and purchaseToken */
     googleServiceAccount: {
@@ -61,12 +61,12 @@ iap.config({
         privateKey: '<private key string from Google API service account JSON key file>'
     },
 
-	/* Configurations for Roku */
-	rokuApiKey: 'aaaa...', // this comes from Roku Developer Dashboard
-	
-	/* Configurations all platforms */
-	test: true, // For Apple and Googl Play to force Sandbox validation only
-	verbose: true // Output debug logs to stdout stream 
+    /* Configurations for Roku */
+    rokuApiKey: 'aaaa...', // this comes from Roku Developer Dashboard
+    
+    /* Configurations all platforms */
+    test: true, // For Apple and Googl Play to force Sandbox validation only
+    verbose: true // Output debug logs to stdout stream 
 });
 iap.setup()
   .then(() => {
@@ -78,18 +78,18 @@ iap.setup()
   });
 
 function onSuccess(validatedData) {
-	// validatedData: the actual content of the validated receipt
-	// validatedData also contains the original receipt
+    // validatedData: the actual content of the validated receipt
+    // validatedData also contains the original receipt
     var options = {
-		ignoreCanceled: true, // Apple ONLY (for now...): purchaseData will NOT contain cancceled items
-		ignoreExpired: true // purchaseData will NOT contain exipired subscription items
-	};
+        ignoreCanceled: true, // Apple ONLY (for now...): purchaseData will NOT contain cancceled items
+        ignoreExpired: true // purchaseData will NOT contain exipired subscription items
+    };
     // validatedData contains sandbox: true/false for Apple and Amazon
-	var purchaseData = iap.getPurchaseData(validatedData, options);
+    var purchaseData = iap.getPurchaseData(validatedData, options);
 }
 
 function onError(error) {
-	// failed to validate the receipt...
+    // failed to validate the receipt...
 }
 ```
 
@@ -349,8 +349,8 @@ To check expiration date or auto renewal status of an Android subscription, you 
 1. Go to: https://developers.google.com/oauthplayground
 2. On the right, hit the gear/settings.
 3. Check the box: `Use your own OAuth credentials`
-	* Enter in clientID and clientSecret
-	* Close
+    * Enter in clientID and clientSecret
+    * Close
 4. On the left, find "Google Play Developer API v3"
  * Select "https://www.googleapis.com/auth/androidpublisher"
 5. Hit Authorize Api's button

@@ -37,6 +37,9 @@ The module supports both Promise and callbacks.
 ```javascript
 var iap = require('in-app-purchase');
 iap.config({
+
+    /* Configurations for HTTP request */
+    requestDefaults: { /* Please refer to the request module documentation here: https://www.npmjs.com/package/request#requestoptions-callback */ },
     
     /* Configurations for Amazon Store */
     amazonAPIVersion: 2, // tells the module to use API version 2

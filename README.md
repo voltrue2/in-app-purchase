@@ -47,6 +47,7 @@ iap.config({
     // amazonValidationHost: http://localhost:8080/RVSSandbox, // Local sandbox URL for testing amazon sandbox receipts.
     
     /* Configurations for Apple */
+    appleExcludeOldTransactions: true // if you want to exclude old transaction, set this to true. Default is false
     applePassword: 'abcdefg...', // this comes from iTunes Connect (You need this to valiate subscriptions)    
     
     /* Configurations for Google Play */

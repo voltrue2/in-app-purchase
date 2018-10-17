@@ -22,7 +22,7 @@ function handlePromisedFunctionCb(resolve, reject) {
                 errorData.status = response.status;
                 errorData.message = response.message;
             }
-            return reject(JSON.stringify(errorData));
+            return reject(JSON.stringify(errorData), response);
         }
         return resolve(response);
     };

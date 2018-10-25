@@ -98,6 +98,8 @@ module.exports.getService = function (receipt) {
         }
         if (parsed.signature) {
             return module.exports.GOOGLE;
+        } else if (receipt.purchaseToken) {
+            return module.exports.GOOGLE;
         } else {
             return module.exports.AMAZON;
         }

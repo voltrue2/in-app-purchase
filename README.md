@@ -235,9 +235,9 @@ iap.setup()
 
 ## Helper Methods
 
-### [object] getPurchaseData([object] response, [object] options)
+### Array<[object]> getPurchaseData([object] response, [object] options)
 
-Returns an object to be used by `isExpired` and `isCanceled`.
+Returns an Array of objects that to be used by `isExpired` and `isCanceled`.
 
 #### [bool] options.ignoreCanceled
 
@@ -271,7 +271,7 @@ Returns a boolean `true` if a canceled receipt is validated.
 iap.validate(receipt)
     .then((response) => {
         var purchaseData = iap.getPurchaseData(response);
-        if (iap.isCanceled(purchaseData)) {
+        if (iap.isCanceled(purchaseData[0])) {
             // receipt has been canceled
         }
     })
@@ -290,7 +290,7 @@ Returns a boolean `true` if a canceled receipt is validated.
 iap.validate(receipt)
     .then((response) => {
         var purchaseData = iap.getPurchaseData(response);
-        if (iap.isExpired(purchaseData)) {
+        if (iap.isExpired(purchaseData[0])) {
             // receipt has been expired
         }
     })

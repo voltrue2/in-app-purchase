@@ -1,7 +1,7 @@
 {
  "name": "in-app-purchase",
  "description": "In-App-Purchase validation and subscription management for iOS, Android, Amazon, and Windows",
- "version": "1.10.6",
+ "version": "1.10.7",
  "author": {
   "name": "Nobuyori Takahashi",
   "email": "voltrue2@yahoo.com"
@@ -11,13 +11,13 @@
   "url": "https://github.com/voltrue2/in-app-purchase.git"
  },
  "dependencies": {
-  "jwt-simple": "^0.5.1",
-  "request": "2.87.0",
+  "jwt-simple": "0.5.1",
+  "request": "2.88.0",
   "xml-crypto": "0.10.1",
   "xmldom": "0.1.19"
  },
  "devDependencies": {
-  "mocha": "^5.2.0",
+  "mocha": "5.2.0",
   "eslint": "5.6.1"
  },
  "scripts": {

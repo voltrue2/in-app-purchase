@@ -61,7 +61,7 @@ iap.config({
 
     /* Configurations for Google Service Account validation: You can validate with just packageName, productId, and purchaseToken */
     googleServiceAccount: {
-        clientEmail: '<client email from Google API service account JSON key file>,'
+        clientEmail: '<client email from Google API service account JSON key file>',
         privateKey: '<private key string from Google API service account JSON key file>'
     },
 

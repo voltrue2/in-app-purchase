@@ -47,11 +47,11 @@ iap.config({
     // amazonValidationHost: http://localhost:8080/RVSSandbox, // Local sandbox URL for testing amazon sandbox receipts.
     
     /* Configurations for Apple */
-    appleExcludeOldTransactions: true // if you want to exclude old transaction, set this to true. Default is false
+    appleExcludeOldTransactions: true, // if you want to exclude old transaction, set this to true. Default is false
     applePassword: 'abcdefg...', // this comes from iTunes Connect (You need this to valiate subscriptions)    
     
     /* Configurations for Google Play */
-    googlePublicKeyPath: 'path/to/public/key/directory/' // this is the path to the directory containing iap-sanbox/iap-live files
+    googlePublicKeyPath: 'path/to/public/key/directory/', // this is the path to the directory containing iap-sanbox/iap-live files
     googlePublicKeyStrSandBox: 'publicKeySandboxString', // this is the google iap-sandbox public key string
     googlePublicKeyStrLive: 'publicKeyLiveString', // this is the google iap-live public key string
     googleAccToken: 'abcdef...', // optional, for Google Play subscriptions
@@ -61,7 +61,7 @@ iap.config({
 
     /* Configurations for Google Service Account validation: You can validate with just packageName, productId, and purchaseToken */
     googleServiceAccount: {
-        clientEmail: '<client email from Google API service account JSON key file>,'
+        clientEmail: '<client email from Google API service account JSON key file>',
         privateKey: '<private key string from Google API service account JSON key file>'
     },
 

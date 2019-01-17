@@ -135,6 +135,20 @@ If you are using Google service account instead of OAuth for Google, the receipt
 }
 ```
 
+### Google Play Using Google Service Account (with Unity receipt)
+
+If you are using Google service account with unity receipt, you need to add a 'Subscription' field to your unity receipt.
+The receipt should look like:
+
+```
+{
+    Store: 'The name of the store in use, such as GooglePlay or AppleAppStore',
+    TransactionID: 'This transaction's unique identifier, provided by the store',
+    Payload: 'Varies by platform, see [Unity Receipt Documentation](https://docs.unity3d.com/Manual/UnityIAPPurchaseReceipts.html)',
+    Subscription: true/false // if the receipt is a subscription, then true
+}
+```
+
 ### Amazon
 
 An Amazon's receipt contains the following:

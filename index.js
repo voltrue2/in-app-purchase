@@ -334,9 +334,15 @@ function parseUnityReceipt(receipt) {
                     throw error;
                 }
             }
+            var payloadContent = JSON.parse(receipt.Payload.json);
             return {
                 data: receipt.Payload.json,
-                signature: receipt.Payload.signature
+                signature: receipt.Payload.signature,
+                // add field necessary to use google service account
+                packageName: payloadContent.packageName,
+                productId: payloadContent.productId,
+                purchaseToken: payloadContent.purchaseToken,
+                subscription: (receipt.Subscription !== undefined && receipt.Subscription)
             };
         case constants.UNITY.AMAZON:
             if (typeof receipt.Payload === 'string') {

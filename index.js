@@ -118,7 +118,7 @@ module.exports.validate = function (service, receipt, cb) {
         // we are given 2 arguments as: .validate(receipt, cb)
         cb = receipt;
         receipt = service;
-        service = module.exports.getService(receipt); 
+        service = module.exports.getService(receipt);
     }
     if (!cb && Promise) {
         return new Promise(function (resolve, reject) {
@@ -129,12 +129,12 @@ module.exports.validate = function (service, receipt, cb) {
             );
         });
     }
-    
+
     if (service === module.exports.UNITY) {
         service = getServiceFromUnityReceipt(receipt);
         receipt = parseUnityReceipt(receipt);
     }
-        
+
     switch (service) {
         case module.exports.APPLE:
             apple.validatePurchase(null, receipt, cb);
@@ -166,9 +166,9 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
         // we are given 3 arguemnts as: .validateOnce(receipt, secretPubKey, cb)
         cb = receipt;
         receipt = service;
-        service = module.exports.getService(receipt); 
+        service = module.exports.getService(receipt);
     }
-    
+
     if (!cb && Promise) {
         return new Promise(function (resolve, reject) {
             module.exports.validateOnce(
@@ -184,12 +184,12 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
         service = getServiceFromUnityReceipt(receipt);
         receipt = parseUnityReceipt(receipt);
     }
-    
+
     if (!secretOrPubKey && service !== module.exports.APPLE && service !== module.exports.WINDOWS) {
         verbose.log('<.validateOnce>', service, receipt);
         return cb(new Error('missing secret or public key for dynamic validation:' + service));
     }
-    
+
     switch (service) {
         case module.exports.APPLE:
             apple.validatePurchase(secretOrPubKey, receipt, cb);
@@ -242,7 +242,7 @@ module.exports.isCanceled = function (purchasedItem) {
         // it has been cancelled
         return true;
     }
-    return false; 
+    return false;
 };
 
 module.exports.getPurchaseData = function (purchaseData, options) {
@@ -277,7 +277,7 @@ module.exports.refreshGoogleToken = function (cb) {
 
 module.exports.setAmazonValidationHost = function (vhost) {
     if (amazon.setValidationHost) {
-        return amazon.setValidationHost(vhost);    
+        return amazon.setValidationHost(vhost);
     }
     return false;
 };
@@ -334,7 +334,7 @@ function parseUnityReceipt(receipt) {
                     throw error;
                 }
             }
-            var payloadContent = JSON.parse(receipt.Payload.json);
+            var payloadContent = typeof receipt.Payload.json !== 'object' ? JSON.parse(receipt.Payload.json) : receipt.Payload.json;
             return {
                 data: receipt.Payload.json,
                 signature: receipt.Payload.signature,

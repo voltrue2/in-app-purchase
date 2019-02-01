@@ -126,6 +126,8 @@ The module requires the above two compoents to be as a JSON object.
 
 If you are using Google service account instead of OAuth for Google, the receipt should look like:
 
+The API used is v3.
+
 ```
 {
     packageName: 'The packge name of the item purchased',

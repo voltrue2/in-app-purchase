@@ -11,7 +11,7 @@
   "url": "https://github.com/voltrue2/in-app-purchase.git"
  },
  "dependencies": {
-  "jwt-simple": "0.5.1",
+  "jwt-simple": "^0.5.6",
   "request": "2.88.0",
   "xml-crypto": "0.10.1",
   "xmldom": "0.1.19"

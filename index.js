@@ -6,6 +6,7 @@ var apple = require('./lib/apple');
 var google = require('./lib/google');
 var windows = require('./lib/windows');
 var amazonManager = require('./lib/amazonManager');
+var facebook = require('./lib/facebook');
 var roku = require('./lib/roku');
 var constants = require('./constants');
 var verbose = require('./lib/verbose');
@@ -33,6 +34,7 @@ module.exports.APPLE = constants.SERVICES.APPLE;
 module.exports.GOOGLE = constants.SERVICES.GOOGLE;
 module.exports.WINDOWS = constants.SERVICES.WINDOWS;
 module.exports.AMAZON = constants.SERVICES.AMAZON;
+module.exports.FACEBOOK = constants.SERVICES.FACEBOOK;
 module.exports.ROKU = constants.SERVICES.ROKU;
 
 module.exports.config = function (configIn) {
@@ -40,6 +42,7 @@ module.exports.config = function (configIn) {
     google.readConfig(configIn);
     windows.readConfig(configIn);
     amazon = amazonManager.create(configIn);
+    facebook.readConfig(configIn);
     roku.readConfig(configIn);
     verbose.setup(configIn);
 };
@@ -59,7 +62,10 @@ module.exports.setup = function (cb) {
         },
         function (next) {
             amazon.setup(next);
-        }
+        },
+        function (next) {
+            facebook.setup(next);      
+        },
     ], cb);
 };
 
@@ -104,6 +110,10 @@ module.exports.getService = function (receipt) {
             return module.exports.AMAZON;
         }
     } catch (error) {
+        var dotSplitedReceipt = receipt.split('.');
+        if (dotSplitedReceipt.length == 2) {
+            return module.exports.FACEBOOK;
+        }
         return module.exports.APPLE;
     }
 };
@@ -147,6 +157,9 @@ module.exports.validate = function (service, receipt, cb) {
             break;
         case module.exports.AMAZON:
             amazon.validatePurchase(null, receipt, cb);
+            break;
+        case module.exports.FACEBOOK:
+            facebook.validatePurchase(null, receipt, cb);
             break;
         case module.exports.ROKU:
             roku.validatePurchase(null, receipt, cb);
@@ -203,6 +216,9 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
         case module.exports.AMAZON:
             amazon.validatePurchase(secretOrPubKey, receipt, cb);
             break;
+        case module.exports.FACEBOOK:
+            facebook.validatePurchase(secretOrPubKey, receipt, cb);
+            break;
         case module.exports.ROKU:
             roku.validatePurchase(secretOrPubKey, receipt, cb);
             break;
@@ -222,6 +238,10 @@ module.exports.isValidated = function (response) {
 module.exports.isExpired = function (purchasedItem) {
     if (!purchasedItem || !purchasedItem.transactionId) {
         throw new Error('invalid purchased item given:\n' + JSON.stringify(purchasedItem));
+    }
+    if (purchasedItem.cancellationDate) {
+        // it has been cancelled
+        return true;
     }
     if (!purchasedItem.expirationDate) {
         // there is no exipiration date with this item
@@ -258,6 +278,8 @@ module.exports.getPurchaseData = function (purchaseData, options) {
             return windows.getPurchaseData(purchaseData, options);
         case module.exports.AMAZON:
             return amazon.getPurchaseData(purchaseData, options);
+        case module.exports.FACEBOOK:
+            return facebook.getPurchaseData(purchaseData, options);
         case module.exports.ROKU:
             return roku.getPurchaseData(purchaseData, options);
         default:

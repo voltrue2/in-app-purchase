@@ -111,7 +111,7 @@ module.exports.getService = function (receipt) {
         }
     } catch (error) {
         var dotSplitedReceipt = receipt.split('.');
-        if (dotSplitedReceipt.length == 2) {
+        if (dotSplitedReceipt.length === 2) {
             return module.exports.FACEBOOK;
         }
         return module.exports.APPLE;

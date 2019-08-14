@@ -7,7 +7,8 @@ exports.SERVICES = {
 	GOOGLE: 'google',
 	WINDOWS: 'windows',
 	AMAZON: 'amazon',
-	ROKU: 'roku'
+	ROKU: 'roku',
+	FACEBOOK: 'facebook'
 };
 
 exports.UNITY = {

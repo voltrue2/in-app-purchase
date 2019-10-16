@@ -213,7 +213,7 @@ describe('#### Amazon ####', function () {
                         });
                         iap.config({ amazonAPIVersion: 2 });
                         iap.setup(function (error) {
-                                assert.equal(error);
+                                assert.equal(error, null);
                                 var set = iap.setAmazonValidationHost('fooooooo');
                                 assert.equal(set, true);
                                 var receipt = JSON.parse(data.toString());
@@ -235,7 +235,7 @@ describe('#### Amazon ####', function () {
                         });
                         iap.config({ amazonAPIVersion: 2 });
                         iap.setup(function (error) {
-                                assert.equal(error);
+                                assert.equal(error, null);
                                 var set = iap.resetAmazonValidationHost();
                                 assert.equal(set, true);
                                 var receipt = JSON.parse(data.toString());

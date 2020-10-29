@@ -15,7 +15,7 @@
   "jwt-simple": "^0.5.6",
   "request": "2.88.0",
   "urlsafe-base64": "^1.0.0",
-  "xml-crypto": "0.10.1",
+  "xml-crypto": "2.0.0",
   "xmldom": "0.1.19"
  },
  "devDependencies": {

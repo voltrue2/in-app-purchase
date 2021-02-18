@@ -20,7 +20,7 @@
  },
  "devDependencies": {
   "mocha": "5.2.0",
-  "eslint": "5.6.1"
+  "eslint": "7.20.0"
  },
  "scripts": {
   "test": "./precommit.sh"

@@ -1,5 +1,5 @@
 {
- "name": "in-app-purchase",
+ "name": "@flat/in-app-purchase",
  "description": "In-App-Purchase validation and subscription management for iOS, Android, Amazon, and Windows",
  "version": "1.11.4",
  "author": {

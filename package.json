@@ -23,7 +23,8 @@
   "eslint": "7.22.0"
  },
  "scripts": {
-  "test": "./precommit.sh"
+  "lint": "make lint",
+  "test": "make lint && make test"
  },
  "#engine": "node >= 0.10.20",
  "contributors": [],

@@ -1,7 +1,7 @@
 {
  "name": "@flat/in-app-purchase",
  "description": "In-App-Purchase validation and subscription management for iOS, Android, Amazon, and Windows",
- "version": "1.12.1",
+ "version": "1.13.0",
  "author": {
   "name": "Nobuyori Takahashi",
   "email": "voltrue2@yahoo.com"

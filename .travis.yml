@@ -1,8 +1,7 @@
 language: node_js
 node_js:
-- 12
 - 14
-- 15
+- 16
 env:
 - CXX=g++-4.8
 addons:

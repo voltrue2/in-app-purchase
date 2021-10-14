@@ -20,7 +20,7 @@
  },
  "devDependencies": {
   "mocha": "9.1.2",
-  "eslint": "7.32.0"
+  "eslint": "8.0.1"
  },
  "scripts": {
   "lint": "make lint",

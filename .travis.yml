@@ -1,12 +1,11 @@
+dist: focal
 language: node_js
 node_js:
 - 16
 - 18
 env:
-- CXX=g++-4.8
+- CXX=g++-10
 addons:
   apt:
-    sources:
-    - ubuntu-toolchain-r-test
     packages:
-    - g++-4.8
+    - g++-10

@@ -18,12 +18,12 @@ var amazon;
 function handlePromisedFunctionCb(resolve, reject) {
     return function _handlePromisedCallback(error, response) {
         if (error) {
-            var errorData = { error: error, status: null, message: null };
-            if (response !== null && typeof response === 'object') {
-                errorData.status = response.status;
-                errorData.message = response.message;
+            if (response !== null && typeof response === 'object' && response.status && response.message) {
+                error = new Error()
+                error.status = response.status;
+                error.message = response.message;
             }
-            return reject(JSON.stringify(errorData), response);
+            return reject(error, response);
         }
         return resolve(response);
     };
@@ -64,7 +64,7 @@ module.exports.setup = function (cb) {
             amazon.setup(next);
         },
         function (next) {
-            facebook.setup(next);      
+            facebook.setup(next);
         },
     ], cb);
 };

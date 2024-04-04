@@ -13,10 +13,10 @@
  "dependencies": {
   "fb": "^2.0.0",
   "jwt-simple": "^0.5.6",
-  "request": "2.88.0",
+  "request": "2.88.2",
   "urlsafe-base64": "^1.0.0",
-  "xml-crypto": "0.10.1",
-  "xmldom": "0.6.0"
+  "xml-crypto": "6.0.0",
+  "@xmldom/xmldom": "0.8.10"
  },
  "devDependencies": {
   "mocha": "5.2.0",

@@ -12,6 +12,7 @@
  },
  "dependencies": {
   "fb": "^2.0.0",
+  "google-auth-library": "^9.15.1",
   "jwt-simple": "^0.5.6",
   "request": "2.88.0",
   "urlsafe-base64": "^1.0.0",
@@ -19,8 +20,8 @@
   "xmldom": "0.6.0"
  },
  "devDependencies": {
-  "mocha": "5.2.0",
-  "eslint": "5.6.1"
+  "eslint": "5.6.1",
+  "mocha": "5.2.0"
  },
  "scripts": {
   "test": "./precommit.sh"

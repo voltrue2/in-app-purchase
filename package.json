@@ -1,103 +1,103 @@
 {
- "name": "in-app-purchase",
- "description": "In-App-Purchase validation and subscription management for iOS, Android, Amazon, and Windows",
- "version": "1.5",
- "author": {
-  "name": "Nobuyori Takahashi",
-  "email": "voltrue2@yahoo.com"
- },
- "repository": {
-  "type": "git",
-  "url": "https://github.com/voltrue2/in-app-purchase.git"
- },
- "dependencies": {
-  "@apple/app-store-server-library": "^2.0.0",
-  "fb": "^2.0.0",
-  "google-auth-library": "^9.15.1",
-  "jwt-simple": "^0.5.6",
-  "request": "2.88.0",
-  "urlsafe-base64": "^1.0.0",
-  "xml-crypto": "0.10.1",
-  "xmldom": "0.6.0"
- },
- "devDependencies": {
-  "eslint": "5.6.1",
-  "mocha": "^10.8.2"
- },
- "scripts": {
-  "test": "./precommit.sh"
- },
- "#engine": "node >= 0.10.20",
- "contributors": [],
- "keywords": [
-  "Apple",
-  "iOS",
-  "Android",
-  "Windows",
-  "Amazon",
-  "Roku",
-  "Purchase",
-  "Subscription",
-  "App",
-  "in-app-purchase",
-  "in-app-billing",
-  "Validation",
-  "IAP"
- ],
- "eslintConfig": {
-  "parserOptions": {
-   "ecmaVersion": 6,
-   "sourceType": "module",
-   "jsx": true
-  },
-  "env": {
-   "node": true,
-   "es6": true,
-   "amd": true,
-   "mocha": true
-  },
-  "rules": {
-   "max-depth": 5,
-   "no-undef": "error",
-   "no-unused-vars": "error",
-   "no-cond-assign": "error",
-   "no-console": "warn",
-   "no-dupe-args": "error",
-   "no-dupe-keys": "error",
-   "no-empty": "error",
-   "no-duplicate-case": "error",
-   "no-func-assign": "error",
-   "no-inner-declarations": "warn",
-   "no-irregular-whitespace": "error",
-   "no-obj-calls": "error",
-   "no-sparse-arrays": "error",
-   "no-unreachable": "error",
-   "no-unsafe-negation": "error",
-   "use-isnan": "error",
-   "valid-typeof": "error",
-   "dot-notation": "warn",
-   "guard-for-in": "off",
-   "no-eval": "error",
-   "no-global-assign": "error",
-   "no-implicit-globals": "error",
-   "no-implied-eval": "error",
-   "no-loop-func": "error",
-   "no-octal": "off",
-   "no-octal-escape": "off",
-   "no-proto": "error",
-   "no-redeclare": "error",
-   "no-restricted-properties": "error",
-   "eqeqeq": "error",
-   "quotes": [
-    "error",
-    "single"
-   ],
-   "curly": "error",
-   "camelcase": "error",
-   "validthis": "off",
-   "bitwise": "off",
-   "semi": "error"
-  }
- },
- "license": "MIT"
+    "name": "in-app-purchase",
+    "description": "In-App-Purchase validation and subscription management for iOS, Android, Amazon, and Windows",
+    "version": "1.6.0",
+    "author": {
+        "name": "Nobuyori Takahashi",
+        "email": "voltrue2@yahoo.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/voltrue2/in-app-purchase.git"
+    },
+    "dependencies": {
+        "@apple/app-store-server-library": "^2.0.0",
+        "fb": "^2.0.0",
+        "google-auth-library": "^9.15.1",
+        "jwt-simple": "^0.5.6",
+        "request": "2.88.0",
+        "urlsafe-base64": "^1.0.0",
+        "xml-crypto": "0.10.1",
+        "xmldom": "0.6.0"
+    },
+    "devDependencies": {
+        "eslint": "5.6.1",
+        "mocha": "^10.8.2"
+    },
+    "scripts": {
+        "test": "./precommit.sh"
+    },
+    "#engine": "node >= 0.10.20",
+    "contributors": [],
+    "keywords": [
+        "Apple",
+        "iOS",
+        "Android",
+        "Windows",
+        "Amazon",
+        "Roku",
+        "Purchase",
+        "Subscription",
+        "App",
+        "in-app-purchase",
+        "in-app-billing",
+        "Validation",
+        "IAP"
+    ],
+    "eslintConfig": {
+        "parserOptions": {
+            "ecmaVersion": 6,
+            "sourceType": "module",
+            "jsx": true
+        },
+        "env": {
+            "node": true,
+            "es6": true,
+            "amd": true,
+            "mocha": true
+        },
+        "rules": {
+            "max-depth": 5,
+            "no-undef": "error",
+            "no-unused-vars": "error",
+            "no-cond-assign": "error",
+            "no-console": "warn",
+            "no-dupe-args": "error",
+            "no-dupe-keys": "error",
+            "no-empty": "error",
+            "no-duplicate-case": "error",
+            "no-func-assign": "error",
+            "no-inner-declarations": "warn",
+            "no-irregular-whitespace": "error",
+            "no-obj-calls": "error",
+            "no-sparse-arrays": "error",
+            "no-unreachable": "error",
+            "no-unsafe-negation": "error",
+            "use-isnan": "error",
+            "valid-typeof": "error",
+            "dot-notation": "warn",
+            "guard-for-in": "off",
+            "no-eval": "error",
+            "no-global-assign": "error",
+            "no-implicit-globals": "error",
+            "no-implied-eval": "error",
+            "no-loop-func": "error",
+            "no-octal": "off",
+            "no-octal-escape": "off",
+            "no-proto": "error",
+            "no-redeclare": "error",
+            "no-restricted-properties": "error",
+            "eqeqeq": "error",
+            "quotes": [
+                "error",
+                "single"
+            ],
+            "curly": "error",
+            "camelcase": "error",
+            "validthis": "off",
+            "bitwise": "off",
+            "semi": "error"
+        }
+    },
+    "license": "MIT"
 }

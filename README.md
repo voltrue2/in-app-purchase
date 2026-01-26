@@ -13,6 +13,19 @@ Important changes made after forking:
 
 2. **Added StoreKit 2 support for iOS** using Apple's App Store Server API. This is the modern replacement for the deprecated `verifyReceipt` endpoint.
 
+3. **Automatic StoreKit 2 Upgrade for Unity Receipts**: If you are using the Unity IAP plugin and provide an Apple receipt object, the library will automatically upgrade to StoreKit 2 validation if the `appleStoreKit2` configuration is present and the receipt contains a `TransactionID`. This allows you to migrate to StoreKit 2 without changing your client-side implementation.
+
+   ```javascript
+   // If configured, this Unity receipt will automatically use StoreKit 2
+   let receipt = {
+       "Store": "AppleAppStore",
+       "TransactionID": "2000001110285660",
+       "Payload": "...", 
+       "Subscription": false
+   };
+   const response = await iap.validate(receipt);
+   ```
+
 ## StoreKit 2 (App Store Server API)
 
 StoreKit 2 uses Apple's new App Store Server API which provides:

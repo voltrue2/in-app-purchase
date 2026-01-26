@@ -147,8 +147,14 @@ module.exports.validate = function (service, receipt, cb) {
     }
 
     if (service === module.exports.UNITY) {
-        service = getServiceFromUnityReceipt(receipt);
-        receipt = parseUnityReceipt(receipt);
+        var unityReceipt = typeof receipt === 'object' ? receipt : JSON.parse(receipt);
+        if (unityReceipt.Store === constants.UNITY.APPLE && appleStoreKit2.isConfigured() && unityReceipt.TransactionID) {
+            service = module.exports.APPLE_STOREKIT2;
+            receipt = unityReceipt.TransactionID;
+        } else {
+            service = getServiceFromUnityReceipt(unityReceipt);
+            receipt = parseUnityReceipt(unityReceipt);
+        }
     }
 
     switch (service) {
@@ -203,8 +209,14 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
     }
 
     if (service === module.exports.UNITY) {
-        service = getServiceFromUnityReceipt(receipt);
-        receipt = parseUnityReceipt(receipt);
+        var unityReceipt = typeof receipt === 'object' ? receipt : JSON.parse(receipt);
+        if (unityReceipt.Store === constants.UNITY.APPLE && appleStoreKit2.isConfigured() && unityReceipt.TransactionID) {
+            service = module.exports.APPLE_STOREKIT2;
+            receipt = unityReceipt.TransactionID;
+        } else {
+            service = getServiceFromUnityReceipt(unityReceipt);
+            receipt = parseUnityReceipt(unityReceipt);
+        }
     }
 
     if (!secretOrPubKey && service !== module.exports.APPLE && service !== module.exports.APPLE_STOREKIT2 && service !== module.exports.WINDOWS) {

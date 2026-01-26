@@ -125,12 +125,11 @@ module.exports.getService = function (receipt) {
 };
 
 module.exports.validate = function (service, receipt, cb) {
-    console.log('new validate', service, receipt, cb);
+    console.log('test update', service, receipt, cb);
     if (receipt === undefined && cb === undefined) {
         // we are given 1 argument as: const promise = .validate(receipt)
         receipt = service;
         service = module.exports.getService(receipt);
-        console.log('new validate 1', service, receipt, cb);
     }
     if (cb === undefined && typeof receipt === 'function') {
         // we are given 2 arguments as: .validate(receipt, cb)

@@ -63,6 +63,7 @@ You can also use environment variables:
 await iap.setup();
 
 // Validate using transaction ID from StoreKit 2
+// (First tries configured environment, if not found (404), tries the other one automatically)
 const result = await iap.validate(iap.APPLE_STOREKIT2, transactionId);
 
 if (iap.isValidated(result)) {
@@ -70,6 +71,14 @@ if (iap.isValidated(result)) {
     console.log('Purchase validated:', purchaseData);
 }
 ```
+
+### Dual Environment Support (Sandbox & Production)
+
+Similar to the legacy `verifyReceipt` implementation, the `iap.APPLE_STOREKIT2` service supports **automatic environment fallback**:
+
+1. Validations are first attempted in the configured `environment` (default: `Production`).
+2. If the transaction is not found (404 error) in the primary environment, the system automatically retries in the other environment (`Sandbox` if primary is `Production`, and vice versa).
+3. This ensures that purchases made by TestFlight users or Sandbox accounts are validated correctly even when the app is configured for Production.
 
 ### Getting Subscription Status
 

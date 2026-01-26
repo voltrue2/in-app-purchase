@@ -3,6 +3,7 @@
 var async = require('./lib/async');
 
 var apple = require('./lib/apple');
+var appleStoreKit2 = require('./lib/appleStoreKit2');
 var google = require('./lib/google');
 var windows = require('./lib/windows');
 var amazonManager = require('./lib/amazonManager');
@@ -31,6 +32,7 @@ function handlePromisedFunctionCb(resolve, reject) {
 
 module.exports.UNITY = constants.SERVICES.UNITY;
 module.exports.APPLE = constants.SERVICES.APPLE;
+module.exports.APPLE_STOREKIT2 = constants.SERVICES.APPLE_STOREKIT2;
 module.exports.GOOGLE = constants.SERVICES.GOOGLE;
 module.exports.WINDOWS = constants.SERVICES.WINDOWS;
 module.exports.AMAZON = constants.SERVICES.AMAZON;
@@ -39,6 +41,7 @@ module.exports.ROKU = constants.SERVICES.ROKU;
 
 module.exports.config = function (configIn) {
     apple.readConfig(configIn);
+    appleStoreKit2.readConfig(configIn);
     google.readConfig(configIn);
     windows.readConfig(configIn);
     amazon = amazonManager.create(configIn);
@@ -58,13 +61,16 @@ module.exports.setup = function (cb) {
             apple.setup(next);
         },
         function (next) {
+            appleStoreKit2.setup(next);
+        },
+        function (next) {
             google.setup(next);
         },
         function (next) {
             amazon.setup(next);
         },
         function (next) {
-            facebook.setup(next);      
+            facebook.setup(next);
         },
     ], cb);
 };
@@ -149,6 +155,9 @@ module.exports.validate = function (service, receipt, cb) {
         case module.exports.APPLE:
             apple.validatePurchase(null, receipt, cb);
             break;
+        case module.exports.APPLE_STOREKIT2:
+            appleStoreKit2.validatePurchase(receipt, cb);
+            break;
         case module.exports.GOOGLE:
             google.validatePurchase(null, receipt, cb);
             break;
@@ -198,7 +207,7 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
         receipt = parseUnityReceipt(receipt);
     }
 
-    if (!secretOrPubKey && service !== module.exports.APPLE && service !== module.exports.WINDOWS) {
+    if (!secretOrPubKey && service !== module.exports.APPLE && service !== module.exports.APPLE_STOREKIT2 && service !== module.exports.WINDOWS) {
         verbose.log('<.validateOnce>', service, receipt);
         return cb(new Error('missing secret or public key for dynamic validation:' + service));
     }
@@ -206,6 +215,9 @@ module.exports.validateOnce = function (service, secretOrPubKey, receipt, cb) {
     switch (service) {
         case module.exports.APPLE:
             apple.validatePurchase(secretOrPubKey, receipt, cb);
+            break;
+        case module.exports.APPLE_STOREKIT2:
+            appleStoreKit2.validatePurchase(receipt, cb);
             break;
         case module.exports.GOOGLE:
             google.validatePurchase(secretOrPubKey, receipt, cb);
@@ -272,6 +284,8 @@ module.exports.getPurchaseData = function (purchaseData, options) {
     switch (purchaseData.service) {
         case module.exports.APPLE:
             return apple.getPurchaseData(purchaseData, options);
+        case module.exports.APPLE_STOREKIT2:
+            return appleStoreKit2.getPurchaseData(purchaseData, options);
         case module.exports.GOOGLE:
             return google.getPurchaseData(purchaseData, options);
         case module.exports.WINDOWS:
@@ -382,6 +396,37 @@ function parseUnityReceipt(receipt) {
 
 // test use only
 module.exports.reset = function () {
-    // resets google setup
+    // resets google and appleStoreKit2 setup
     google.reset();
+    appleStoreKit2.reset();
+};
+
+// StoreKit 2 specific functions
+module.exports.getSubscriptionStatus = function (originalTransactionId, cb) {
+    if (!cb && Promise) {
+        return new Promise(function (resolve, reject) {
+            module.exports.getSubscriptionStatus(
+                originalTransactionId,
+                handlePromisedFunctionCb(resolve, reject)
+            );
+        });
+    }
+    appleStoreKit2.getSubscriptionStatus(originalTransactionId, cb);
+};
+
+module.exports.getTransactionHistory = function (transactionId, options, cb) {
+    if (typeof options === 'function') {
+        cb = options;
+        options = {};
+    }
+    if (!cb && Promise) {
+        return new Promise(function (resolve, reject) {
+            module.exports.getTransactionHistory(
+                transactionId,
+                options,
+                handlePromisedFunctionCb(resolve, reject)
+            );
+        });
+    }
+    appleStoreKit2.getTransactionHistory(transactionId, options, cb);
 };

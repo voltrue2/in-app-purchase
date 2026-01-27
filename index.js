@@ -125,7 +125,7 @@ module.exports.getService = function (receipt) {
 };
 
 module.exports.validate = function (service, receipt, cb) {
-    console.log('claude update', service, receipt, cb);
+
     if (receipt === undefined && cb === undefined) {
         // we are given 1 argument as: const promise = .validate(receipt)
         receipt = service;
